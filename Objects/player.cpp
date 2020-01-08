@@ -41,10 +41,12 @@ void player::control(void)
 	if (_stickInput.x > 300)
 	{
 		_pos.x += _stickInput.x / 100;
+		_stats = OBJ_STATS::RIGHT;
 	}
 	if (_stickInput.x < -300)
 	{
 		_pos.x += _stickInput.x / 100;
+		_stats = OBJ_STATS::LEFT;
 	}
 
 	if (StageMngIns.getStageData((static_cast<int>(_pos.y) / BlockSize) * StageWidth + (static_cast<int>(_pos.x + 32) / BlockSize)) ||

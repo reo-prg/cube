@@ -22,6 +22,6 @@ private:
 	double _initVel;		// ‰‘¬
 	int _jumpDeley;			// ŸƒWƒƒƒ“ƒv‚Å‚«‚é‚æ‚¤‚É‚È‚é‚½‚ß‚ÌŠÔŠu
 	void control(void);
-	void velUpdate(void);
+	void velUpdate(void);	
 };
 

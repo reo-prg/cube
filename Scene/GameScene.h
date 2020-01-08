@@ -15,5 +15,6 @@ public:
 
 	Base_unq Update(Base_unq scene);
 	std::vector<std::shared_ptr<object>> _objList;
+	std::vector<std::shared_ptr<object>> _cubeList;
 };
 

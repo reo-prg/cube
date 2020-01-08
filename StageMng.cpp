@@ -17,6 +17,8 @@ void StageMng::UpdateStagecount(int count)
 	if (fp != nullptr)
 	{
 		fread(&_stageData[0], sizeof(_stageData[0]), _stageData.size(), fp);
+
+
 	}
 	else
 	{

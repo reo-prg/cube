@@ -14,6 +14,10 @@ object::~object()
 {
 }
 
+void object::Update(void)
+{
+}
+
 void object::objDraw(void)
 {
 	ImageMngIns.AddDraw({ _image[_stats],static_cast<int>(_pos.x) + 16,static_cast<int>(_pos.y) + 16,_rad,LAYER::CHAR,_zOrder });

@@ -7,7 +7,7 @@
 enum class OBJ_TYPE
 {
 	PLAYER,
-	BLOCK,
+	CUBE_DEF,
 	MAX
 };
 
@@ -25,7 +25,7 @@ public:
 	object();
 	virtual ~object();
 
-	virtual void Update(void) = 0;
+	virtual void Update(void);
 	void objDraw(void);
 
 	void setImage(OBJ_STATS, int);		// ó‘Ô‚²‚Æ‚Ì‰æ‘œ‚Ìİ’è
