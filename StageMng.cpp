@@ -1,7 +1,7 @@
 #include <StageMng.h>
 
 StageMng* StageMng::sInstance = nullptr;
-std::vector<int> StageMng::_stageData;
+int StageMng::_stageData[StageHeight][StageWidth];
 int StageMng::_stageScreen;
 
 
@@ -16,7 +16,9 @@ void StageMng::UpdateStagecount(int count)
 	fopen_s(&fp, "data/stage_data.dat", "rb");
 	if (fp != nullptr)
 	{
-		fread(&_stageData[0], sizeof(_stageData[0]), _stageData.size(), fp);
+		fread(&_stageData[0], sizeof(_stageData[0][0]), StageHeight * StageWidth, fp);
+
+
 	}
 	else
 	{
@@ -31,20 +33,20 @@ void StageMng::UpdateStagecount(int count)
 	{
 		for (int x = 0; x < StageWidth; x++)
 		{
-			if (_stageData[y * StageWidth + x] == 1)
+			if (_stageData[y][x] == 1)
 			{
-				DrawGraph(x * 32, y * 32, ImageMngIns.getImage("s_block")[0], true);
+				DrawGraph(x * 32, y * 32, ImageMngIns.getImage("s_cube")[0], true);
 			}
 
 		}
 	}
 }
 
-int StageMng::getStageData(int val)
+int StageMng::getStageData(Vector2Template<int> val)
 {
-	if (val >= 0 && val < StageHeight * StageWidth)
+	if (val.x >= 0 && val.x < StageWidth && val.y >= 0 && val.y < StageHeight)
 	{
-		return _stageData[val];
+		return _stageData[val.y][val.x];
 	}
 	else
 	{
@@ -55,7 +57,6 @@ int StageMng::getStageData(int val)
 StageMng::StageMng()
 {
 	_stageScreen = MakeScreen(SceneMngIns.ScreenSize.x, SceneMngIns.ScreenSize.y, false);
-	_stageData.resize(StageHeight * StageWidth);
 	UpdateStagecount(0);
 }
 

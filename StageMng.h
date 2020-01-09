@@ -34,11 +34,11 @@ public:
 	void Update(void);
 	void UpdateStagecount(int count);
 
-	int getStageData(int);
+	int getStageData(Vector2Template<int> val);
 private:
 	static StageMng* sInstance;
 
-	static std::vector<int> _stageData;			// ステージの情報を保存
+	static int _stageData[StageHeight][StageWidth];			// ステージの情報を保存
 	static int _stageScreen;					// ステージ用のスクリーン
 
 	StageMng();

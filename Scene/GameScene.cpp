@@ -6,7 +6,7 @@ GameScene::GameScene()
 {
 	ImageMngIns.getImage("image/char.png", "player", 64, 32, 2, 8);
 
-	_objList.emplace_back(new player({ 800.0,704.0 }, 0.0));
+	_objList.emplace_back(new player({ 800.0,704.0 }, 0.0, { 32,32 }));
 }
 
 

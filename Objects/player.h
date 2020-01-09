@@ -11,7 +11,7 @@ class player :
 {
 public:
 	player();
-	player(Vector2Template<double> pos, double rad);
+	player(Vector2Template<double> pos, double rad, Vector2Template<int> size);
 	~player();
 
 	void Update(void);
@@ -22,6 +22,6 @@ private:
 	double _initVel;		// ‰‘¬
 	int _jumpDeley;			// ŸƒWƒƒƒ“ƒv‚Å‚«‚é‚æ‚¤‚É‚È‚é‚½‚ß‚ÌŠÔŠu
 	void control(void);
-	void velUpdate(void);
+	void velUpdate(void);	
 };
 

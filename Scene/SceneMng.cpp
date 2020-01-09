@@ -10,7 +10,6 @@ void SceneMng::Run(void)
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{
 		_runScene = _runScene->Update(std::move(_runScene));
-		joypad = GetJoypadInputState(DX_INPUT_PAD1);
 
 		ImageMngIns.Draw();
 	}
@@ -29,7 +28,7 @@ bool SceneMng::SystemInit(void)
 	SetDrawScreen(DX_SCREEN_BACK);		// 描画先をバックバッファに設定
 
 	ImageMngIns.getImage("image/back.png", "back");
-	ImageMngIns.getImage("image/stageblock.png", "s_block");
+	ImageMngIns.getImage("image/stageblock.png", "s_cube");
 
 
 	_runScene = std::make_unique<GameScene>();

@@ -14,6 +14,7 @@ public:
 	~GameScene();
 
 	Base_unq Update(Base_unq scene);
+private:
 	std::vector<std::shared_ptr<object>> _objList;
 };
 

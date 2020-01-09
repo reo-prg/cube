@@ -7,7 +7,7 @@
 enum class OBJ_TYPE
 {
 	PLAYER,
-	BLOCK,
+	CUBE_DEF,
 	MAX
 };
 
@@ -16,6 +16,7 @@ enum class OBJ_STATS
 {
 	LEFT,
 	RIGHT,
+	NORMAL,
 	MAX
 };
 
@@ -25,7 +26,7 @@ public:
 	object();
 	virtual ~object();
 
-	virtual void Update(void) = 0;
+	virtual void Update(void);
 	void objDraw(void);
 
 	void setImage(OBJ_STATS, int);		// 状態ごとの画像の設定
@@ -34,6 +35,7 @@ protected:
 	double					_rad;		// 角度
 	int						_zOrder;	// zオーダー
 	OBJ_STATS				_stats;		// 現在の状態
+	Vector2Template<int>	_size;		// サイズ
 private:
 	std::map<OBJ_STATS,int> _image;		// 画像ID
 };
