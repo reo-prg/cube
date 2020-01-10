@@ -29,6 +29,7 @@ bool SceneMng::SystemInit(void)
 
 	ImageMngIns.getImage("image/back.png", "back");
 	ImageMngIns.getImage("image/stageblock.png", "s_cube");
+	ImageMngIns.getImage("image/cube.png", "cube", 32, 32, 3, 1);
 
 
 	_runScene = std::make_unique<GameScene>();

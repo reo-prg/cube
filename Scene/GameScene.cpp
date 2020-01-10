@@ -1,6 +1,6 @@
 #include <Scene/GameScene.h>
 
-
+std::vector<std::shared_ptr<object>> GameScene::_objList;
 
 GameScene::GameScene()
 {

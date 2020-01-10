@@ -15,6 +15,7 @@ public:
 
 	Base_unq Update(Base_unq scene);
 private:
-	std::vector<std::shared_ptr<object>> _objList;
+	friend class StageMng;
+	static std::vector<std::shared_ptr<object>> _objList;
 };
 

@@ -14,6 +14,7 @@ player::player(Vector2Template<double> pos, double rad, Vector2Template<int> siz
 	_initVel = 0.0;
 	_jumpDeley = 0;
 	_stats = OBJ_STATS::RIGHT;
+	_type = OBJ_TYPE::PLAYER;
 
 	setImage(OBJ_STATS::RIGHT, ImageMngIns.getImage("player")[0]);
 	setImage(OBJ_STATS::LEFT , ImageMngIns.getImage("player")[1]);

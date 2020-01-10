@@ -3,11 +3,13 @@
 #include <common/Vector2.h>
 #include <Graphic/ImageMng.h>
 
+
 // オブジェクトの種類
 enum class OBJ_TYPE
 {
 	PLAYER,
-	CUBE_DEF,
+	CUBE_LOCK,
+	CUBE_FALL,
 	MAX
 };
 
@@ -36,6 +38,7 @@ protected:
 	int						_zOrder;	// zオーダー
 	OBJ_STATS				_stats;		// 現在の状態
 	Vector2Template<int>	_size;		// サイズ
+	OBJ_TYPE				_type;		// オブジェクトの種類
 private:
 	std::map<OBJ_STATS,int> _image;		// 画像ID
 };

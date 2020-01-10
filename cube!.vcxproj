@@ -136,7 +136,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Objects\cubeDef.cpp" />
+    <ClCompile Include="Objects\FallCube.cpp" />
+    <ClCompile Include="Objects\LockCube.cpp" />
     <ClCompile Include="graphic\ImageMng.cpp" />
     <ClCompile Include="graphic\LAYER.cpp" />
     <ClCompile Include="Objects\object.cpp" />
@@ -153,7 +154,8 @@
   <ItemGroup>
     <ClInclude Include="common\dit\detail.h" />
     <ClInclude Include="common\Vector2.h" />
-    <ClInclude Include="Objects\cubeDef.h" />
+    <ClInclude Include="Objects\FallCube.h" />
+    <ClInclude Include="Objects\LockCube.h" />
     <ClInclude Include="graphic\ImageMng.h" />
     <ClInclude Include="graphic\LAYER.h" />
     <ClInclude Include="Objects\object.h" />

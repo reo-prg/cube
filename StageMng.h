@@ -3,6 +3,8 @@
 #include <Graphic/ImageMng.h>
 #include <Scene/SceneMng.h>
 #include <_debug/_DebugConOut.h>
+#include <Objects/LockCube.h>
+#include <Objects/FallCube.h>
 
 #define StageMngIns StageMng::getInstance()
 #define StageHeight	24
@@ -39,7 +41,8 @@ private:
 	static StageMng* sInstance;
 
 	static int _stageData[StageHeight][StageWidth];			// ステージの情報を保存
-	static int _stageScreen;					// ステージ用のスクリーン
+	static int _stageScreen;								// ステージ用のスクリーン
+
 
 	StageMng();
 	~StageMng();
