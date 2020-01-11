@@ -11,7 +11,7 @@ public:
 	FallCube(Vector2Template<int> pos, Vector2Template<int> size);
 	~FallCube();
 
-	void Update(void);
+	void Update(void)override;
 	void velUpdate(void);
 };
 

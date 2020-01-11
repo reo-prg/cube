@@ -2,9 +2,18 @@
 #include <Objects/object.h>
 #include <Graphic/ImageMng.h>
 #include <StageMng.h>
+#include <func/CanGripCube.h>
 
 #define PL_G_ACC 0.4		// プレイヤーの重力加速度
 #define JUMP_DELEY 5		// ジャンプの間隔(時間)
+
+enum class CHECK_DIR
+{
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT
+};
 
 class player :
 	public object
@@ -14,14 +23,17 @@ public:
 	player(Vector2Template<double> pos, double rad, Vector2Template<int> size);
 	~player();
 
-	void Update(void);
+	void Update(void)override;
 private:
 	Vector2Template<int> _stickInput;
 	int _padInput;
 
-	double _initVel;		// 初速
-	int _jumpDeley;			// 次ジャンプできるようになるための間隔
+	double _initVel;					// 初速
+	int _jumpDeley;						// 次ジャンプできるようになるための間隔
+	std::shared_ptr<object> _gripCube;	// 掴んでいるキューブ
+
 	void control(void);
-	void velUpdate(void);	
+	void velUpdate(void);
+	bool CheckHitCube(CHECK_DIR);
 };
 

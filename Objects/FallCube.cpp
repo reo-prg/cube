@@ -14,6 +14,7 @@ FallCube::FallCube(Vector2Template<int> pos, Vector2Template<int> size)
 	_rad = 0.0;
 	_stats = OBJ_STATS::NORMAL;
 	_type = OBJ_TYPE::CUBE_FALL;
+	_grip = false;
 
 	setImage(OBJ_STATS::NORMAL, ImageMngIns.getImage("cube")[0]);
 }

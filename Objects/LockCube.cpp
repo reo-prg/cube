@@ -14,6 +14,7 @@ LockCube::LockCube(Vector2Template<int> pos, Vector2Template<int> size)
 	_size = size;
 	_stats = OBJ_STATS::NORMAL;
 	_type = OBJ_TYPE::CUBE_LOCK;
+	_grip = false;
 
 	setImage(OBJ_STATS::NORMAL, ImageMngIns.getImage("cube")[1]);
 }

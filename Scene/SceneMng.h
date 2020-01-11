@@ -1,5 +1,7 @@
 #pragma once
 #include <memory>
+#include <vector>
+#include <functional>
 #include <common/Vector2.h>
 #include <Graphic/ImageMng.h>
 #include <Scene/BaseScene.h>
