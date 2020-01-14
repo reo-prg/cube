@@ -12,40 +12,46 @@ void StageMng::Update(void)
 
 void StageMng::UpdateStagecount(int count)
 {
-	FILE *fp;
-	fopen_s(&fp, "data/stage_data.dat", "rb");
-	if (fp != nullptr)
-	{
-		int cubeCount;		// キューブの数
-		int pos[2];			// 読み取った座標の一時格納場所
-		int type;			// キューブの種類
+	FILE  *fp;
+	fopen_s(&fp, fileName[count].c_str(), "r");
 
-		fread(&_stageData[0], sizeof(_stageData[0][0]), StageHeight * StageWidth, fp);
-
-		fread(&cubeCount, sizeof(int), 1, fp);
-		for (int i = 0; i < cubeCount; i++)
-		{
-			fread(pos, sizeof(int), 2, fp);
-			fread(&type, sizeof(int), 1, fp);
-			switch (type)
-			{
-			case 0:
-				GameScene::_objList.emplace_back(new LockCube({ pos[0],pos[1] }, { 32,32 }));
-				break;
-			case 1:
-				GameScene::_objList.emplace_back(new FallCube({ pos[0],pos[1] }, { 32,32 }));
-				break;
-			default:
-				AST();
-				break;
-			}
-		}
-	}
-	else
+	if (fp == nullptr)
 	{
 		AST();
 	}
-	fclose(fp);
+	else
+	{
+		int objCount;				// オブジェクトの数
+		Vector2Template<int> pos;	// オブジェクトの座標
+		int type;	// オブジェクトの種類
+
+		for (int i = 0; i < StageHeight; i++)
+		{
+			for (int j = 0; j < StageWidth; j++)
+			{
+				fscanf_s(fp, "%d,", &_stageData[i][j]);
+			}
+		}
+
+		fscanf_s(fp, "%d,", &objCount);
+		for (int i = 0; i < objCount; i++)
+		{
+			fscanf_s(fp, "%d,%d,%d,", &pos.x, &pos.y, &type);
+			switch (type)
+			{
+			case 0:
+				GameScene::_objList.emplace_back(new LockCube(pos, { 32,32 }));
+				break;
+			case 1:
+				GameScene::_objList.emplace_back(new FallCube(pos, { 32,32 }));
+				break;
+			case 10:
+				GameScene::_objList.emplace_back(new player({ static_cast<double>(pos.x), static_cast<double>(pos.y) }, 0.0, { 32,32 }));
+			}
+		}
+		fclose(fp);
+	}
+	
 
 	SetDrawScreen(_stageScreen);
 	ClsDrawScreen();
@@ -54,9 +60,9 @@ void StageMng::UpdateStagecount(int count)
 	{
 		for (int x = 0; x < StageWidth; x++)
 		{
-			if (_stageData[y][x] == 1)
+			if (_stageData[y][x] != -1)
 			{
-				DrawGraph(x * 32, y * 32, ImageMngIns.getImage("s_cube")[0], true);
+				DrawGraph(x * 32, y * 32, ImageMngIns.getImage("s_cube")[_stageData[y][x]], true);
 			}
 
 		}
@@ -78,7 +84,6 @@ int StageMng::getStageData(Vector2Template<int> val)
 StageMng::StageMng()
 {
 	_stageScreen = MakeScreen(SceneMngIns.ScreenSize.x, SceneMngIns.ScreenSize.y, false);
-	UpdateStagecount(0);
 }
 
 

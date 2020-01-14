@@ -4,9 +4,7 @@ std::vector<std::shared_ptr<object>> GameScene::_objList;
 
 GameScene::GameScene()
 {
-	ImageMngIns.getImage("image/char.png", "player", 64, 32, 2, 8);
-
-	_objList.emplace_back(new player({ 800.0,704.0 }, 0.0, { 32,32 }));
+	StageMngIns.UpdateStagecount(0);
 }
 
 

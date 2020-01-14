@@ -11,7 +11,7 @@ std::shared_ptr<object> CanGripCube::operator()(player& pl_obj)
 		if (data->getType() != OBJ_TYPE::PLAYER)
 		{
 			if (plArmPos.x >= data->getPos().x && plArmPos.x < data->getPos().x + data->getSize().x &&
-				plArmPos.y >= data->getPos().y && plArmPos.y < data->getPos().y + cubeSizeY)
+				plArmPos.y >= data->getPos().y + 12 && plArmPos.y < data->getPos().y + 20)
 			{
 				data->setGrip(true);
 				pl_obj.setGrip(true);

@@ -1,5 +1,6 @@
 #pragma once
 #include <DxLib.h>
+#include <vector>
 #include <Graphic/ImageMng.h>
 #include <Scene/SceneMng.h>
 #include <_debug/_DebugConOut.h>
@@ -42,6 +43,8 @@ private:
 
 	static int _stageData[StageHeight][StageWidth];			// ステージの情報を保存
 	static int _stageScreen;								// ステージ用のスクリーン
+
+	const std::vector<std::string> fileName = { "data/stage_0.csv" };
 
 
 	StageMng();
