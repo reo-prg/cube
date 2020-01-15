@@ -71,13 +71,13 @@ void StageMng::UpdateStagecount(int count)
 
 int StageMng::getStageData(Vector2Template<int> val)
 {
-	if (val.x >= 0 && val.x < StageWidth && val.y >= 0 && val.y < StageHeight)
+	if (val.x >= 0 && val.x < StageWidth * BlockSize && val.y >= 0 && val.y < StageHeight * BlockSize)
 	{
-		return _stageData[val.y][val.x];
+		return _stageData[val.y / BlockSize][val.x / BlockSize];
 	}
 	else
 	{
-		return 1;
+		return 100;
 	}
 }
 
