@@ -4,8 +4,9 @@
 #include <StageMng.h>
 #include <func/CanGripCube.h>
 
-#define PL_G_ACC 0.4		// プレイヤーの重力加速度
-#define JUMP_DELEY 5		// ジャンプの間隔(時間)
+#define PL_G_ACC	0.4		// プレイヤーの重力加速度
+#define JUMP_DELEY	5		// ジャンプの間隔(時間)
+#define PL_SPEED	4		// プレイヤーのはやさ
 
 enum class CHECK_DIR
 {
