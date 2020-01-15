@@ -1,4 +1,4 @@
-#include "object.h"
+#include <Objects/object.h>
 
 
 
@@ -57,5 +57,6 @@ Vector2Template<int> object::getSize(void)
 {
 	return _size;
 }
+
 
 

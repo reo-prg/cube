@@ -2,7 +2,7 @@
 
 std::shared_ptr<object> CanGripCube::operator()(player& pl_obj)
 {
-	Vector2Template<double> plArmPos = { pl_obj.getPos().x + static_cast<double>(pl_obj.getStats()) * 56 - 12, pl_obj.getPos().y + pl_obj.getSize().x / 2 };
+	Vector2Template<double> plArmPos = { pl_obj.getPos().x + static_cast<double>(pl_obj.getStats()) * 64 - 16, pl_obj.getPos().y + pl_obj.getSize().x / 2 };
 
 	
 
@@ -11,7 +11,7 @@ std::shared_ptr<object> CanGripCube::operator()(player& pl_obj)
 		if (data->getType() != OBJ_TYPE::PLAYER)
 		{
 			if (plArmPos.x >= data->getPos().x && plArmPos.x < data->getPos().x + data->getSize().x &&
-				plArmPos.y >= data->getPos().y + 12 && plArmPos.y < data->getPos().y + 20)
+				plArmPos.y >= data->getPos().y + 8 && plArmPos.y < data->getPos().y + 24)
 			{
 				data->setGrip(true);
 				pl_obj.setGrip(true);

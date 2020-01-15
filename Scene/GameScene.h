@@ -6,6 +6,7 @@
 #include <Objects/object.h>
 #include <Objects/player.h>
 #include <func/CanGripCube.h>
+#include <func/CheckHitObj.h>
 
 class GameScene :
 	public BaseScene
@@ -18,6 +19,8 @@ public:
 private:
 	friend class StageMng;
 	friend struct CanGripCube;
+	friend struct CheckHitObj;
+
 	static std::vector<std::shared_ptr<object>> _objList;
 };
 

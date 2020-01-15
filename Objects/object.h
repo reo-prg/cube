@@ -2,6 +2,7 @@
 #include <map>
 #include <common/Vector2.h>
 #include <Graphic/ImageMng.h>
+#include <Objects/CHECK_DIR.h>
 
 
 // オブジェクトの種類
