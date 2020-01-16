@@ -1,5 +1,6 @@
 #pragma once
 #include <Objects/object.h>
+#include <StageMng.h>
 
 #define CB_G_ACC 0.2 // キューブの重力加速度
 
@@ -13,5 +14,7 @@ public:
 
 	void Update(void)override;
 	void velUpdate(void);
+private:
+	double _initVel;
 };
 

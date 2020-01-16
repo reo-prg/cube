@@ -30,6 +30,7 @@ private:
 
 	void control(void);
 	void velUpdate(void);
+	bool clearCheck(void);				// クリアしたのかをチェック
 	bool CheckHitCube(CHECK_DIR);
 };
 

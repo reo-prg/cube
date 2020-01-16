@@ -1,10 +1,10 @@
 #include <func/CheckHitObj.h>
 
-Vector2Template<double> CheckHitObj::operator()(Vector2Template<double> obj_pos, Vector2Template<int> obj_size, std::shared_ptr<object> ignore_obj, CHECK_DIR dir)
+Vector2Template<double> CheckHitObj::operator()(Vector2Template<double> obj_pos, Vector2Template<int> obj_size, OBJ_TYPE ignore_objtype, std::shared_ptr<object> ignore_obj, CHECK_DIR dir)
 {	
 	for (auto data : GameScene::_objList)
 	{
-		if (data->getType() != OBJ_TYPE::PLAYER && data != ignore_obj)
+		if (data->getType() != ignore_objtype && data != ignore_obj)
 		{
 			Vector2Template<double> cubePos = data->getPos();
 			Vector2Template<int> cubeSize = data->getSize();

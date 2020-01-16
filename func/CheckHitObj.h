@@ -6,6 +6,6 @@
 struct CheckHitObj
 {
 public:
-	Vector2Template<double> operator()(Vector2Template<double>, Vector2Template<int>, std::shared_ptr<object>, CHECK_DIR);
+	Vector2Template<double> operator()(Vector2Template<double>, Vector2Template<int>, OBJ_TYPE, std::shared_ptr<object>, CHECK_DIR);
 };
 

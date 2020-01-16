@@ -40,10 +40,10 @@ void StageMng::UpdateStagecount(int count)
 			switch (type)
 			{
 			case 0:
-				GameScene::_objList.emplace_back(new LockCube(pos, { 32,32 }));
+				GameScene::_objList.emplace_back(new FallCube(pos, { 32,32 }));
 				break;
 			case 1:
-				GameScene::_objList.emplace_back(new FallCube(pos, { 32,32 }));
+				GameScene::_objList.emplace_back(new LockCube(pos, { 32,32 }));
 				break;
 			case 10:
 				GameScene::_objList.emplace_back(new player({ static_cast<double>(pos.x), static_cast<double>(pos.y) }, 0.0, { 32,32 }));

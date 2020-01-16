@@ -29,9 +29,17 @@ player::~player()
 
 void player::Update(void)
 {
-	velUpdate();
 	control();
+	velUpdate();
 
+	if (_grip)
+	{
+		_gripCube->setPos({ this->_pos.x + (static_cast<int>(this->_stats) * 2 - 1) * _gripCube->getSize().x, this->_pos.y });
+	}
+	if (clearCheck())
+	{
+		
+	}
 	if (_jumpDeley > 0)
 	{
 		_jumpDeley--;
@@ -42,26 +50,35 @@ void player::control(void)
 {
 	_padInput = GetJoypadInputState(DX_INPUT_PAD1);
 	GetJoypadAnalogInput(&_stickInput.x, &_stickInput.y, DX_INPUT_PAD1);
-
+	if (CheckHitKey(KEY_INPUT_Z) && !_grip)
+	{
+		_gripCube = CanGripCube()(*this);
+	}
+	if (!CheckHitKey(KEY_INPUT_Z) && _grip)
+	{
+		_grip = false;
+		_gripCube->setGrip(false);
+		_gripCube = false;
+	}
 
 	Vector2Template<double> tmpPos;
 
 	// 左右移動
 	if (_stickInput.x > 300 || CheckHitKey(KEY_INPUT_RIGHT))
 	{
-		if (_grip)
-		{
-			_gripCube->setPos({ this->_pos.x + (static_cast<int>(OBJ_STATS::RIGHT) * 2 - 1) * _gripCube->getSize().x, this->_pos.y });
-		}
+		_stats = OBJ_STATS::RIGHT;
 		if (StageMngIns.getStageData({ static_cast<int>(_pos.x + _size.x + PL_SPEED), static_cast<int>(_pos.y) }) >= 24 ||
-			StageMngIns.getStageData({ static_cast<int>(_pos.x + _size.x + PL_SPEED), static_cast<int>(_pos.y + _size.y - 1) }) >= 24 ||
-			CheckHitCube(CHECK_DIR::RIGHT))
+			StageMngIns.getStageData({ static_cast<int>(_pos.x + _size.x + PL_SPEED), static_cast<int>(_pos.y + _size.y - 1) }) >= 24)
 		{
 			_pos.x = (static_cast<double>(static_cast<int>(_pos.x + PL_SPEED) / BlockSize) * BlockSize);
 		}
+		else if (CheckHitCube(CHECK_DIR::RIGHT))
+		{
+			_pos.x = _gripCube->getPos().x - _gripCube->getSize().x;
+		}
 		else
 		{
-			tmpPos = CheckHitObj()({ _pos.x + PL_SPEED, _pos.y }, _size, _gripCube, CHECK_DIR::RIGHT);
+			tmpPos = CheckHitObj()({ _pos.x + PL_SPEED, _pos.y }, _size, OBJ_TYPE::PLAYER, _gripCube, CHECK_DIR::RIGHT);
 			if (tmpPos.x != -100 && tmpPos.y != -100)
 			{
 				_pos.x = tmpPos.x - _size.x;
@@ -71,23 +88,22 @@ void player::control(void)
 				_pos.x += PL_SPEED;
 			}
 		}
-		_stats = OBJ_STATS::RIGHT;
 	}
 	if (_stickInput.x < -300 || CheckHitKey(KEY_INPUT_LEFT))
 	{
-		if (_grip)
-		{
-			_gripCube->setPos({ this->_pos.x + (static_cast<int>(OBJ_STATS::LEFT) * 2 - 1) * _gripCube->getSize().x, this->_pos.y });
-		}
+		_stats = OBJ_STATS::LEFT;
 		if (StageMngIns.getStageData({ static_cast<int>(_pos.x - PL_SPEED), static_cast<int>(_pos.y) }) >= 24 ||
-			StageMngIns.getStageData({ static_cast<int>(_pos.x - PL_SPEED), static_cast<int>(_pos.y + _size.y - 1) }) >= 24 ||
-			CheckHitCube(CHECK_DIR::LEFT))
+			StageMngIns.getStageData({ static_cast<int>(_pos.x - PL_SPEED), static_cast<int>(_pos.y + _size.y - 1) }) >= 24)
 		{
 			_pos.x = (static_cast<double>(static_cast<int>(_pos.x + _size.x - PL_SPEED) / BlockSize) * BlockSize);
 		}
+		else if (CheckHitCube(CHECK_DIR::LEFT))
+		{
+			_pos.x = _gripCube->getPos().x + _gripCube->getSize().x;
+		}
 		else
 		{
-			tmpPos = CheckHitObj()({ _pos.x - PL_SPEED, _pos.y }, _size, _gripCube, CHECK_DIR::LEFT);
+			tmpPos = CheckHitObj()({ _pos.x - PL_SPEED, _pos.y }, _size, OBJ_TYPE::PLAYER, _gripCube, CHECK_DIR::LEFT);
 			if (tmpPos.x != -100 && tmpPos.y != -100)
 			{
 				_pos.x = tmpPos.x + _size.x;
@@ -97,12 +113,6 @@ void player::control(void)
 				_pos.x -= PL_SPEED;
 			}
 		}
-		_stats = OBJ_STATS::LEFT;
-
-	}
-	if (_grip)
-	{
-		_gripCube->setPos({ this->_pos.x + (static_cast<int>(this->_stats) * 2 - 1) * _gripCube->getSize().x, this->_pos.y });
 	}
 
 	// 特殊な場合の左右の衝突チェック(データが23以下は貫通可能　24以上は貫通不可)
@@ -115,12 +125,9 @@ void player::control(void)
 		{
 			_pos.x = (static_cast<double>(static_cast<int>(_pos.x) / BlockSize - 1) * BlockSize);
 		}
-		if (_grip)
-		{
-			_gripCube->setPos({ this->_pos.x + (static_cast<int>(this->_stats) * 2 - 1) * _gripCube->getSize().x, this->_pos.y });
-		}
-		if (_grip && (StageMngIns.getStageData({ static_cast<int>(_pos.x + _size.x - 1), static_cast<int>(_pos.y) }) >= 24 ||
-			StageMngIns.getStageData({ static_cast<int>(_pos.x + _size.x - 1), static_cast<int>(_pos.y + _size.y - 1) }) >= 24))
+		if (_grip && (StageMngIns.getStageData({ static_cast<int>(_pos.x + _size.x), static_cast<int>(_pos.y) }) >= 24 ||
+			StageMngIns.getStageData({ static_cast<int>(_pos.x + _size.x), static_cast<int>(_pos.y + _size.y - 1) }) >= 24) &&
+			!CheckHitCube(CHECK_DIR::RIGHT))
 		{
 			_pos.x = (static_cast<double>(static_cast<int>(_pos.x) / BlockSize - 1) * BlockSize);
 		}
@@ -135,21 +142,13 @@ void player::control(void)
 		{
 			_pos.x = static_cast<double>((static_cast<int>(_pos.x + _size.x - 1) / BlockSize + 1) * BlockSize);
 		}
-		if (_grip)
-		{
-			_gripCube->setPos({ this->_pos.x + (static_cast<int>(this->_stats) * 2 - 1) * _gripCube->getSize().x, this->_pos.y });
-		}
 		if (_grip && (StageMngIns.getStageData({ static_cast<int>(_pos.x - 1), static_cast<int>(_pos.y) }) >= 24 ||
-			StageMngIns.getStageData({ static_cast<int>(_pos.x - 1), static_cast<int>(_pos.y + _size.y - 1) }) >= 24))
+			StageMngIns.getStageData({ static_cast<int>(_pos.x - 1), static_cast<int>(_pos.y + _size.y - 1) }) >= 24) &&
+			!CheckHitCube(CHECK_DIR::LEFT))
 		{
 			_pos.x = static_cast<double>((static_cast<int>(_pos.x + _size.x - 1) / BlockSize + 1) * BlockSize);
 		}
 	}
-	if (_grip)
-	{
-		_gripCube->setPos({ this->_pos.x + (static_cast<int>(this->_stats) * 2 - 1) * _gripCube->getSize().x, this->_pos.y });
-	}
-
 
 	// ジャンプ
 	if (((_padInput & PAD_INPUT_2) != 0 || CheckHitKey(KEY_INPUT_X)) && _jumpDeley <= 0)
@@ -161,7 +160,7 @@ void player::control(void)
 		}
 		else
 		{
-			tmpPos = CheckHitObj()({ _pos.x, _pos.y }, _size, _gripCube, CHECK_DIR::DOWN);
+			tmpPos = CheckHitObj()({ _pos.x, _pos.y }, _size, OBJ_TYPE::PLAYER, _gripCube, CHECK_DIR::DOWN);
 			if (tmpPos.x != -100 && tmpPos.y != -100)
 			{
 				_initVel = -10.0;
@@ -172,39 +171,27 @@ void player::control(void)
 
 void player::velUpdate(void)
 {
-	if (CheckHitKey(KEY_INPUT_Z) && !_grip)
-	{
-		_gripCube = CanGripCube()(*this);
-	}
-	if (!CheckHitKey(KEY_INPUT_Z) && _grip)
-	{
-		_grip = false;
-		_gripCube->setGrip(false);
-		_gripCube = false;
-	}
-
 	Vector2Template<double> tmpPos;
 
 	// 自分の上のブロックにぶつかったら加速度を0にする
 	if (StageMngIns.getStageData({ static_cast<int>(_pos.x), static_cast<int>(_pos.y + _initVel) }) >= 24 ||
-		StageMngIns.getStageData({ static_cast<int>(_pos.x + _size.x - 1), static_cast<int>(_pos.y + _initVel) }) >= 24 ||
-		CheckHitCube(CHECK_DIR::UP))
+		StageMngIns.getStageData({ static_cast<int>(_pos.x + _size.x - 1), static_cast<int>(_pos.y + _initVel) }) >= 24)
 	{
 		_pos.y = (static_cast<int>(_pos.y) / BlockSize) * BlockSize;
 		_initVel = 0.0;
 	}
+	else if (CheckHitCube(CHECK_DIR::UP))
+	{
+		_pos.y = _gripCube->getPos().y;
+	}
 	else
 	{
-		tmpPos = CheckHitObj()({ _pos.x, _pos.y + _initVel }, _size, _gripCube, CHECK_DIR::UP);
+		tmpPos = CheckHitObj()({ _pos.x, _pos.y + _initVel }, _size, OBJ_TYPE::PLAYER, _gripCube, CHECK_DIR::UP);
 		if (tmpPos.x != -100 && tmpPos.y != -100)
 		{
 			_pos.y = tmpPos.y + _size.y;
 			_initVel = 0.0;
 		}
-	}
-	if (_grip)
-	{
-		_gripCube->setPos({ this->_pos.x + (static_cast<int>(this->_stats) * 2 - 1) * _gripCube->getSize().x, this->_pos.y });
 	}
 
 	// 自分の下にブロックが無いなら加速度を変える　あるならば加速度を0にする
@@ -213,7 +200,7 @@ void player::velUpdate(void)
 	{
 		if (CheckHitCube(CHECK_DIR::DOWN))
 		{
-			tmpPos = CheckHitObj()({ _pos.x, _pos.y + _initVel }, _size, _gripCube, CHECK_DIR::DOWN);
+			tmpPos = CheckHitObj()({ _pos.x, _pos.y + _initVel }, _size, OBJ_TYPE::PLAYER, _gripCube, CHECK_DIR::DOWN);
 			if (tmpPos.x == -100 && tmpPos.y == -100)
 			{
 				_initVel += PL_G_ACC;
@@ -238,10 +225,16 @@ void player::velUpdate(void)
 
 		_initVel = 0.0;
 	}
-	if (_grip)
+}
+
+bool player::clearCheck(void)
+{
+	if (StageMngIns.getStageData({ static_cast<int>(_pos.x + _size.x / 2), static_cast<int>(_pos.y + _size.y / 2) }) >= 0 &&
+		StageMngIns.getStageData({ static_cast<int>(_pos.x + _size.x / 2), static_cast<int>(_pos.y + _size.y / 2) }) <= 3)
 	{
-		_gripCube->setPos({ this->_pos.x + (static_cast<int>(this->_stats) * 2 - 1) * _gripCube->getSize().x, this->_pos.y });
+		return true;
 	}
+	return false;
 }
 
 bool player::CheckHitCube(CHECK_DIR dir)
@@ -254,7 +247,7 @@ bool player::CheckHitCube(CHECK_DIR dir)
 		}
 		return false;
 	}
-
+	Vector2Template<double> tmpPos;
 	_gripCube->setPos({ this->_pos.x + (static_cast<int>(this->_stats) * 2 - 1) * _gripCube->getSize().x, this->_pos.y });
 
 	switch (dir)
@@ -263,28 +256,68 @@ bool player::CheckHitCube(CHECK_DIR dir)
 		if (StageMngIns.getStageData({ static_cast<int>(_gripCube->getPos().x + _gripCube->getSize().x + PL_SPEED), static_cast<int>(_gripCube->getPos().y) }) >= 24 ||
 			StageMngIns.getStageData({ static_cast<int>(_gripCube->getPos().x + _gripCube->getSize().x + PL_SPEED), static_cast<int>(_gripCube->getPos().y + _gripCube->getSize().y - 1) }) >= 24)
 		{
+			_gripCube->setPos({ static_cast<double>(static_cast<int>(_gripCube->getPos().x + PL_SPEED) / BlockSize) * BlockSize, _gripCube->getPos().y });
 			return true;
+		}
+		else
+		{
+			tmpPos = CheckHitObj()({ _gripCube->getPos().x + PL_SPEED, _gripCube->getPos().y }, _gripCube->getSize(), OBJ_TYPE::PLAYER, _gripCube, CHECK_DIR::RIGHT);
+			if (tmpPos.x != -100 && tmpPos.y != -100)
+			{
+				_gripCube->setPos({ tmpPos.x - _gripCube->getSize().x, _gripCube->getPos().y });
+				return true;
+			}
 		}
 		break;
 	case CHECK_DIR::LEFT:
 		if (StageMngIns.getStageData({ static_cast<int>(_gripCube->getPos().x - PL_SPEED), static_cast<int>(_gripCube->getPos().y) }) >= 24 ||
 			StageMngIns.getStageData({ static_cast<int>(_gripCube->getPos().x - PL_SPEED), static_cast<int>(_gripCube->getPos().y + _gripCube->getSize().y - 1) }) >= 24)
 		{
+			_gripCube->setPos({ static_cast<double>(static_cast<int>(_gripCube->getPos().x + _gripCube->getSize().x - PL_SPEED) / BlockSize) * BlockSize, _gripCube->getPos().y });
 			return true;
+		}
+		else
+		{
+			tmpPos = CheckHitObj()({ _gripCube->getPos().x - PL_SPEED, _gripCube->getPos().y }, _gripCube->getSize(), OBJ_TYPE::PLAYER, _gripCube, CHECK_DIR::LEFT);
+			if (tmpPos.x != -100 && tmpPos.y != -100)
+			{
+				_gripCube->setPos({ tmpPos.x + _gripCube->getSize().x, _gripCube->getPos().y });
+				return true;
+			}
 		}
 		break;
 	case CHECK_DIR::UP:
 		if (StageMngIns.getStageData({ static_cast<int>(_gripCube->getPos().x), static_cast<int>(_gripCube->getPos().y + _initVel) }) >= 24 ||
 			StageMngIns.getStageData({ static_cast<int>(_gripCube->getPos().x + _gripCube->getSize().x - 1), static_cast<int>(_gripCube->getPos().y + _initVel) }) >= 24)
 		{
+			_gripCube->setPos({ _gripCube->getPos().x, static_cast<double>(static_cast<int>(_gripCube->getPos().y) / BlockSize) * BlockSize });
 			return true;
+		}
+		else
+		{
+			tmpPos = CheckHitObj()({ _gripCube->getPos().x, _gripCube->getPos().y + _initVel }, _gripCube->getSize(), OBJ_TYPE::PLAYER, _gripCube, CHECK_DIR::UP);
+			if (tmpPos.x != -100 && tmpPos.y != -100)
+			{
+				_gripCube->setPos({ _gripCube->getPos().x, tmpPos.y + _gripCube->getSize().y });
+				return true;
+			}
 		}
 		break;
 	case CHECK_DIR::DOWN:
 		if (StageMngIns.getStageData({ static_cast<int>(_gripCube->getPos().x), static_cast<int>(_gripCube->getPos().y + _gripCube->getSize().y + _initVel) }) <= 23 &&
 			StageMngIns.getStageData({ static_cast<int>(_gripCube->getPos().x + _gripCube->getSize().x - 1), static_cast<int>(_gripCube->getPos().y + _gripCube->getSize().y + _initVel) }) <= 23)
 		{
+			_gripCube->setPos({ _gripCube->getPos().x, static_cast<double>(static_cast<int>(_gripCube->getPos().y + _initVel) / BlockSize) * BlockSize });
 			return true;
+		}
+		else
+		{
+			tmpPos = CheckHitObj()({ _gripCube->getPos().x, _gripCube->getPos().y + _initVel }, _gripCube->getSize(), OBJ_TYPE::PLAYER, _gripCube, CHECK_DIR::DOWN);
+			if (tmpPos.x != -100 && tmpPos.y != -100)
+			{
+				_gripCube->setPos({ _gripCube->getPos().x, tmpPos.y - _gripCube->getSize().y });
+				return true;
+			}
 		}
 		break;
 	default:
