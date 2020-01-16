@@ -16,7 +16,7 @@ class player :
 {
 public:
 	player();
-	player(Vector2Template<double> pos, double rad, Vector2Template<int> size);
+	player(Vector2Template<double> pos, double rad, Vector2Template<int> size, int color);
 	~player();
 
 	void Update(void)override;

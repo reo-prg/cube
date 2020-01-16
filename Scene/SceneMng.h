@@ -6,7 +6,7 @@
 #include <Graphic/ImageMng.h>
 #include <Scene/BaseScene.h>
 #include <Scene/TitleScene.h>
-#include <Scene/SelectScene.h>
+#include <Scene/CharSelectScene.h>
 #include <Scene/GameScene.h>
 
 #define SceneMngIns SceneMng::getInstance()

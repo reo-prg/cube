@@ -38,13 +38,16 @@ public:
 	void UpdateStagecount(int count);
 
 	int getStageData(Vector2Template<int> val);
+	void setPlayerColor(int);
 	void resetObj(void);
 private:
 	static StageMng* sInstance;
 
-	static int _stageData[StageHeight][StageWidth];			// ステージの情報を保存
-	static int _stageScreen;								// ステージ用のスクリーン
-	static std::vector<std::pair<Vector2Template<int>, int>> _objInitPos;	// オブジェクトの初期位置を保存
+	int _stageData[StageHeight][StageWidth];						// ステージの情報を保存
+	int _stageScreen;												// ステージ用のスクリーン
+	std::vector<std::pair<Vector2Template<int>, int>> _objInitPos;	// オブジェクトの初期位置を保存
+	
+	int _playerColor;												// プレイヤーの色
 
 	const std::vector<std::string> fileName = { "data/stage_0.csv" };
 
