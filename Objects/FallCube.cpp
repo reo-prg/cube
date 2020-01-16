@@ -57,4 +57,8 @@ void FallCube::velUpdate(void)
 			_initVel = 0.0;
 		}
 	}
+	else
+	{
+		_initVel = 0.0;
+	}
 }

@@ -21,6 +21,9 @@ private:
 	friend struct CanGripCube;
 	friend struct CheckHitObj;
 
-	static std::vector<std::shared_ptr<object>> _objList;
+	unsigned int _stageCount;		// 現在のステージ数
+	bool _keyOldR;					// Rキーの1フレ前の状態
+
+	static std::vector<std::shared_ptr<object>> _objList;	// オブジェクトのsharedptrを格納
 };
 

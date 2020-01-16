@@ -183,6 +183,7 @@ void player::velUpdate(void)
 	else if (CheckHitCube(CHECK_DIR::UP))
 	{
 		_pos.y = _gripCube->getPos().y;
+		_initVel = 0.0;
 	}
 	else
 	{
@@ -195,35 +196,31 @@ void player::velUpdate(void)
 	}
 
 	// 自分の下にブロックが無いなら加速度を変える　あるならば加速度を0にする
-	if (StageMngIns.getStageData({ static_cast<int>(_pos.x), static_cast<int>(_pos.y + _size.y + _initVel) }) <= 23 &&
-		StageMngIns.getStageData({ static_cast<int>(_pos.x + _size.x - 1), static_cast<int>(_pos.y + _size.y + _initVel) }) <= 23)
+	if (StageMngIns.getStageData({ static_cast<int>(_pos.x), static_cast<int>(_pos.y + _size.y + _initVel) }) <= 24 &&
+		StageMngIns.getStageData({ static_cast<int>(_pos.x + _size.x - 1), static_cast<int>(_pos.y + _size.y + _initVel) }) <= 24)
 	{
-		if (CheckHitCube(CHECK_DIR::DOWN))
-		{
-			tmpPos = CheckHitObj()({ _pos.x, _pos.y + _initVel }, _size, OBJ_TYPE::PLAYER, _gripCube, CHECK_DIR::DOWN);
-			if (tmpPos.x == -100 && tmpPos.y == -100)
-			{
-				_initVel += PL_G_ACC;
-				_jumpDeley = JUMP_DELEY;
-				_pos.y += _initVel;
-			}
-			else
-			{
-				_pos.y = tmpPos.y - _size.y;
-				_initVel = 0.0;
-			}
-		}
-		else
-		{
-			_pos.y = (static_cast<int>(_pos.y + _initVel) / BlockSize) * BlockSize;
-			_initVel = 0.0;
-		}
+		_pos.y = (static_cast<int>(_pos.y + _initVel) / BlockSize) * BlockSize;
+		_initVel = 0.0;
+	}
+	else if (CheckHitCube(CHECK_DIR::DOWN))
+	{
+		_pos.y = _gripCube->getPos().y;
+		_initVel = 0.0;
 	}
 	else
 	{
-		_pos.y = (static_cast<int>(_pos.y + _initVel) / BlockSize) * BlockSize;
-
-		_initVel = 0.0;
+		tmpPos = CheckHitObj()({ _pos.x, _pos.y + _initVel }, _size, OBJ_TYPE::PLAYER, _gripCube, CHECK_DIR::DOWN);
+		if (tmpPos.x == -100 && tmpPos.y == -100)
+		{
+			_jumpDeley = JUMP_DELEY;
+			_pos.y += _initVel;
+			_initVel += PL_G_ACC;
+		}
+		else
+		{
+			_pos.y = tmpPos.y - _size.y;
+			_initVel = 0.0;
+		}
 	}
 }
 
@@ -241,10 +238,7 @@ bool player::CheckHitCube(CHECK_DIR dir)
 {
 	if (_gripCube == nullptr)
 	{
-		if (dir == CHECK_DIR::DOWN)
-		{
-			return true;
-		}
+
 		return false;
 	}
 	Vector2Template<double> tmpPos;
@@ -304,10 +298,10 @@ bool player::CheckHitCube(CHECK_DIR dir)
 		}
 		break;
 	case CHECK_DIR::DOWN:
-		if (StageMngIns.getStageData({ static_cast<int>(_gripCube->getPos().x), static_cast<int>(_gripCube->getPos().y + _gripCube->getSize().y + _initVel) }) <= 23 &&
-			StageMngIns.getStageData({ static_cast<int>(_gripCube->getPos().x + _gripCube->getSize().x - 1), static_cast<int>(_gripCube->getPos().y + _gripCube->getSize().y + _initVel) }) <= 23)
+		if (StageMngIns.getStageData({ static_cast<int>(_gripCube->getPos().x), static_cast<int>(_gripCube->getPos().y + _gripCube->getSize().y + _initVel) }) >= 24 &&
+			StageMngIns.getStageData({ static_cast<int>(_gripCube->getPos().x + _gripCube->getSize().x - 1), static_cast<int>(_gripCube->getPos().y + _gripCube->getSize().y + _initVel) }) >= 24)
 		{
-			_gripCube->setPos({ _gripCube->getPos().x, static_cast<double>(static_cast<int>(_gripCube->getPos().y + _initVel) / BlockSize) * BlockSize });
+			_gripCube->setPos({ _gripCube->getPos().x, static_cast<double>(static_cast<int>(_gripCube->getPos().y) / BlockSize) * BlockSize });
 			return true;
 		}
 		else

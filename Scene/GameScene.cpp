@@ -4,7 +4,9 @@ std::vector<std::shared_ptr<object>> GameScene::_objList;
 
 GameScene::GameScene()
 {
-	StageMngIns.UpdateStagecount(0);
+	_stageCount = 0;
+	_keyOldR = false;
+	StageMngIns.UpdateStagecount(_stageCount);
 }
 
 
@@ -23,6 +25,12 @@ Base_unq GameScene::Update(Base_unq scene)
 	{
 		data->objDraw();
 	}
+
+	if (CheckHitKey(KEY_INPUT_R) && (!_keyOldR))
+	{
+		StageMngIns.resetObj();
+	}
+	_keyOldR = CheckHitKey(KEY_INPUT_R);
 
 	StageMngIns.Update();
 

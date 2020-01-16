@@ -3,7 +3,7 @@
 StageMng* StageMng::sInstance = nullptr;
 int StageMng::_stageData[StageHeight][StageWidth];
 int StageMng::_stageScreen;
-
+std::vector<std::pair<Vector2Template<int>, int>> StageMng::_objInitPos;
 
 void StageMng::Update(void)
 {
@@ -12,6 +12,7 @@ void StageMng::Update(void)
 
 void StageMng::UpdateStagecount(int count)
 {
+	_objInitPos.clear();
 	FILE  *fp;
 	fopen_s(&fp, fileName[count].c_str(), "r");
 
@@ -48,6 +49,7 @@ void StageMng::UpdateStagecount(int count)
 			case 10:
 				GameScene::_objList.emplace_back(new player({ static_cast<double>(pos.x), static_cast<double>(pos.y) }, 0.0, { 32,32 }));
 			}
+			_objInitPos.emplace_back(std::make_pair(Vector2Template<int>{ pos.x,pos.y },type));
 		}
 		fclose(fp);
 	}
@@ -78,6 +80,25 @@ int StageMng::getStageData(Vector2Template<int> val)
 	else
 	{
 		return 100;
+	}
+}
+
+void StageMng::resetObj(void)
+{
+	GameScene::_objList.clear();
+	for (auto data : _objInitPos)
+	{
+		switch (data.second)
+		{
+		case 0:
+			GameScene::_objList.emplace_back(new FallCube(data.first, { 32,32 }));
+			break;
+		case 1:
+			GameScene::_objList.emplace_back(new LockCube(data.first, { 32,32 }));
+			break;
+		case 10:
+			GameScene::_objList.emplace_back(new player({ static_cast<double>(data.first.x), static_cast<double>(data.first.y) }, 0.0, { 32,32 }));
+		}
 	}
 }
 
