@@ -7,7 +7,7 @@
 #include <func/CheckHitObj.h>
 
 #define PL_G_ACC	0.4		// プレイヤーの重力加速度
-#define JUMP_DELEY	5		// ジャンプの間隔(時間)
+#define JUMP_DELEY	3		// ジャンプの間隔(時間)
 #define PL_SPEED	4		// プレイヤーのはやさ
 
 

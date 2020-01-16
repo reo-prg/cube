@@ -156,14 +156,14 @@ void player::control(void)
 		if(StageMngIns.getStageData({ static_cast<int>(_pos.x), static_cast<int>(_pos.y + _size.y) }) >= 24 ||
 			StageMngIns.getStageData({ static_cast<int>(_pos.x + _size.x - 1), static_cast<int>(_pos.y + _size.y) }) >= 24)
 		{
-			_initVel = -10.0;
+			_initVel = -9.0;
 		}
 		else
 		{
 			tmpPos = CheckHitObj()({ _pos.x, _pos.y }, _size, OBJ_TYPE::PLAYER, _gripCube, CHECK_DIR::DOWN);
 			if (tmpPos.x != -100 && tmpPos.y != -100)
 			{
-				_initVel = -10.0;
+				_initVel = -9.0;
 			}
 		}
 	}
@@ -196,8 +196,8 @@ void player::velUpdate(void)
 	}
 
 	// 自分の下にブロックが無いなら加速度を変える　あるならば加速度を0にする
-	if (StageMngIns.getStageData({ static_cast<int>(_pos.x), static_cast<int>(_pos.y + _size.y + _initVel) }) <= 24 &&
-		StageMngIns.getStageData({ static_cast<int>(_pos.x + _size.x - 1), static_cast<int>(_pos.y + _size.y + _initVel) }) <= 24)
+	if (StageMngIns.getStageData({ static_cast<int>(_pos.x), static_cast<int>(_pos.y + _size.y + _initVel) }) >= 24 ||
+		StageMngIns.getStageData({ static_cast<int>(_pos.x + _size.x - 1), static_cast<int>(_pos.y + _size.y + _initVel) }) >= 24)
 	{
 		_pos.y = (static_cast<int>(_pos.y + _initVel) / BlockSize) * BlockSize;
 		_initVel = 0.0;
@@ -298,10 +298,10 @@ bool player::CheckHitCube(CHECK_DIR dir)
 		}
 		break;
 	case CHECK_DIR::DOWN:
-		if (StageMngIns.getStageData({ static_cast<int>(_gripCube->getPos().x), static_cast<int>(_gripCube->getPos().y + _gripCube->getSize().y + _initVel) }) >= 24 &&
+		if (StageMngIns.getStageData({ static_cast<int>(_gripCube->getPos().x), static_cast<int>(_gripCube->getPos().y + _gripCube->getSize().y + _initVel) }) >= 24 ||
 			StageMngIns.getStageData({ static_cast<int>(_gripCube->getPos().x + _gripCube->getSize().x - 1), static_cast<int>(_gripCube->getPos().y + _gripCube->getSize().y + _initVel) }) >= 24)
 		{
-			_gripCube->setPos({ _gripCube->getPos().x, static_cast<double>(static_cast<int>(_gripCube->getPos().y) / BlockSize) * BlockSize });
+			_gripCube->setPos({ _gripCube->getPos().x, static_cast<double>(static_cast<int>(_gripCube->getPos().y + _gripCube->getSize().y - 1) / BlockSize) * BlockSize });
 			return true;
 		}
 		else
