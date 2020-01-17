@@ -50,11 +50,11 @@ void player::control(void)
 {
 	_padInput = GetJoypadInputState(DX_INPUT_PAD1);
 	GetJoypadAnalogInput(&_stickInput.x, &_stickInput.y, DX_INPUT_PAD1);
-	if (CheckHitKey(KEY_INPUT_Z) && !_grip)
+	if (CheckHitKey(KEY_INPUT_SPACE) && !_grip)
 	{
 		_gripCube = CanGripCube()(*this);
 	}
-	if (!CheckHitKey(KEY_INPUT_Z) && _grip)
+	if (!CheckHitKey(KEY_INPUT_SPACE) && _grip)
 	{
 		_grip = false;
 		_gripCube->setGrip(false);
@@ -151,7 +151,7 @@ void player::control(void)
 	}
 
 	// ƒWƒƒƒ“ƒv
-	if (((_padInput & PAD_INPUT_2) != 0 || CheckHitKey(KEY_INPUT_X)) && _jumpDeley <= 0)
+	if (((_padInput & PAD_INPUT_2) != 0 || CheckHitKey(KEY_INPUT_UP)) && _jumpDeley <= 0)
 	{
 		if(StageMngIns.getStageData({ static_cast<int>(_pos.x), static_cast<int>(_pos.y + _size.y) }) >= 24 ||
 			StageMngIns.getStageData({ static_cast<int>(_pos.x + _size.x - 1), static_cast<int>(_pos.y + _size.y) }) >= 24)

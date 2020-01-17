@@ -29,11 +29,11 @@ bool SceneMng::SystemInit(void)
 
 	ImageMngIns.getImage("image/TitleLogo.png", "logo");
 	ImageMngIns.getImage("image/TitleMes.png", "TitleMes");
+	ImageMngIns.getImage("image/cursor.png", "cursor");
 	ImageMngIns.getImage("image/back.png", "back");
 	ImageMngIns.getImage("image/stage_chip.png", "s_cube", 32, 32, 8, 8);
 	ImageMngIns.getImage("image/cube.png", "cube", 32, 32, 3, 1);
 	ImageMngIns.getImage("image/char.png", "player", 64, 32, 2, 8);
-
 
 	_runScene = std::make_unique<TitleScene>();
 
