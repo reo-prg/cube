@@ -19,8 +19,9 @@ private:
 	int _keyAllOld;			// 1フレ前のCheckHitKeyAll
 	int _theta;				// 角度
 	bool _sceneMoveFlag;	// シーンを移行するかのフラグ
+	bool _mesMoveFlag;		// メッセージが動いているかのフラグ
 	int _mesPos_x;			// メッセージのX座標
 
+	Base_unq mesMove(Base_unq);	// メッセージを動かす
 	void Draw(void);
 };
-

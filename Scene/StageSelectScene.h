@@ -10,6 +10,9 @@ public:
 	~StageSelectScene();
 
 	Base_unq Update(Base_unq scene);
+private:
 
+
+	void Draw();
 };
 
