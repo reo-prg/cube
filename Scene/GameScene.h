@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <algorithm>
 #include <Scene/BaseScene.h>
 #include <Graphic/ImageMng.h>
 #include <StageMng.h>
@@ -13,13 +14,17 @@ class GameScene :
 {
 public:
 	GameScene();
+	GameScene(int stage);
 	~GameScene();
 
-	Base_unq Update(Base_unq scene);
+	Base_unq Update(Base_unq);
+	void setStage(int);
 private:
 	friend class StageMng;
 	friend struct CanGripCube;
 	friend struct CheckHitObj;
+
+	bool clearCheck(void);				// クリアしたのかをチェック
 
 	unsigned int _stageCount;		// 現在のステージ数
 	bool _keyOldR;					// Rキーの1フレ前の状態

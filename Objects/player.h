@@ -6,7 +6,7 @@
 #include <Objects/CHECK_DIR.h>
 #include <func/CheckHitObj.h>
 
-#define PL_G_ACC	0.4		// プレイヤーの重力加速度
+#define PL_G_ACC	0.45		// プレイヤーの重力加速度
 #define JUMP_DELEY	3		// ジャンプの間隔(時間)
 #define PL_SPEED	4		// プレイヤーのはやさ
 
@@ -30,7 +30,6 @@ private:
 
 	void control(void);
 	void velUpdate(void);
-	bool clearCheck(void);				// クリアしたのかをチェック
 	bool CheckHitCube(CHECK_DIR);
 };
 

@@ -5,13 +5,13 @@
 CharSelectScene::CharSelectScene()
 {
 	_charSelPos_x = -600;
-	_cursorPos = 0;
+	_cursor = 0;
 	_charMoveFlag = true;
 	_sceneMoveFlag = false;
 
 	_keyOld.try_emplace(KEY_INPUT_LEFT, 1);
 	_keyOld.try_emplace(KEY_INPUT_RIGHT, 1);
-	_keyOld.try_emplace(KEY_INPUT_DOWN, 1);
+	_keyOld.try_emplace(KEY_INPUT_RSHIFT, 1);
 	_keyOld.try_emplace(KEY_INPUT_SPACE, 1);
 }
 
@@ -63,21 +63,21 @@ Base_unq CharSelectScene::charSelect(Base_unq scene)
 {
 	if (keyUpdate(KEY_INPUT_LEFT) == 0 && CheckHitKey(KEY_INPUT_LEFT) == 1)
 	{
-		_cursorPos--;
-		if (_cursorPos < 0)
+		_cursor--;
+		if (_cursor < 0)
 		{
-			_cursorPos = 7;
+			_cursor = 7;
 		}
 	}
 	if (keyUpdate(KEY_INPUT_RIGHT) == 0 && CheckHitKey(KEY_INPUT_RIGHT) == 1)
 	{
-		_cursorPos++;
-		if (_cursorPos > 7)
+		_cursor++;
+		if (_cursor > 7)
 		{
-			_cursorPos = 0;
+			_cursor = 0;
 		}
 	}
-	if (keyUpdate(KEY_INPUT_DOWN) == 0 && CheckHitKey(KEY_INPUT_DOWN) == 1)
+	if (keyUpdate(KEY_INPUT_RSHIFT) == 0 && CheckHitKey(KEY_INPUT_RSHIFT) == 1)
 	{
 		_charMoveFlag = true;
 		_sceneMoveFlag = true;
@@ -87,10 +87,11 @@ Base_unq CharSelectScene::charSelect(Base_unq scene)
 	{
 		_charMoveFlag = true;
 		_sceneMoveFlag = true;
+		StageMngIns.setPlayerColor(_cursor);
 		_tmpScene = std::make_unique<StageSelectScene>();
 	}
 
-	ImageMngIns.AddDraw({ ImageMngIns.getImage("cursor")[0], PL_SPACE * _cursorPos + _charSelPos_x, 600 + BlockSize, 0.0, LAYER::UI, 0 });
+	ImageMngIns.AddDraw({ ImageMngIns.getImage("cursor")[0], PL_SPACE * _cursor + _charSelPos_x, 400 + BlockSize, 0.0, LAYER::UI, 0 });
 
 	return std::move(scene);
 }
@@ -110,9 +111,8 @@ int CharSelectScene::keyUpdate(int key)
 void CharSelectScene::Draw(void)
 {
 	ImageMngIns.AddDraw({ ImageMngIns.getImage("back")[0], SceneMngIns.ScreenCenter.x, SceneMngIns.ScreenCenter.y, 0.0, LAYER::BG, -1000 });
-	ImageMngIns.AddDraw({ ImageMngIns.getImage("logo")[0], SceneMngIns.ScreenCenter.x, SceneMngIns.ScreenCenter.y - 70, 0.0, LAYER::UI, 0 });
 	for (int i = 0; i < 8; i++)
 	{
-		ImageMngIns.AddDraw({ ImageMngIns.getImage("player")[i * 2], PL_SPACE * i + _charSelPos_x, 600, 0.0, LAYER::CHAR, 0 });
+		ImageMngIns.AddDraw({ ImageMngIns.getImage("player")[i * 2], PL_SPACE * i + _charSelPos_x, 400, 0.0, LAYER::CHAR, 0 });
 	}
 }

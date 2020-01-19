@@ -5,7 +5,7 @@
 #include <Scene/StageSelectScene.h>
 
 #define PL_SPACE	80
-#define PL_POS_X	(PL_SPACE * 7 + BlockSize) / 2
+#define PL_POS_X	((PL_SPACE * 7 + BlockSize) / 2)
 
 class CharSelectScene :
 	public BaseScene
@@ -17,12 +17,12 @@ public:
 	Base_unq Update(Base_unq scene);
 private:
 	int _charSelPos_x;					// キャラクターセレクトのオフセット
-	int _cursorPos;						// カーソルの位置
+	int _cursor;						// カーソルの位置
 	bool _charMoveFlag;					// キャラクターが動いているか
 	bool _sceneMoveFlag;				// 場面を変えるかどうか
 	Base_unq _tmpScene;					// 一時的に次のシーンを保持
 
-	std::map<int, int>	_keyOld;		// 1フレ前のキー
+	std::map<int, int>	_keyOld;		// 1フレ前のキー状態
 	
 	Base_unq charMove(Base_unq);
 	Base_unq charSelect(Base_unq);

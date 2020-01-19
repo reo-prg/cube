@@ -1,9 +1,6 @@
 #include <StageMng.h>
 
 StageMng* StageMng::sInstance = nullptr;
-//int StageMng::_stageData[StageHeight][StageWidth];
-//int StageMng::_stageScreen;
-//std::vector<std::pair<Vector2Template<int>, int>> StageMng::_objInitPos;
 
 void StageMng::Update(void)
 {

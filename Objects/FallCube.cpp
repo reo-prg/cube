@@ -41,7 +41,7 @@ void FallCube::velUpdate(void)
 			tmpPos = CheckHitObj()({ _pos.x, _pos.y + _initVel }, _size, OBJ_TYPE::MAX, std::make_shared<object>(*this), CHECK_DIR::DOWN);
 			if (tmpPos.x == -100 && tmpPos.y == -100)
 			{
-				_initVel += PL_G_ACC;
+				_initVel += CB_G_ACC;
 				_pos.y += _initVel;
 			}
 			else

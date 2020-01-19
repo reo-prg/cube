@@ -32,7 +32,7 @@ Vector2Template<double> CheckHitObj::operator()(Vector2Template<double> obj_pos,
 				}
 				break;
 			case CHECK_DIR::RIGHT:
-				if ((obj_pos.x + obj_size.x >= cubePos.x && obj_pos.x + obj_size.x < cubePos.x + cubeSize.x) &&
+				if ((obj_pos.x + obj_size.x - 1 >= cubePos.x && obj_pos.x + obj_size.x - 1 < cubePos.x + cubeSize.x) &&
 					((obj_pos.y >= cubePos.y && obj_pos.y < cubePos.y + cubeSize.y) || (obj_pos.y + obj_size.y - 1 >= cubePos.y && obj_pos.y + obj_size.y - 1 < cubePos.y + cubeSize.y)))
 				{
 					return cubePos;

@@ -49,7 +49,8 @@ private:
 	
 	int _playerColor;												// プレイヤーの色
 
-	const std::vector<std::string> fileName = { "data/stage_0.csv" };
+	const std::vector<std::string> fileName = { "data/stage_0.csv", "data/stage_1.csv", "data/stage_2.csv","data/stage_3.csv", 
+												"data/stage_4.csv", "data/stage_5.csv", "data/stage_6.csv", "data/stage_7.csv", };
 
 
 	StageMng();
