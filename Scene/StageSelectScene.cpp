@@ -108,13 +108,19 @@ Base_unq StageSelectScene::stageSelect(Base_unq scene)
 		_tmpScene = std::make_unique<GameScene>(_cursor);
 	}
 
-	ImageMngIns.AddDraw({ ImageMngIns.getImage("flame")[0], STAGE_OFFSET + (_cursor % 4) * (STAGE_SIZE_X + STAGE_SPACE), 500 + (_cursor / 4) * (STAGE_SIZE_Y + STAGE_SPACE), 0.0, LAYER::UI, 0 });
+	// ògÇÃï`âÊ
+	ImageMngIns.AddDraw({ ImageMngIns.getImage("flame")[0], STAGE_OFFSET + (_cursor % 4) * (STAGE_SIZE_X + STAGE_SPACE), 470 + (_cursor / 4) * (STAGE_SIZE_Y + STAGE_SPACE), 0.0, LAYER::UI, 0 });
 	
+	// è„ÇÃägëÂÇ≥ÇÍÇΩÉXÉeÅ[ÉWÇÃï`âÊ
 	SetDrawScreen(_stageViewScreen);
 	ClsDrawScreen();
 	DrawRotaGraph(STAGE_SIZE_X, STAGE_SIZE_Y, 2.0, 0.0, ImageMngIns.getImage("stage")[_cursor], false);
-	DrawBox(0, 0, STAGE_SIZE_X * 2 - 1, STAGE_SIZE_Y * 2 - 1, 0x000000, false);
-	ImageMngIns.AddDraw({ _stageViewScreen, SceneMngIns.ScreenCenter.x, 200, 0.0, LAYER::UI, 0 });
+	ImageMngIns.AddDraw({ _stageViewScreen, SceneMngIns.ScreenCenter.x, 250, 0.0, LAYER::UI, 0 });
+
+	// ÉKÉCÉhÇÃï`âÊ
+	ImageMngIns.AddDraw({ ImageMngIns.getImage("guide")[0], BACK_POS_X, GUIDE_POS_Y, 0.0, LAYER::UI, 1000 });
+	ImageMngIns.AddDraw({ ImageMngIns.getImage("guide")[1], NEXT_POS_X, GUIDE_POS_Y, 0.0, LAYER::UI, 1000 });
+	ImageMngIns.AddDraw({ ImageMngIns.getImage("guide")[3], SELECT_POS_X, GUIDE_POS_Y, 0.0, LAYER::UI, 1000 });
 
 	return std::move(scene);
 }
@@ -134,8 +140,10 @@ int StageSelectScene::keyUpdate(int key)
 void StageSelectScene::Draw()
 {
 	ImageMngIns.AddDraw({ ImageMngIns.getImage("back")[0], SceneMngIns.ScreenCenter.x, SceneMngIns.ScreenCenter.y, 0.0, LAYER::BG, -1000 });
+	ImageMngIns.AddDraw({ ImageMngIns.getImage("SelectMes")[1], _stagePos_x + SceneMngIns.ScreenCenter.x - STAGE_OFFSET, 52, 0.0, LAYER::BG, 0 });
+
 	for (int i = 0; i < 8; i++)
 	{
-		ImageMngIns.AddDraw({ ImageMngIns.getImage("stage")[i], (i % 4) * (STAGE_SIZE_X + STAGE_SPACE) + _stagePos_x, 500 + (i / 4) * (STAGE_SIZE_Y + STAGE_SPACE), 0.0, LAYER::CHAR, 0 });
+		ImageMngIns.AddDraw({ ImageMngIns.getImage("stage")[i], (i % 4) * (STAGE_SIZE_X + STAGE_SPACE) + _stagePos_x, 470 + (i / 4) * (STAGE_SIZE_Y + STAGE_SPACE), 0.0, LAYER::CHAR, 0 });
 	}
 }

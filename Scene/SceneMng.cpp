@@ -29,6 +29,8 @@ bool SceneMng::SystemInit(void)
 
 	ImageMngIns.getImage("image/TitleLogo.png", "logo");
 	ImageMngIns.getImage("image/TitleMes.png", "TitleMes");
+	ImageMngIns.getImage("image/SelectMes.png", "SelectMes", 700, 64, 1, 2);
+	ImageMngIns.getImage("image/guide.png", "guide", 256, 64, 1, 4);
 	ImageMngIns.getImage("image/cursor.png", "cursor");
 	ImageMngIns.getImage("image/stage.png", "stage", 128, 96, 4, 2);
 	ImageMngIns.getImage("image/stageflame.png", "flame");

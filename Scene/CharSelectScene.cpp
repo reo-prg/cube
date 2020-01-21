@@ -91,7 +91,12 @@ Base_unq CharSelectScene::charSelect(Base_unq scene)
 		_tmpScene = std::make_unique<StageSelectScene>();
 	}
 
+	// ÉJÅ[É\ÉãÇÃï`âÊ
 	ImageMngIns.AddDraw({ ImageMngIns.getImage("cursor")[0], PL_SPACE * _cursor + _charSelPos_x, 400 + BlockSize, 0.0, LAYER::UI, 0 });
+	// ÉKÉCÉhÇÃï`âÊ
+	ImageMngIns.AddDraw({ ImageMngIns.getImage("guide")[0], BACK_POS_X, GUIDE_POS_Y, 0.0, LAYER::UI, 1000 });
+	ImageMngIns.AddDraw({ ImageMngIns.getImage("guide")[1], NEXT_POS_X, GUIDE_POS_Y, 0.0, LAYER::UI, 1000 });
+	ImageMngIns.AddDraw({ ImageMngIns.getImage("guide")[2], SELECT_POS_X, GUIDE_POS_Y, 0.0, LAYER::UI, 1000 });
 
 	return std::move(scene);
 }
@@ -111,6 +116,7 @@ int CharSelectScene::keyUpdate(int key)
 void CharSelectScene::Draw(void)
 {
 	ImageMngIns.AddDraw({ ImageMngIns.getImage("back")[0], SceneMngIns.ScreenCenter.x, SceneMngIns.ScreenCenter.y, 0.0, LAYER::BG, -1000 });
+	ImageMngIns.AddDraw({ ImageMngIns.getImage("SelectMes")[0], _charSelPos_x + PL_POS_X, 200, 0.0, LAYER::BG, 0 });
 	for (int i = 0; i < 8; i++)
 	{
 		ImageMngIns.AddDraw({ ImageMngIns.getImage("player")[i * 2], PL_SPACE * i + _charSelPos_x, 400, 0.0, LAYER::CHAR, 0 });
