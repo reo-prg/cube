@@ -12,6 +12,8 @@
 #define StageWidth	32
 #define BlockSize	32
 
+#define PLAYER_OFFSET	-800
+
 class StageMng
 {
 public:
@@ -38,6 +40,8 @@ public:
 	void UpdateStagecount(int count);
 
 	int getStageData(Vector2Template<int> val);
+	int getPlayerColor(void);
+
 	void setPlayerColor(int);
 	void resetObj(void);
 private:

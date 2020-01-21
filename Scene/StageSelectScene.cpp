@@ -4,7 +4,7 @@
 
 StageSelectScene::StageSelectScene()
 {
-	_stagePos_x = -600;
+	_stagePos_x = -720;
 	_cursor = 0;
 	_stageMoveFlag = true;
 	_sceneMoveFlag = false;
@@ -109,13 +109,15 @@ Base_unq StageSelectScene::stageSelect(Base_unq scene)
 	}
 
 	// 枠の描画
-	ImageMngIns.AddDraw({ ImageMngIns.getImage("flame")[0], STAGE_OFFSET + (_cursor % 4) * (STAGE_SIZE_X + STAGE_SPACE), 470 + (_cursor / 4) * (STAGE_SIZE_Y + STAGE_SPACE), 0.0, LAYER::UI, 0 });
+	ImageMngIns.AddDraw({ ImageMngIns.getImage("s_flame")[0], STAGE_OFFSET + (_cursor % 4) * (STAGE_SIZE_X + STAGE_SPACE), 470 + (_cursor / 4) * (STAGE_SIZE_Y + STAGE_SPACE), 0.0, LAYER::UI, 0 });
 	
 	// 上の拡大されたステージの描画
 	SetDrawScreen(_stageViewScreen);
 	ClsDrawScreen();
 	DrawRotaGraph(STAGE_SIZE_X, STAGE_SIZE_Y, 2.0, 0.0, ImageMngIns.getImage("stage")[_cursor], false);
 	ImageMngIns.AddDraw({ _stageViewScreen, SceneMngIns.ScreenCenter.x, 250, 0.0, LAYER::UI, 0 });
+
+	ImageMngIns.AddDraw({ ImageMngIns.getImage("flame")[0], SceneMngIns.ScreenCenter.x, 250, 0.0, LAYER::UI, 100 });
 
 	// ガイドの描画
 	ImageMngIns.AddDraw({ ImageMngIns.getImage("guide")[0], BACK_POS_X, GUIDE_POS_Y, 0.0, LAYER::UI, 1000 });
@@ -141,6 +143,7 @@ void StageSelectScene::Draw()
 {
 	ImageMngIns.AddDraw({ ImageMngIns.getImage("back")[0], SceneMngIns.ScreenCenter.x, SceneMngIns.ScreenCenter.y, 0.0, LAYER::BG, -1000 });
 	ImageMngIns.AddDraw({ ImageMngIns.getImage("SelectMes")[1], _stagePos_x + SceneMngIns.ScreenCenter.x - STAGE_OFFSET, 52, 0.0, LAYER::BG, 0 });
+	ImageMngIns.AddDraw({ ImageMngIns.getImage("player")[StageMngIns.getPlayerColor() * 2], _stagePos_x + 700, 658, 0.0, LAYER::UI, 0 });			// 座標はステージ一覧の右下
 
 	for (int i = 0; i < 8; i++)
 	{

@@ -38,6 +38,11 @@ void object::setPos(Vector2Template<double> pos)
 	_pos = pos;
 }
 
+void object::setState(OBJ_STATS stats)
+{
+	_stats = stats;
+}
+
 OBJ_STATS object::getStats(void)
 {
 	return _stats;

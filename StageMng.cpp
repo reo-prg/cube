@@ -44,7 +44,7 @@ void StageMng::UpdateStagecount(int count)
 				GameScene::_objList.emplace_back(new LockCube(pos, { 32,32 }));
 				break;
 			case 10:
-				GameScene::_objList.emplace_back(new player({ static_cast<double>(pos.x), static_cast<double>(pos.y) }, 0.0, { 32,32 }, _playerColor));
+				GameScene::_objList.emplace_back(new player({ static_cast<double>(pos.x), static_cast<double>(pos.y) + PLAYER_OFFSET }, 0.0, { 32,32 }, _playerColor));
 			}
 			_objInitPos.emplace_back(std::make_pair(Vector2Template<int>{ pos.x,pos.y },type));
 		}
@@ -78,6 +78,11 @@ int StageMng::getStageData(Vector2Template<int> val)
 	{
 		return 100;
 	}
+}
+
+int StageMng::getPlayerColor(void)
+{
+	return _playerColor;
 }
 
 void StageMng::setPlayerColor(int color)

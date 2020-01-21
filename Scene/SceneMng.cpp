@@ -33,7 +33,8 @@ bool SceneMng::SystemInit(void)
 	ImageMngIns.getImage("image/guide.png", "guide", 256, 64, 1, 4);
 	ImageMngIns.getImage("image/cursor.png", "cursor");
 	ImageMngIns.getImage("image/stage.png", "stage", 128, 96, 4, 2);
-	ImageMngIns.getImage("image/stageflame.png", "flame");
+	ImageMngIns.getImage("image/stageflame.png", "s_flame");
+	ImageMngIns.getImage("image/flame.png", "flame");
 	ImageMngIns.getImage("image/back.png", "back");
 	ImageMngIns.getImage("image/stage_chip.png", "s_cube", 32, 32, 8, 8);
 	ImageMngIns.getImage("image/cube.png", "cube", 32, 32, 3, 1);

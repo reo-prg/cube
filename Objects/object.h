@@ -35,6 +35,7 @@ public:
 	void setImage(OBJ_STATS, int);			// ó‘Ô‚²‚Æ‚Ì‰æ‘œ‚Ìİ’è
 	void setGrip(bool);						// _grip‚Ì•ÏX
 	void setPos(Vector2Template<double>);	// À•W‚Ìİ’è
+	void setState(OBJ_STATS);
 
 	OBJ_STATS getStats(void);
 	OBJ_TYPE getType(void);
