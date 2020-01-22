@@ -17,6 +17,7 @@ player::player(Vector2Template<double> pos, double rad, Vector2Template<int> siz
 	_type = OBJ_TYPE::PLAYER;
 	_grip = false;
 	_gripCube = nullptr;
+	_zOrder = 10;
 
 	setImage(OBJ_STATS::RIGHT, ImageMngIns.getImage("player")[color * 2 + 0]);
 	setImage(OBJ_STATS::LEFT , ImageMngIns.getImage("player")[color * 2 + 1]);

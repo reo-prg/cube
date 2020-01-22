@@ -6,7 +6,7 @@ object::object()
 {
 	_pos = { 0,0 };
 	_rad = 0.0;
-	_zOrder = 100;
+	_zOrder = 0;
 }
 
 

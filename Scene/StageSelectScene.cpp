@@ -143,7 +143,7 @@ void StageSelectScene::Draw()
 {
 	ImageMngIns.AddDraw({ ImageMngIns.getImage("back")[0], SceneMngIns.ScreenCenter.x, SceneMngIns.ScreenCenter.y, 0.0, LAYER::BG, -1000 });
 	ImageMngIns.AddDraw({ ImageMngIns.getImage("SelectMes")[1], _stagePos_x + SceneMngIns.ScreenCenter.x - STAGE_OFFSET, 52, 0.0, LAYER::BG, 0 });
-	ImageMngIns.AddDraw({ ImageMngIns.getImage("player")[StageMngIns.getPlayerColor() * 2], _stagePos_x + 700, 658, 0.0, LAYER::UI, 0 });			// 座標はステージ一覧の右下
+	ImageMngIns.AddDraw({ ImageMngIns.getImage("player")[StageMngIns.getPlayerColor() * 2], (_cursor % 4) * (STAGE_SIZE_X + STAGE_SPACE) + _stagePos_x - 85, 470 + (_cursor / 4) * (STAGE_SIZE_Y + STAGE_SPACE) + 32, 0.0, LAYER::UI, 200 });			// 座標はステージ一覧の右下
 
 	for (int i = 0; i < 8; i++)
 	{
