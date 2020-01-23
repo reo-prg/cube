@@ -1,17 +1,22 @@
-﻿  CheckHitObj.cpp
+﻿  CHECK_DIR.cpp
+  CheckHitObj.cpp
   CanGripCube.cpp
   FallCube.cpp
+  LockCube.cpp
+  ImageMng.cpp
+  LAYER.cpp
+  object.cpp
   player.cpp
   GameScene.cpp
+  BaseScene.cpp
   main.cpp
   SceneMng.cpp
   TitleScene.cpp
   CharSelectScene.cpp
   StageMng.cpp
   StageSelectScene.cpp
+  _DebugConOut.cpp
   コード生成しています。
-  8 of 1282 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
-    4 functions were new in current compilation
-    3 functions had inline decision re-evaluated but remain unchanged
+  All 1282 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   コード生成が終了しました。
   cube!.vcxproj -> C:\Users\1916037\Desktop\cube-\x64\Release\cube!.exe
