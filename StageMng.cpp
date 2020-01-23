@@ -4,6 +4,7 @@ StageMng* StageMng::sInstance = nullptr;
 
 void StageMng::Update(void)
 {
+	// スクリーンの描画
 	ImageMngIns.AddDraw({ _stageScreen,SceneMngIns.ScreenCenter.x,SceneMngIns.ScreenCenter.y,0.0,LAYER::CHAR,0 });
 }
 
@@ -120,6 +121,8 @@ void StageMng::resetObj(void)
 
 StageMng::StageMng()
 {
+	// 初期化
+	// スクリーンの作成
 	_stageScreen = MakeScreen(SceneMngIns.ScreenSize.x, SceneMngIns.ScreenSize.y, false);
 }
 

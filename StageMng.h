@@ -43,7 +43,7 @@ public:
 	int getStageData(Vector2Template<int> val);	// 特定のマスに判定があるか
 	int getPlayerColor(void);					// プレイヤーの色を渡す
 
-	void setPlayerColor(int);					// プレイヤーの色を受け取る
+	void setPlayerColor(int color);					// プレイヤーの色を受け取る
 	void resetObj(void);						// ステージを初期状態に戻す
 private:
 	static StageMng* sInstance;

@@ -9,6 +9,7 @@
 #include <func/CanGripCube.h>
 #include <func/CheckHitObj.h>
 
+// プレイヤーのアニメーションの種類
 enum class PL_ANIM
 {
 	FALL,
@@ -24,8 +25,8 @@ public:
 	GameScene(int stage);
 	~GameScene();
 
-	Base_unq Update(Base_unq);
-	void setStage(int);
+	Base_unq Update(Base_unq scene);
+	void setStage(int count);			// ステージの設定
 private:
 	friend class StageMng;
 	friend struct CanGripCube;
@@ -33,25 +34,26 @@ private:
 
 	bool clearCheck(void);				// クリアしたのかをチェック
 
-	bool moveFall(void);
-	bool moveUp(void);
-	bool moveLR(void);
+	// プレイヤーのアニメーション
+	bool moveFall(void);				// 落ちる
+	bool moveUp(void);					// 上がる
+	bool moveLR(void);					// 回転
 	
 	int _count;											// アニメーション用フレームカウンタ
 	std::vector<std::pair<OBJ_STATS, int>> _LRAnim;		// 回転アニメーション
 	int _animCount;										// 現在のアニメーション
 
-	bool (GameScene::*_plMove)(void);
+	bool (GameScene::*_plMove)(void);					// アニメーションの関数ポインタ
 
-	bool objUpdate(void);
-	bool animUpdate(void);
-
-	bool (GameScene::*_update)(void);
+	bool objUpdate(void);				// プレイ中の処理	
+	bool animUpdate(void);				// アニメーション中の処理
+	
+	bool (GameScene::*_update)(void);	// 上2つの関数ポインタ
 
 	void Draw(void);
 
-	unsigned int _stageCount;		// 現在のステージ数
-	bool _keyOldR;					// Rキーの1フレ前の状態
+	unsigned int _stageCount;			// 現在のステージ数
+	bool _keyOldR;						// Rキーの1フレ前の状態
 
 	static std::vector<std::shared_ptr<object>> _objList;	// オブジェクトのsharedptrを格納
 };

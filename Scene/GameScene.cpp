@@ -8,6 +8,7 @@ GameScene::GameScene()
 
 GameScene::GameScene(int stage)
 {
+	// 初期化
 	_keyOldR = false;
 	StageMngIns.UpdateStagecount(stage);
 	_update = &GameScene::animUpdate;
@@ -40,6 +41,7 @@ GameScene::~GameScene()
 
 Base_unq GameScene::Update(Base_unq scene)
 {
+	// 最後まで終わったらステージ選択へ
 	if ((this->*_update)())
 	{
 		scene = std::make_unique<StageSelectScene>();

@@ -35,6 +35,7 @@ Base_unq StageSelectScene::Update(Base_unq scene)
 Base_unq StageSelectScene::stageMove(Base_unq scene)
 {
 	_stagePos_x += 10;
+	// 次のシーンに行く時のアニメーション処理
 	if (!_sceneMoveFlag)
 	{
 		if (_stagePos_x >= STAGE_OFFSET)
@@ -55,6 +56,7 @@ Base_unq StageSelectScene::stageMove(Base_unq scene)
 
 Base_unq StageSelectScene::stageSelect(Base_unq scene)
 {
+	// カーソルの上下左右移動
 	if ((keyUpdate(KEY_INPUT_LEFT) == 0 && CheckHitKey(KEY_INPUT_LEFT) == 1) || (SceneMngIns.GetStick().x < -STICK_INPUT && SceneMngIns.GetStickOld().x >= -STICK_INPUT))
 	{
 		_cursor--;
@@ -88,6 +90,7 @@ Base_unq StageSelectScene::stageSelect(Base_unq scene)
 		}
 	}
 
+	// 決定、もどる
 	if ((keyUpdate(KEY_INPUT_RSHIFT) == 0 && CheckHitKey(KEY_INPUT_RSHIFT) == 1) || ((SceneMngIns.GetPad() & PAD_INPUT_1) != 0 && (SceneMngIns.GetPadOld() & PAD_INPUT_1) == 0))
 	{
 		_sceneMoveFlag = true;

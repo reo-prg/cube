@@ -53,6 +53,7 @@ bool SceneMng::SystemInit(void)
 	}
 	SetDrawScreen(DX_SCREEN_BACK);		// 描画先をバックバッファに設定
 
+	// 画像読み込み
 	ImageMngIns.getImage("image/TitleLogo.png", "logo");
 	ImageMngIns.getImage("image/TitleMes.png", "TitleMes");
 	ImageMngIns.getImage("image/SelectMes.png", "SelectMes", 700, 64, 1, 2);
@@ -66,11 +67,13 @@ bool SceneMng::SystemInit(void)
 	ImageMngIns.getImage("image/cube.png", "cube", 32, 32, 3, 1);
 	ImageMngIns.getImage("image/char.png", "player", 64, 32, 2, 8);
 
+	// ゲームパッドの状態の初期化
 	_stick = { 0,0 };
 	_padInput = 0;
 	_stickOld = { 0,0 };
 	_padInputOld = INT_MAX;
 
+	// 最初のシーンのを設定
 	_runScene = std::make_unique<TitleScene>();
 
 	return true;
