@@ -46,11 +46,12 @@ void player::Update(void)
 
 void player::control(void)
 {
-	if (((SceneMngIns.GetPad() & PAD_INPUT_1) != 0 || (CheckHitKey(KEY_INPUT_SPACE))) && !_grip)
+	if (((SceneMngIns.GetPad() & PAD_INPUT_5) != 0 || (SceneMngIns.GetPad() & PAD_INPUT_6) != 0 || (CheckHitKey(KEY_INPUT_SPACE))) && !_grip)
 	{
 		_gripCube = CanGripCube()(*this);
+		SceneMngIns.StartVib(DX_INPUT_PAD1, 1000, 1000);
 	}
-	if (((SceneMngIns.GetPad() & PAD_INPUT_1) == 0 && (!CheckHitKey(KEY_INPUT_SPACE))) && _grip)
+	if (((SceneMngIns.GetPad() & PAD_INPUT_5) == 0 && (SceneMngIns.GetPad() & PAD_INPUT_6) == 0  && (!CheckHitKey(KEY_INPUT_SPACE))) && _grip)
 	{
 		_grip = false;
 		_gripCube->setGrip(false);

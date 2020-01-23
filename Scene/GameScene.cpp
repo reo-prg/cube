@@ -128,7 +128,7 @@ bool GameScene::objUpdate(void)
 		data->Update();
 	}
 
-	if (CheckHitKey(KEY_INPUT_R) && (!_keyOldR))
+	if (CheckHitKey(KEY_INPUT_R) && (!_keyOldR) || ((SceneMngIns.GetPad() & PAD_INPUT_10) != 0 && (SceneMngIns.GetPadOld() & PAD_INPUT_10) == 0))
 	{
 		StageMngIns.resetObj();
 	}

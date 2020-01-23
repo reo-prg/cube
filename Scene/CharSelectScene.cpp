@@ -70,7 +70,7 @@ Base_unq CharSelectScene::charSelect(Base_unq scene)
 			_cursor = 0;
 		}
 	}
-	if ((keyUpdate(KEY_INPUT_RSHIFT) == 0 && CheckHitKey(KEY_INPUT_RSHIFT) == 1) || ((SceneMngIns.GetPad() & PAD_INPUT_1) != 0 && (SceneMngIns.GetPadOld() & PAD_INPUT_1) == 0))
+	if ((keyUpdate(KEY_INPUT_RSHIFT) == 0 && CheckHitKey(KEY_INPUT_RSHIFT) == 1) || ((SceneMngIns.GetPad() & PAD_INPUT_3) != 0 && (SceneMngIns.GetPadOld() & PAD_INPUT_3) == 0))
 	{
 		_sceneMoveFlag = true;
 		_charSel = &CharSelectScene::charMove;
