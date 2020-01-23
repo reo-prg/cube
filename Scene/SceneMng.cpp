@@ -2,17 +2,43 @@
 #include <Scene/SceneMng.h>
 
 SceneMng* SceneMng::sInstance = nullptr;
-int SceneMng::joypad;
 
 void SceneMng::Run(void)
 {
 	SystemInit();
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{
+		UpdatePad();
+
 		_runScene = _runScene->Update(std::move(_runScene));
 
 		ImageMngIns.Draw();
 	}
+}
+
+int SceneMng::GetPad(void)const
+{
+	return _padInput;
+}
+
+int SceneMng::GetPadOld(void)const
+{
+	return _padInputOld;
+}
+
+Vector2Template<int> SceneMng::GetStick(void)const
+{
+	return _stick;
+}
+
+Vector2Template<int> SceneMng::GetStickOld(void)const
+{
+	return _stickOld;
+}
+
+void SceneMng::StartVib(int pad, int power, int time)const
+{
+	StartJoypadVibration(pad, power, time);
 }
 
 bool SceneMng::SystemInit(void)
@@ -40,9 +66,22 @@ bool SceneMng::SystemInit(void)
 	ImageMngIns.getImage("image/cube.png", "cube", 32, 32, 3, 1);
 	ImageMngIns.getImage("image/char.png", "player", 64, 32, 2, 8);
 
+	_stick = { 0,0 };
+	_padInput = 0;
+	_stickOld = { 0,0 };
+	_padInputOld = INT_MAX;
+
 	_runScene = std::make_unique<TitleScene>();
 
 	return true;
+}
+
+void SceneMng::UpdatePad(void)
+{
+	_padInputOld = _padInput;
+	_stickOld = _stick;
+	_padInput = GetJoypadInputState(DX_INPUT_PAD1);
+	GetJoypadAnalogInput(&_stick.x, &_stick.y, DX_INPUT_PAD1);
 }
 
 SceneMng::SceneMng() :ScreenSize{ 1024,768 }, ScreenCenter(ScreenSize / 2)

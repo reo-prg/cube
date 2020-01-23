@@ -1,20 +1,13 @@
-﻿  CHECK_DIR.cpp
-  CheckHitObj.cpp
-  CanGripCube.cpp
-  FallCube.cpp
-  LockCube.cpp
-  ImageMng.cpp
-  LAYER.cpp
-  object.cpp
+﻿  FallCube.cpp
   player.cpp
-  GameScene.cpp
-  BaseScene.cpp
-  main.cpp
-  SceneMng.cpp
-  TitleScene.cpp
   CharSelectScene.cpp
-  StageMng.cpp
+  GameScene.cpp
+  SceneMng.cpp
   StageSelectScene.cpp
-  _DebugConOut.cpp
+  TitleScene.cpp
+  StageMng.cpp
+  CanGripCube.cpp
+  CheckHitObj.cpp
+  main.cpp
   コードを生成中...
-  cube!.vcxproj -> C:\Users\ewan1\OneDrive\Desktop\cube-\x64\Debug\cube!.exe
+  cube!.vcxproj -> C:\Users\1916037\Desktop\cube-\x64\Debug\cube!.exe

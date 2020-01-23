@@ -46,13 +46,11 @@ void player::Update(void)
 
 void player::control(void)
 {
-	_padInput = GetJoypadInputState(DX_INPUT_PAD1);
-	GetJoypadAnalogInput(&_stickInput.x, &_stickInput.y, DX_INPUT_PAD1);
-	if (CheckHitKey(KEY_INPUT_SPACE) && !_grip)
+	if (((SceneMngIns.GetPad() & PAD_INPUT_1) != 0 || (CheckHitKey(KEY_INPUT_SPACE))) && !_grip)
 	{
 		_gripCube = CanGripCube()(*this);
 	}
-	if (!CheckHitKey(KEY_INPUT_SPACE) && _grip)
+	if (((SceneMngIns.GetPad() & PAD_INPUT_1) == 0 && (!CheckHitKey(KEY_INPUT_SPACE))) && _grip)
 	{
 		_grip = false;
 		_gripCube->setGrip(false);
@@ -62,7 +60,7 @@ void player::control(void)
 	Vector2Template<double> tmpPos;
 
 	// ¶‰EˆÚ“®
-	if (_stickInput.x > 300 || CheckHitKey(KEY_INPUT_RIGHT))
+	if (SceneMngIns.GetStick().x > 300 || CheckHitKey(KEY_INPUT_RIGHT))
 	{
 		_stats = OBJ_STATS::RIGHT;
 		if (StageMngIns.getStageData({ static_cast<int>(_pos.x + _size.x + PL_SPEED), static_cast<int>(_pos.y) }) >= 24 ||
@@ -70,11 +68,11 @@ void player::control(void)
 		{
 			if (CheckHitCube(CHECK_DIR::RIGHT))
 			{
-				_pos.x = (static_cast<double>(static_cast<int>(_pos.x) / BlockSize - 1) * BlockSize);
+				_pos.x = (static_cast<double>(static_cast<int>(_pos.x) / CubeSize - 1) * CubeSize);
 			}
 			else
 			{
-				_pos.x = (static_cast<double>(static_cast<int>(_pos.x + PL_SPEED) / BlockSize) * BlockSize);
+				_pos.x = (static_cast<double>(static_cast<int>(_pos.x + PL_SPEED) / CubeSize) * CubeSize);
 			}
 		}
 		else if (CheckHitCube(CHECK_DIR::RIGHT))
@@ -83,7 +81,7 @@ void player::control(void)
 			if (StageMngIns.getStageData({ static_cast<int>(_pos.x + _size.x + PL_SPEED - 1), static_cast<int>(_pos.y) }) >= 24 ||
 				StageMngIns.getStageData({ static_cast<int>(_pos.x + _size.x + PL_SPEED - 1), static_cast<int>(_pos.y + _size.y - 1) }) >= 24)
 			{
-				_pos.x = (static_cast<double>(static_cast<int>(_pos.x + PL_SPEED) / BlockSize - 1) * BlockSize);
+				_pos.x = (static_cast<double>(static_cast<int>(_pos.x + PL_SPEED) / CubeSize - 1) * CubeSize);
 			}
 			else
 			{
@@ -107,7 +105,7 @@ void player::control(void)
 			}
 		}
 	}
-	else if (_stickInput.x < -300 || CheckHitKey(KEY_INPUT_LEFT))
+	else if (SceneMngIns.GetStick().x < -300 || CheckHitKey(KEY_INPUT_LEFT))
 	{
 		_stats = OBJ_STATS::LEFT;
 		if (StageMngIns.getStageData({ static_cast<int>(_pos.x - PL_SPEED), static_cast<int>(_pos.y) }) >= 24 ||
@@ -115,11 +113,11 @@ void player::control(void)
 		{
 			if (CheckHitCube(CHECK_DIR::LEFT))
 			{
-				_pos.x = (static_cast<double>(static_cast<int>(_pos.x + _size.x - PL_SPEED - 1) / BlockSize + 1) * BlockSize);
+				_pos.x = (static_cast<double>(static_cast<int>(_pos.x + _size.x - PL_SPEED - 1) / CubeSize + 1) * CubeSize);
 			}
 			else
 			{
-				_pos.x = (static_cast<double>(static_cast<int>(_pos.x + _size.x - PL_SPEED - 1) / BlockSize) * BlockSize);
+				_pos.x = (static_cast<double>(static_cast<int>(_pos.x + _size.x - PL_SPEED - 1) / CubeSize) * CubeSize);
 			}
 		}
 		else if (CheckHitCube(CHECK_DIR::LEFT))
@@ -128,7 +126,7 @@ void player::control(void)
 			if (StageMngIns.getStageData({ static_cast<int>(_pos.x - PL_SPEED), static_cast<int>(_pos.y) }) >= 24 ||
 				StageMngIns.getStageData({ static_cast<int>(_pos.x - PL_SPEED), static_cast<int>(_pos.y + _size.y - 1) }) >= 24)
 			{
-				_pos.x = (static_cast<double>(static_cast<int>(_pos.x + _size.x - PL_SPEED - 1) / BlockSize + 1) * BlockSize);
+				_pos.x = (static_cast<double>(static_cast<int>(_pos.x + _size.x - PL_SPEED - 1) / CubeSize + 1) * CubeSize);
 			}
 			else
 			{
@@ -169,7 +167,7 @@ void player::control(void)
 			StageMngIns.getStageData({ static_cast<int>(_pos.x + _size.x), static_cast<int>(_pos.y + _size.y - 1) }) >= 24) &&
 			CheckHitCube(CHECK_DIR::RIGHT))
 		{
-			_pos.x = (static_cast<double>(static_cast<int>(_pos.x) / BlockSize - 1) * BlockSize);
+			_pos.x = (static_cast<double>(static_cast<int>(_pos.x) / CubeSize - 1) * CubeSize);
 			_gripCube->setPos({ this->_pos.x + (static_cast<int>(this->_stats) * 2 - 1) * _gripCube->getSize().x, this->_pos.y });
 		}
 
@@ -178,7 +176,7 @@ void player::control(void)
 			if (StageMngIns.getStageData({ static_cast<int>(_gripCube->getPos().x + _gripCube->getSize().x - 1), static_cast<int>(_gripCube->getPos().y) }) >= 24 ||
 				StageMngIns.getStageData({ static_cast<int>(_gripCube->getPos().x + _gripCube->getSize().x - 1), static_cast<int>(_gripCube->getPos().y + _gripCube->getSize().y - 1) }) >= 24)
 			{
-				_pos.x = static_cast<double>((static_cast<int>(_pos.x) / BlockSize - 1) * BlockSize);
+				_pos.x = static_cast<double>((static_cast<int>(_pos.x) / CubeSize - 1) * CubeSize);
 			}
 
 			tmpPos = CheckHitObj()({ _gripCube->getPos().x, _gripCube->getPos().y }, _size, OBJ_TYPE::PLAYER, _gripCube, CHECK_DIR::LEFT);
@@ -196,7 +194,7 @@ void player::control(void)
 			StageMngIns.getStageData({ static_cast<int>(_pos.x - 1), static_cast<int>(_pos.y + _size.y - 1) }) >= 24) &&
 			CheckHitCube(CHECK_DIR::LEFT))
 		{
-			_pos.x = static_cast<double>((static_cast<int>(_pos.x + _size.x - 1) / BlockSize + 1) * BlockSize);
+			_pos.x = static_cast<double>((static_cast<int>(_pos.x + _size.x - 1) / CubeSize + 1) * CubeSize);
 			_gripCube->setPos({ this->_pos.x + (static_cast<int>(this->_stats) * 2 - 1) * _gripCube->getSize().x, this->_pos.y });
 		}
 
@@ -205,7 +203,7 @@ void player::control(void)
 			if (StageMngIns.getStageData({ static_cast<int>(_gripCube->getPos().x), static_cast<int>(_gripCube->getPos().y) }) >= 24 ||
 				StageMngIns.getStageData({ static_cast<int>(_gripCube->getPos().x), static_cast<int>(_gripCube->getPos().y + _gripCube->getSize().y - 1) }) >= 24)
 			{
-				_pos.x = static_cast<double>((static_cast<int>(_pos.x + _size.x - 1) / BlockSize + 1) * BlockSize);
+				_pos.x = static_cast<double>((static_cast<int>(_pos.x + _size.x - 1) / CubeSize + 1) * CubeSize);
 			}
 
 			tmpPos = CheckHitObj()({ _gripCube->getPos().x, _gripCube->getPos().y }, _size, OBJ_TYPE::PLAYER, _gripCube, CHECK_DIR::RIGHT);
@@ -218,7 +216,7 @@ void player::control(void)
 	
 
 	// ƒWƒƒƒ“ƒv
-	if (((_padInput & PAD_INPUT_2) != 0 || CheckHitKey(KEY_INPUT_UP)) && _jumpDeley <= 0)
+	if (((SceneMngIns.GetPad() & PAD_INPUT_2) != 0 || CheckHitKey(KEY_INPUT_UP)) && _jumpDeley <= 0)
 	{
 		if(StageMngIns.getStageData({ static_cast<int>(_pos.x), static_cast<int>(_pos.y + _size.y) }) >= 24 ||
 			StageMngIns.getStageData({ static_cast<int>(_pos.x + _size.x - 1), static_cast<int>(_pos.y + _size.y) }) >= 24)
@@ -244,7 +242,7 @@ void player::velUpdate(void)
 	if (StageMngIns.getStageData({ static_cast<int>(_pos.x), static_cast<int>(_pos.y + _initVel) }) >= 24 ||
 		StageMngIns.getStageData({ static_cast<int>(_pos.x + _size.x - 1), static_cast<int>(_pos.y + _initVel) }) >= 24)
 	{
-		_pos.y = (static_cast<int>(_pos.y) / BlockSize) * BlockSize;
+		_pos.y = (static_cast<int>(_pos.y) / CubeSize) * CubeSize;
 		_initVel = 0.0;
 	}
 	else if (CheckHitCube(CHECK_DIR::UP))
@@ -266,7 +264,7 @@ void player::velUpdate(void)
 	if (StageMngIns.getStageData({ static_cast<int>(_pos.x), static_cast<int>(_pos.y + _size.y + _initVel) }) >= 24 ||
 		StageMngIns.getStageData({ static_cast<int>(_pos.x + _size.x - 1), static_cast<int>(_pos.y + _size.y + _initVel) }) >= 24)
 	{
-		_pos.y = (static_cast<int>(_pos.y + _initVel) / BlockSize) * BlockSize;
+		_pos.y = (static_cast<int>(_pos.y + _initVel) / CubeSize) * CubeSize;
 		_initVel = 0.0;
 	}
 	else if (CheckHitCube(CHECK_DIR::DOWN))
@@ -307,7 +305,7 @@ bool player::CheckHitCube(CHECK_DIR dir)
 		if (StageMngIns.getStageData({ static_cast<int>(_gripCube->getPos().x + _gripCube->getSize().x + PL_SPEED - 1), static_cast<int>(_gripCube->getPos().y) }) >= 24 ||
 			StageMngIns.getStageData({ static_cast<int>(_gripCube->getPos().x + _gripCube->getSize().x + PL_SPEED - 1), static_cast<int>(_gripCube->getPos().y + _gripCube->getSize().y - 1) }) >= 24)
 		{
-			_gripCube->setPos({ static_cast<double>(static_cast<int>(_gripCube->getPos().x + PL_SPEED) / BlockSize) * BlockSize, _gripCube->getPos().y });
+			_gripCube->setPos({ static_cast<double>(static_cast<int>(_gripCube->getPos().x + PL_SPEED) / CubeSize) * CubeSize, _gripCube->getPos().y });
 			return true;
 		}
 		else
@@ -324,7 +322,7 @@ bool player::CheckHitCube(CHECK_DIR dir)
 		if (StageMngIns.getStageData({ static_cast<int>(_gripCube->getPos().x - PL_SPEED), static_cast<int>(_gripCube->getPos().y) }) >= 24 ||
 			StageMngIns.getStageData({ static_cast<int>(_gripCube->getPos().x - PL_SPEED), static_cast<int>(_gripCube->getPos().y + _gripCube->getSize().y - 1) }) >= 24)
 		{
-			_gripCube->setPos({ static_cast<double>(static_cast<int>(_gripCube->getPos().x + _gripCube->getSize().x - PL_SPEED - 1) / BlockSize) * BlockSize, _gripCube->getPos().y });
+			_gripCube->setPos({ static_cast<double>(static_cast<int>(_gripCube->getPos().x + _gripCube->getSize().x - PL_SPEED - 1) / CubeSize) * CubeSize, _gripCube->getPos().y });
 			return true;
 		}
 		else
@@ -341,7 +339,7 @@ bool player::CheckHitCube(CHECK_DIR dir)
 		if (StageMngIns.getStageData({ static_cast<int>(_gripCube->getPos().x), static_cast<int>(_gripCube->getPos().y + _initVel) }) >= 24 ||
 			StageMngIns.getStageData({ static_cast<int>(_gripCube->getPos().x + _gripCube->getSize().x - 1), static_cast<int>(_gripCube->getPos().y + _initVel) }) >= 24)
 		{
-			_gripCube->setPos({ _gripCube->getPos().x, static_cast<double>(static_cast<int>(_gripCube->getPos().y) / BlockSize) * BlockSize });
+			_gripCube->setPos({ _gripCube->getPos().x, static_cast<double>(static_cast<int>(_gripCube->getPos().y) / CubeSize) * CubeSize });
 			return true;
 		}
 		else
@@ -358,7 +356,7 @@ bool player::CheckHitCube(CHECK_DIR dir)
 		if (StageMngIns.getStageData({ static_cast<int>(_gripCube->getPos().x), static_cast<int>(_gripCube->getPos().y + _gripCube->getSize().y + _initVel) }) >= 24 ||
 			StageMngIns.getStageData({ static_cast<int>(_gripCube->getPos().x + _gripCube->getSize().x - 1), static_cast<int>(_gripCube->getPos().y + _gripCube->getSize().y + _initVel) }) >= 24)
 		{
-			_gripCube->setPos({ _gripCube->getPos().x, static_cast<double>(static_cast<int>(_gripCube->getPos().y + _gripCube->getSize().y - 1) / BlockSize) * BlockSize });
+			_gripCube->setPos({ _gripCube->getPos().x, static_cast<double>(static_cast<int>(_gripCube->getPos().y + _gripCube->getSize().y - 1) / CubeSize) * CubeSize });
 			return true;
 		}
 		else

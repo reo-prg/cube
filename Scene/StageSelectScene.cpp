@@ -6,8 +6,8 @@ StageSelectScene::StageSelectScene()
 {
 	_stagePos_x = -720;
 	_cursor = 0;
-	_stageMoveFlag = true;
 	_sceneMoveFlag = false;
+	_stageSel = &StageSelectScene::stageMove;
 
 	_keyOld.try_emplace(KEY_INPUT_LEFT, 1);
 	_keyOld.try_emplace(KEY_INPUT_RIGHT, 1);
@@ -26,14 +26,7 @@ StageSelectScene::~StageSelectScene()
 
 Base_unq StageSelectScene::Update(Base_unq scene)
 {
-	if (_stageMoveFlag)
-	{
-		scene = stageMove(std::move(scene));
-	}
-	else
-	{
-		scene = stageSelect(std::move(scene));
-	}
+	scene = (this->*_stageSel)(std::move(scene));
 
 	Draw();
 	return std::move(scene);
@@ -47,7 +40,7 @@ Base_unq StageSelectScene::stageMove(Base_unq scene)
 		if (_stagePos_x >= STAGE_OFFSET)
 		{
 			_stagePos_x = STAGE_OFFSET;
-			_stageMoveFlag = false;
+			_stageSel = &StageSelectScene::stageSelect;
 		}
 	}
 	else
@@ -62,7 +55,7 @@ Base_unq StageSelectScene::stageMove(Base_unq scene)
 
 Base_unq StageSelectScene::stageSelect(Base_unq scene)
 {
-	if (keyUpdate(KEY_INPUT_LEFT) == 0 && CheckHitKey(KEY_INPUT_LEFT) == 1)
+	if ((keyUpdate(KEY_INPUT_LEFT) == 0 && CheckHitKey(KEY_INPUT_LEFT) == 1) || (SceneMngIns.GetStick().x < -STICK_INPUT && SceneMngIns.GetStickOld().x >= -STICK_INPUT))
 	{
 		_cursor--;
 		if (_cursor < 0)
@@ -70,7 +63,7 @@ Base_unq StageSelectScene::stageSelect(Base_unq scene)
 			_cursor = 7;
 		}
 	}
-	if (keyUpdate(KEY_INPUT_RIGHT) == 0 && CheckHitKey(KEY_INPUT_RIGHT) == 1)
+	if ((keyUpdate(KEY_INPUT_RIGHT) == 0 && CheckHitKey(KEY_INPUT_RIGHT) == 1) || (SceneMngIns.GetStick().x > STICK_INPUT && SceneMngIns.GetStickOld().x <= STICK_INPUT))
 	{
 		_cursor++;
 		if (_cursor > 7)
@@ -78,7 +71,7 @@ Base_unq StageSelectScene::stageSelect(Base_unq scene)
 			_cursor = 0;
 		}
 	}
-	if (keyUpdate(KEY_INPUT_UP) == 0 && CheckHitKey(KEY_INPUT_UP) == 1)
+	if ((keyUpdate(KEY_INPUT_UP) == 0 && CheckHitKey(KEY_INPUT_UP) == 1) || (SceneMngIns.GetStick().y < -STICK_INPUT && SceneMngIns.GetStickOld().y >= -STICK_INPUT))
 	{
 		_cursor += 4;
 		if (_cursor > 7)
@@ -86,7 +79,7 @@ Base_unq StageSelectScene::stageSelect(Base_unq scene)
 			_cursor = _cursor - 8;
 		}
 	}
-	if (keyUpdate(KEY_INPUT_DOWN) == 0 && CheckHitKey(KEY_INPUT_DOWN) == 1)
+	if ((keyUpdate(KEY_INPUT_DOWN) == 0 && CheckHitKey(KEY_INPUT_DOWN) == 1) || (SceneMngIns.GetStick().y > STICK_INPUT && SceneMngIns.GetStickOld().y <= STICK_INPUT))
 	{
 		_cursor -= 4;
 		if (_cursor < 0)
@@ -95,16 +88,16 @@ Base_unq StageSelectScene::stageSelect(Base_unq scene)
 		}
 	}
 
-	if (keyUpdate(KEY_INPUT_RSHIFT) == 0 && CheckHitKey(KEY_INPUT_RSHIFT) == 1)
+	if ((keyUpdate(KEY_INPUT_RSHIFT) == 0 && CheckHitKey(KEY_INPUT_RSHIFT) == 1) || ((SceneMngIns.GetPad() & PAD_INPUT_1) != 0 && (SceneMngIns.GetPadOld() & PAD_INPUT_1) == 0))
 	{
-		_stageMoveFlag = true;
 		_sceneMoveFlag = true;
+		_stageSel = &StageSelectScene::stageMove;
 		_tmpScene = std::make_unique<CharSelectScene>();
 	}
-	if (keyUpdate(KEY_INPUT_SPACE) == 0 && CheckHitKey(KEY_INPUT_SPACE) == 1)
+	if ((keyUpdate(KEY_INPUT_SPACE) == 0 && CheckHitKey(KEY_INPUT_SPACE) == 1) || ((SceneMngIns.GetPad() & PAD_INPUT_2) != 0 && (SceneMngIns.GetPadOld() & PAD_INPUT_2) == 0))
 	{
-		_stageMoveFlag = true;
 		_sceneMoveFlag = true;
+		_stageSel = &StageSelectScene::stageMove;
 		_tmpScene = std::make_unique<GameScene>(_cursor);
 	}
 

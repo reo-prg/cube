@@ -10,6 +10,8 @@ void StageMng::Update(void)
 void StageMng::UpdateStagecount(int count)
 {
 	_objInitPos.clear();
+
+	// データの読み込みとオブジェクトの配置
 	FILE  *fp;
 	fopen_s(&fp, fileName[count].c_str(), "r");
 
@@ -51,7 +53,7 @@ void StageMng::UpdateStagecount(int count)
 		fclose(fp);
 	}
 	
-
+	// ステージを別のスクリーンにあらかじめ描画
 	SetDrawScreen(_stageScreen);
 	ClsDrawScreen();
 	DrawGraph(0, 0, ImageMngIns.getImage("back")[0], true);
@@ -70,9 +72,9 @@ void StageMng::UpdateStagecount(int count)
 
 int StageMng::getStageData(Vector2Template<int> val)
 {
-	if (val.x >= 0 && val.x < StageWidth * BlockSize && val.y >= 0 && val.y < StageHeight * BlockSize)
+	if (val.x >= 0 && val.x < StageWidth * CubeSize && val.y >= 0 && val.y < StageHeight * CubeSize)
 	{
-		return _stageData[val.y / BlockSize][val.x / BlockSize];
+		return _stageData[val.y / CubeSize][val.x / CubeSize];
 	}
 	else
 	{

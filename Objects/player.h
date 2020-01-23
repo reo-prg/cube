@@ -21,9 +21,6 @@ public:
 
 	void Update(void)override;
 private:
-	Vector2Template<int> _stickInput;
-	int _padInput;
-
 	double _initVel;					// 初速
 	int _jumpDeley;						// 次ジャンプできるようになるための間隔
 	std::shared_ptr<object> _gripCube;	// 掴んでいるキューブ

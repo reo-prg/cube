@@ -21,7 +21,7 @@ Base_unq TitleScene::Update(Base_unq scene)
 {
 	if (!_mesMoveFlag)
 	{
-		if (CheckHitKeyAll() > 0 && _keyAllOld == 0)
+		if ((CheckHitKeyAll() > 0 && _keyAllOld == 0) || (SceneMngIns.GetPad() != 0 && SceneMngIns.GetPadOld() == 0))
 		{
 			_sceneMoveFlag = true;
 			_mesMoveFlag = true;

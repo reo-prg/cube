@@ -35,15 +35,26 @@ public:
 
 	void Run(void);
 
+	int GetPad(void)const;
+	int GetPadOld(void)const;
+	Vector2Template<int> GetStick(void)const;
+	Vector2Template<int> GetStickOld(void)const;
+
+	void StartVib(int pad, int power, int time)const;
+
 	const Vector2Template<int> ScreenSize;
 	const Vector2Template<int> ScreenCenter;
 private:
 	static SceneMng* sInstance;
-	static int joypad;
+	int _padInput;
+	int _padInputOld;
+	Vector2Template<int> _stick;
+	Vector2Template<int> _stickOld;
 
 	Base_unq _runScene;				// åªç›ÇÃÉVÅ[Éì
 
 	bool SystemInit(void);
+	void UpdatePad(void);
 
 	SceneMng();
 	~SceneMng();

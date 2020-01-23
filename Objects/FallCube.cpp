@@ -53,7 +53,7 @@ void FallCube::velUpdate(void)
 		}
 		else
 		{
-			_pos.y = (static_cast<int>(_pos.y + _initVel) / BlockSize) * BlockSize;
+			_pos.y = (static_cast<int>(_pos.y + _initVel) / CubeSize) * CubeSize;
 
 			_initVel = 0.0;
 		}

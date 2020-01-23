@@ -20,7 +20,6 @@ public:
 private:
 	int _stagePos_x;					// ステージの座標
 	int _cursor;						// カーソル
-	bool _stageMoveFlag;				// UIが動いているか
 	bool _sceneMoveFlag;				// 場面を変えるかどうか
 	Base_unq _tmpScene;					// 一時的に次のシーンを保持
 	int _stageViewScreen;					// スクリーン
@@ -29,6 +28,9 @@ private:
 
 	Base_unq stageMove(Base_unq);
 	Base_unq stageSelect(Base_unq);
+
+	Base_unq (StageSelectScene::*_stageSel)(Base_unq);
+
 	int keyUpdate(int);
 	void Draw();
 };

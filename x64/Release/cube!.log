@@ -1,8 +1,17 @@
-﻿  FallCube.cpp
-  LockCube.cpp
+﻿  CheckHitObj.cpp
+  CanGripCube.cpp
+  FallCube.cpp
+  player.cpp
+  GameScene.cpp
+  main.cpp
+  SceneMng.cpp
+  TitleScene.cpp
+  CharSelectScene.cpp
+  StageMng.cpp
+  StageSelectScene.cpp
   コード生成しています。
-  4 of 1314 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    2 functions had inline decision re-evaluated but remain unchanged
+  8 of 1282 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
+    4 functions were new in current compilation
+    3 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
-  cube!.vcxproj -> C:\Users\ewan1\OneDrive\Desktop\cube-\x64\Release\cube!.exe
+  cube!.vcxproj -> C:\Users\1916037\Desktop\cube-\x64\Release\cube!.exe

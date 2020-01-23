@@ -6,6 +6,8 @@
 #define SELECT_POS_X	512
 #define NEXT_POS_X		884
 
+#define STICK_INPUT	300
+
 class BaseScene;
 
 using Base_unq = std::unique_ptr<BaseScene>;

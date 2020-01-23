@@ -6,8 +6,8 @@ CharSelectScene::CharSelectScene()
 {
 	_charSelPos_x = -600;
 	_cursor = 0;
-	_charMoveFlag = true;
 	_sceneMoveFlag = false;
+	_charSel = &CharSelectScene::charMove;
 
 	_keyOld.try_emplace(KEY_INPUT_LEFT, 1);
 	_keyOld.try_emplace(KEY_INPUT_RIGHT, 1);
@@ -22,14 +22,7 @@ CharSelectScene::~CharSelectScene()
 
 Base_unq CharSelectScene::Update(Base_unq scene)
 {
-	if (_charMoveFlag)
-	{
-		scene = charMove(std::move(scene));
-	}
-	else
-	{
-		scene = charSelect(std::move(scene));
-	}
+	scene = (this->*_charSel)(std::move(scene));
 
 	Draw();
 
@@ -44,7 +37,7 @@ Base_unq CharSelectScene::charMove(Base_unq scene)
 		if (_charSelPos_x > SceneMngIns.ScreenCenter.x - PL_POS_X)
 		{
 			_charSelPos_x = SceneMngIns.ScreenCenter.x - PL_POS_X;
-			_charMoveFlag = false;
+			_charSel = &CharSelectScene::charSelect;
 		}
 	}
 	else
@@ -61,7 +54,7 @@ Base_unq CharSelectScene::charMove(Base_unq scene)
 
 Base_unq CharSelectScene::charSelect(Base_unq scene)
 {
-	if (keyUpdate(KEY_INPUT_LEFT) == 0 && CheckHitKey(KEY_INPUT_LEFT) == 1)
+	if ((keyUpdate(KEY_INPUT_LEFT) == 0 && CheckHitKey(KEY_INPUT_LEFT) == 1) || (SceneMngIns.GetStick().x < -STICK_INPUT && SceneMngIns.GetStickOld().x >= -STICK_INPUT))
 	{
 		_cursor--;
 		if (_cursor < 0)
@@ -69,7 +62,7 @@ Base_unq CharSelectScene::charSelect(Base_unq scene)
 			_cursor = 7;
 		}
 	}
-	if (keyUpdate(KEY_INPUT_RIGHT) == 0 && CheckHitKey(KEY_INPUT_RIGHT) == 1)
+	if ((keyUpdate(KEY_INPUT_RIGHT) == 0 && CheckHitKey(KEY_INPUT_RIGHT) == 1) || (SceneMngIns.GetStick().x > STICK_INPUT && SceneMngIns.GetStickOld().x <= STICK_INPUT))
 	{
 		_cursor++;
 		if (_cursor > 7)
@@ -77,22 +70,22 @@ Base_unq CharSelectScene::charSelect(Base_unq scene)
 			_cursor = 0;
 		}
 	}
-	if (keyUpdate(KEY_INPUT_RSHIFT) == 0 && CheckHitKey(KEY_INPUT_RSHIFT) == 1)
+	if ((keyUpdate(KEY_INPUT_RSHIFT) == 0 && CheckHitKey(KEY_INPUT_RSHIFT) == 1) || ((SceneMngIns.GetPad() & PAD_INPUT_1) != 0 && (SceneMngIns.GetPadOld() & PAD_INPUT_1) == 0))
 	{
-		_charMoveFlag = true;
 		_sceneMoveFlag = true;
+		_charSel = &CharSelectScene::charMove;
 		_tmpScene = std::make_unique<TitleScene>();
 	}
-	if (keyUpdate(KEY_INPUT_SPACE) == 0 && CheckHitKey(KEY_INPUT_SPACE) == 1)
+	if (keyUpdate(KEY_INPUT_SPACE) == 0 && CheckHitKey(KEY_INPUT_SPACE) == 1 || ((SceneMngIns.GetPad() & PAD_INPUT_2) != 0 && (SceneMngIns.GetPadOld() & PAD_INPUT_2) == 0))
 	{
-		_charMoveFlag = true;
 		_sceneMoveFlag = true;
+		_charSel = &CharSelectScene::charMove;
 		StageMngIns.setPlayerColor(_cursor);
 		_tmpScene = std::make_unique<StageSelectScene>();
 	}
 
 	// ÉJÅ[É\ÉãÇÃï`âÊ
-	ImageMngIns.AddDraw({ ImageMngIns.getImage("cursor")[0], PL_SPACE * _cursor + _charSelPos_x, 400 + BlockSize, 0.0, LAYER::UI, 0 });
+	ImageMngIns.AddDraw({ ImageMngIns.getImage("cursor")[0], PL_SPACE * _cursor + _charSelPos_x, 400 + CubeSize, 0.0, LAYER::UI, 0 });
 	// ÉKÉCÉhÇÃï`âÊ
 	ImageMngIns.AddDraw({ ImageMngIns.getImage("guide")[0], BACK_POS_X, GUIDE_POS_Y, 0.0, LAYER::UI, 1000 });
 	ImageMngIns.AddDraw({ ImageMngIns.getImage("guide")[1], NEXT_POS_X, GUIDE_POS_Y, 0.0, LAYER::UI, 1000 });
