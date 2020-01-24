@@ -1,7 +1,8 @@
-﻿  GameScene.cpp
+﻿  LiftCube.cpp
+  CharSelectScene.cpp
   コード生成しています。
-  1 of 1320 functions (<0.1%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
+  2 of 1285 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+    2 functions were new in current compilation
+    7 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
-  cube!.vcxproj -> C:\Users\ewan1\OneDrive\Desktop\cube-\x64\Release\cube!.exe
+  cube!.vcxproj -> C:\Users\1916037\Desktop\cube-\x64\Release\cube!.exe

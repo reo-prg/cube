@@ -43,6 +43,11 @@ void object::setState(OBJ_STATS stats)
 	_stats = stats;
 }
 
+void object::setEffect(EFFECT effect, Vector2Template<int> pos)
+{
+
+}
+
 OBJ_STATS object::getStats(void)
 {
 	return _stats;

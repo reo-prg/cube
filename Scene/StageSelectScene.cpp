@@ -14,6 +14,7 @@ StageSelectScene::StageSelectScene()
 	_keyOld.try_emplace(KEY_INPUT_UP, 1);
 	_keyOld.try_emplace(KEY_INPUT_DOWN, 1);
 	_keyOld.try_emplace(KEY_INPUT_RSHIFT, 1);
+	_keyOld.try_emplace(KEY_INPUT_LSHIFT, 1);
 	_keyOld.try_emplace(KEY_INPUT_SPACE, 1);
 
 	_stageViewScreen = MakeScreen(STAGE_SIZE_X * 2, STAGE_SIZE_Y * 2, false);
@@ -91,7 +92,7 @@ Base_unq StageSelectScene::stageSelect(Base_unq scene)
 	}
 
 	// åàíËÅAÇ‡Ç«ÇÈ
-	if ((keyUpdate(KEY_INPUT_RSHIFT) == 0 && CheckHitKey(KEY_INPUT_RSHIFT) == 1) || ((SceneMngIns.GetPad() & PAD_INPUT_3) != 0 && (SceneMngIns.GetPadOld() & PAD_INPUT_3) == 0))
+	if ((keyUpdate(KEY_INPUT_LSHIFT) == 0 && CheckHitKey(KEY_INPUT_LSHIFT) == 1) || (keyUpdate(KEY_INPUT_RSHIFT) == 0 && CheckHitKey(KEY_INPUT_RSHIFT) == 1) || ((SceneMngIns.GetPad() & PAD_INPUT_3) != 0 && (SceneMngIns.GetPadOld() & PAD_INPUT_3) == 0))
 	{
 		_sceneMoveFlag = true;
 		_stageSel = &StageSelectScene::stageMove;

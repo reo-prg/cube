@@ -1,5 +1,6 @@
 #pragma once
 #include <map>
+#include <tuple> 
 #include <common/Vector2.h>
 #include <Graphic/ImageMng.h>
 #include <Objects/CHECK_DIR.h>
@@ -23,6 +24,13 @@ enum class OBJ_STATS
 	MAX
 };
 
+// エフェクトの種類
+enum class EFFECT
+{
+	SMOKE,
+	GRIP
+};
+
 class object
 {
 public:
@@ -32,10 +40,10 @@ public:
 	virtual void Update(void);
 	void objDraw(void);
 
-	void setImage(OBJ_STATS, int);			// 状態ごとの画像の設定
-	void setGrip(bool);						// _gripの変更
-	void setPos(Vector2Template<double>);	// 座標の設定
-	void setState(OBJ_STATS);
+	void setImage(OBJ_STATS, int);								// 状態ごとの画像の設定
+	void setGrip(bool);											// _gripの変更
+	void setPos(Vector2Template<double> pos);					// 座標の設定
+	void setState(OBJ_STATS stats);								// 状態の設定
 
 	OBJ_STATS getStats(void);
 	OBJ_TYPE getType(void);
@@ -50,6 +58,6 @@ protected:
 	OBJ_TYPE				_type;		// オブジェクトの種類
 	bool					_grip;		// 掴んでいるか
 private:
-	std::map<OBJ_STATS,int> _image;		// 画像ID
+	std::map<OBJ_STATS,int> _image;												// 画像ID
 };
 
