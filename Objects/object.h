@@ -1,6 +1,5 @@
 #pragma once
-#include <map>
-#include <tuple> 
+#include <map> 
 #include <common/Vector2.h>
 #include <Graphic/ImageMng.h>
 #include <Objects/CHECK_DIR.h>
@@ -22,13 +21,6 @@ enum class OBJ_STATS
 	RIGHT,
 	NORMAL,
 	MAX
-};
-
-// エフェクトの種類
-enum class EFFECT
-{
-	SMOKE,
-	GRIP
 };
 
 class object

@@ -1,8 +1,12 @@
-﻿  LiftCube.cpp
-  CharSelectScene.cpp
-  コード生成しています。
-  2 of 1285 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
-    2 functions were new in current compilation
-    7 functions had inline decision re-evaluated but remain unchanged
-  コード生成が終了しました。
-  cube!.vcxproj -> C:\Users\1916037\Desktop\cube-\x64\Release\cube!.exe
+﻿  ImageMng.cpp
+c:\users\1916037\desktop\cube-\graphic\imagemng.cpp(74): error C3867: 'std::_Vector_iterator<std::_Vector_val<std::_Simple_types<_Ty>>>::operator *': 非標準の構文です。メンバーにポインタを作成するには '&' を使用してください
+          with
+          [
+              _Ty=std::tuple<EFFECT,Vector2Template<int>,int,int>
+          ]
+c:\users\1916037\desktop\cube-\graphic\imagemng.cpp(74): error C2679: 二項演算子 '=': 型 'overloaded-function' の右オペランドを扱う演算子が見つかりません (または変換できません)。
+  c:\program files (x86)\microsoft visual studio\2017\professional\vc\tools\msvc\14.13.26128\include\tuple(634): note: 'std::tuple<EFFECT &,Vector2Template<int> &,int &,int &> &std::tuple<EFFECT &,Vector2Template<int> &,int &,int &>::operator =(std::tuple<EFFECT &,Vector2Template<int> &,int &,int &> &&) noexcept(<expr>)' の可能性があります
+  c:\program files (x86)\microsoft visual studio\2017\professional\vc\tools\msvc\14.13.26128\include\tuple(573): note: または 'std::tuple<EFFECT &,Vector2Template<int> &,int &,int &> &std::tuple<EFFECT &,Vector2Template<int> &,int &,int &>::operator =(const std::tuple<EFFECT &,Vector2Template<int> &,int &,int &> &)'
+  c:\program files (x86)\microsoft visual studio\2017\professional\vc\tools\msvc\14.13.26128\include\tuple(493): note: または 'std::tuple<EFFECT &,Vector2Template<int> &,int &,int &> &std::tuple<EFFECT &,Vector2Template<int> &,int &,int &>::operator =<EFFECT,Vector2Template<int>,int,int>(std::tuple<EFFECT,Vector2Template<int>,int,int> &&)'
+  c:\program files (x86)\microsoft visual studio\2017\professional\vc\tools\msvc\14.13.26128\include\tuple(485): note: または 'std::tuple<EFFECT &,Vector2Template<int> &,int &,int &> &std::tuple<EFFECT &,Vector2Template<int> &,int &,int &>::operator =<EFFECT,Vector2Template<int>,int,int>(const std::tuple<EFFECT,Vector2Template<int>,int,int> &)'
+  c:\users\1916037\desktop\cube-\graphic\imagemng.cpp(74): note: 引数リスト '(std::tuple<EFFECT &,Vector2Template<int> &,int &,int &>, overloaded-function)' を一致させようとしているとき

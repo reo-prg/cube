@@ -50,6 +50,7 @@ void player::control(void)
 	{
 		_gripCube = CanGripCube()(*this);
 		SceneMngIns.StartVib(DX_INPUT_PAD1, 1000, 1000);
+		ImageMngIns.setEffect(EFFECT::GRIP, { static_cast<int>(_pos.x + static_cast<int>(_stats) * CubeSize),static_cast<int>(_pos.y) });
 	}
 	if (((SceneMngIns.GetPad() & PAD_INPUT_5) == 0 && (SceneMngIns.GetPad() & PAD_INPUT_6) == 0  && (!CheckHitKey(KEY_INPUT_SPACE))) && _grip)
 	{

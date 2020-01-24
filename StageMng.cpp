@@ -5,7 +5,7 @@ StageMng* StageMng::sInstance = nullptr;
 void StageMng::Update(void)
 {
 	// ƒXƒNƒŠ[ƒ“‚Ì•`‰æ
-	ImageMngIns.AddDraw({ _stageScreen,SceneMngIns.ScreenCenter.x,SceneMngIns.ScreenCenter.y,0.0,LAYER::CHAR,0 });
+	ImageMngIns.AddDraw({ _stageScreen,SceneMngIns.ScreenCenter.x,SceneMngIns.ScreenCenter.y,0.0,LAYER::BG,0 });
 }
 
 void StageMng::UpdateStagecount(int count)

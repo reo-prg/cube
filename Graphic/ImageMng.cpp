@@ -3,6 +3,11 @@
 
 ImageMng* ImageMng::sInstance = nullptr;
 
+void ImageMng::setEffect(EFFECT effect, Vector2Template<int> pos)
+{
+	_effectList.emplace_back(std::make_tuple(effect, pos, 0, 0));
+}
+
 std::vector<int> ImageMng::getImage(const std::string& key)
 {
 	return getImage(key,key);
@@ -31,6 +36,7 @@ std::vector<int> ImageMng::getImage(const std::string& filename, const std::stri
 
 void ImageMng::Draw(void)
 {
+	UpdateEffect();
 	SetDrawScreen(DX_SCREEN_BACK);
 	ClsDrawScreen();
 
@@ -57,6 +63,33 @@ void ImageMng::Draw(void)
 	_drawList.clear();
 }
 
+void ImageMng::UpdateEffect(void)
+{
+	for (auto data : _effectList)
+	{
+		EFFECT effect;
+		Vector2Template<int> pos;
+		int count, flame;
+
+		std::tie(effect, pos, count, flame) = data;
+
+		AddDraw({ _effectMap[effect][count].first , pos.x, pos.y, 0.0, LAYER::UI, 1000 });
+
+		flame++;
+
+		if (flame >= _effectMap[effect][count].second)
+		{
+			count++;
+			if (_effectMap[effect][count].second == -1)
+			{
+				flame = -1;
+			}
+		}
+	}
+
+
+}
+
 void ImageMng::AddDraw(DrawData data)
 {
 	_drawList.emplace_back(data);
@@ -64,7 +97,10 @@ void ImageMng::AddDraw(DrawData data)
 
 ImageMng::ImageMng()
 {
-	
+	_effectMap[EFFECT::GRIP].emplace_back(std::make_pair(getImage("gripEffect")[0], 20));
+	_effectMap[EFFECT::GRIP].emplace_back(std::make_pair(getImage("gripEffect")[1], 40));
+	_effectMap[EFFECT::GRIP].emplace_back(std::make_pair(getImage("gripEffect")[2], 60));
+	_effectMap[EFFECT::GRIP].emplace_back(std::make_pair(getImage("gripEffect")[2], -1));
 }
 
 
