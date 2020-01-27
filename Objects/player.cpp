@@ -50,7 +50,6 @@ void player::control(void)
 	{
 		_gripCube = CanGripCube()(*this);
 		SceneMngIns.StartVib(DX_INPUT_PAD1, 1000, 1000);
-		ImageMngIns.setEffect(EFFECT::GRIP, { static_cast<int>(_pos.x + static_cast<int>(_stats) * CubeSize),static_cast<int>(_pos.y) });
 	}
 	if (((SceneMngIns.GetPad() & PAD_INPUT_5) == 0 && (SceneMngIns.GetPad() & PAD_INPUT_6) == 0  && (!CheckHitKey(KEY_INPUT_SPACE))) && _grip)
 	{
@@ -267,11 +266,28 @@ void player::velUpdate(void)
 		StageMngIns.getStageData({ static_cast<int>(_pos.x + _size.x - 1), static_cast<int>(_pos.y + _size.y + _initVel) }) >= 24)
 	{
 		_pos.y = (static_cast<int>(_pos.y + _initVel) / CubeSize) * CubeSize;
+		if (_initVel != 0.0)
+		{
+			ImageMngIns.setEffect(EFFECT::SMOKE, { static_cast<int>(_pos.x) + CubeSize / 2,static_cast<int>(_pos.y) + CubeSize / 2 });
+			if (CheckHitCube(CHECK_DIR::DOWN))
+			{
+				ImageMngIns.setEffect(EFFECT::SMOKE, { static_cast<int>(_gripCube->getPos().x) + CubeSize / 2,static_cast<int>(_gripCube->getPos().y) + CubeSize / 2 });
+			}
+		}
 		_initVel = 0.0;
 	}
 	else if (CheckHitCube(CHECK_DIR::DOWN))
 	{
 		_pos.y = _gripCube->getPos().y;
+		if (_initVel != 0.0)
+		{
+			ImageMngIns.setEffect(EFFECT::SMOKE, { static_cast<int>(_gripCube->getPos().x) + CubeSize / 2,static_cast<int>(_gripCube->getPos().y) + CubeSize / 2 });
+			tmpPos = CheckHitObj()({ _pos.x, _pos.y + _initVel }, _size, OBJ_TYPE::PLAYER, _gripCube, CHECK_DIR::DOWN);
+			if (tmpPos.x != -100 && tmpPos.y != -100)
+			{
+				ImageMngIns.setEffect(EFFECT::SMOKE, { static_cast<int>(_pos.x) + CubeSize / 2,static_cast<int>(_pos.y) + CubeSize / 2 });
+			}
+		}
 		_initVel = 0.0;
 	}
 	else
@@ -286,6 +302,10 @@ void player::velUpdate(void)
 		else
 		{
 			_pos.y = tmpPos.y - _size.y;
+			if (_initVel != 0.0)
+			{
+				ImageMngIns.setEffect(EFFECT::SMOKE, { static_cast<int>(_pos.x) + CubeSize / 2,static_cast<int>(_pos.y) + CubeSize / 2 });
+			}
 			_initVel = 0.0;
 		}
 	}

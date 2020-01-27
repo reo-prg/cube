@@ -65,29 +65,35 @@ void ImageMng::Draw(void)
 
 void ImageMng::UpdateEffect(void)
 {
-	for (auto data : _effectList)
+	for (auto data = _effectList.begin(); data != _effectList.end();)
 	{
 		EFFECT effect;
 		Vector2Template<int> pos;
 		int count, flame;
 
-		std::tie(effect, pos, count, flame) = data;
+		std::tie(effect, pos, count, flame) = (*data);
 
-		AddDraw({ _effectMap[effect][count].first , pos.x, pos.y, 0.0, LAYER::UI, 1000 });
+   		AddDraw({ _effectMap[effect][count].first , pos.x, pos.y, 0.0, LAYER::UI, 1000 });
 
-		flame++;
+		std::get<3>(*data)++;
 
 		if (flame >= _effectMap[effect][count].second)
 		{
-			count++;
+			std::get<2>(*data)++;
 			if (_effectMap[effect][count].second == -1)
 			{
-				flame = -1;
+				data = _effectList.erase(data);
+			}
+			else
+			{
+				data++;
 			}
 		}
+		else
+		{
+			data++;
+		}
 	}
-
-
 }
 
 void ImageMng::AddDraw(DrawData data)
@@ -97,15 +103,32 @@ void ImageMng::AddDraw(DrawData data)
 
 ImageMng::ImageMng()
 {
-	_effectMap[EFFECT::GRIP].emplace_back(std::make_pair(getImage("gripEffect")[0], 20));
-	_effectMap[EFFECT::GRIP].emplace_back(std::make_pair(getImage("gripEffect")[1], 40));
-	_effectMap[EFFECT::GRIP].emplace_back(std::make_pair(getImage("gripEffect")[2], 60));
-	_effectMap[EFFECT::GRIP].emplace_back(std::make_pair(getImage("gripEffect")[2], -1));
+	ImageMngInit();
 }
 
 
 ImageMng::~ImageMng()
 {
+}
+
+void ImageMng::ImageMngInit(void)
+{
+	getImage("image/effect.png", "gripEffect", 64, 64, 3, 1);
+
+	_effectMap[EFFECT::GRIP].emplace_back(std::make_pair(getImage("gripEffect")[0], 5));
+	_effectMap[EFFECT::GRIP].emplace_back(std::make_pair(getImage("gripEffect")[1], 10));
+	_effectMap[EFFECT::GRIP].emplace_back(std::make_pair(getImage("gripEffect")[2], 15));
+	_effectMap[EFFECT::GRIP].emplace_back(std::make_pair(getImage("gripEffect")[2], -1));
+
+	getImage("image/smoke.png", "smokeEffect", 64, 64, 6, 1);
+
+	_effectMap[EFFECT::SMOKE].emplace_back(std::make_pair(getImage("smokeEffect")[0], 3));
+	_effectMap[EFFECT::SMOKE].emplace_back(std::make_pair(getImage("smokeEffect")[1], 6));
+	_effectMap[EFFECT::SMOKE].emplace_back(std::make_pair(getImage("smokeEffect")[2], 9));
+	_effectMap[EFFECT::SMOKE].emplace_back(std::make_pair(getImage("smokeEffect")[3], 12));
+	_effectMap[EFFECT::SMOKE].emplace_back(std::make_pair(getImage("smokeEffect")[4], 15));
+	_effectMap[EFFECT::SMOKE].emplace_back(std::make_pair(getImage("smokeEffect")[5], 18));
+	_effectMap[EFFECT::SMOKE].emplace_back(std::make_pair(getImage("smokeEffect")[5], -1));
 }
 
 

@@ -16,6 +16,7 @@ std::shared_ptr<object> CanGripCube::operator()(player& pl_obj)
 				data->setGrip(true);
 				pl_obj.setGrip(true);
 				pl_obj.setPos({data->getPos().x + pl_obj.getSize().x - (static_cast<int>(pl_obj.getStats()) * (pl_obj.getSize().x + data->getSize().x)),data->getPos().y});
+				ImageMngIns.setEffect(EFFECT::GRIP, { static_cast<int>(pl_obj.getPos().x + static_cast<int>(pl_obj.getStats()) * CubeSize),static_cast<int>(pl_obj.getPos().y) + CubeSize / 2 });
 				return data;
 			}
 		}

@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <chrono>
 #include <algorithm>
 #include <Scene/BaseScene.h>
 #include <Graphic/ImageMng.h>
@@ -8,6 +9,8 @@
 #include <Objects/player.h>
 #include <func/CanGripCube.h>
 #include <func/CheckHitObj.h>
+
+using namespace std::chrono;
 
 // プレイヤーのアニメーションの種類
 enum class PL_ANIM
@@ -54,6 +57,10 @@ private:
 
 	unsigned int _stageCount;			// 現在のステージ数
 	bool _keyOldR;						// Rキーの1フレ前の状態
+
+	// ゲーム開始時間と終了時間
+	steady_clock::time_point _startTime;
+	steady_clock::time_point _clearTime;
 
 	static std::vector<std::shared_ptr<object>> _objList;	// オブジェクトのsharedptrを格納
 };

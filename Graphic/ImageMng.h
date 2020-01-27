@@ -73,5 +73,7 @@ private:
 
 	ImageMng();
 	~ImageMng();
+
+	void ImageMngInit(void);
 };
 

@@ -83,6 +83,8 @@ bool GameScene::moveFall(void)
 	if (_count >= 40)
 	{
 		_update = &GameScene::objUpdate;
+		ImageMngIns.setEffect(EFFECT::SMOKE, { static_cast<int>((*pl_data)->getPos().x) + CubeSize / 2,static_cast<int>((*pl_data)->getPos().y) + CubeSize / 2 });
+		_startTime = steady_clock::now();
 	}
 	return false;
 }
@@ -97,6 +99,7 @@ bool GameScene::moveUp(void)
 
 	if (_count >= 80)
 	{
+
 		return true;
 	}
 	return false;
@@ -139,6 +142,8 @@ bool GameScene::objUpdate(void)
 		_update = &GameScene::animUpdate;
 		_plMove = &GameScene::moveLR;
 		_count = 0;
+		_clearTime = steady_clock::now();
+		int time = static_cast<int>(duration_cast<milliseconds>(_clearTime - _startTime).count());
 	}
 
 	Draw();

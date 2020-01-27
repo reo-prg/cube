@@ -48,13 +48,20 @@ void FallCube::velUpdate(void)
 			else
 			{
 				_pos.y = tmpPos.y - _size.y;
+				if (_initVel != 0.0)
+				{
+					ImageMngIns.setEffect(EFFECT::SMOKE, { static_cast<int>(_pos.x) + CubeSize / 2,static_cast<int>(_pos.y) + CubeSize / 2 });
+				}
 				_initVel = 0.0;
 			}
 		}
 		else
 		{
 			_pos.y = (static_cast<int>(_pos.y + _initVel) / CubeSize) * CubeSize;
-
+			if (_initVel != 0.0)
+			{
+				ImageMngIns.setEffect(EFFECT::SMOKE, { static_cast<int>(_pos.x) + CubeSize / 2,static_cast<int>(_pos.y) + CubeSize / 2 });
+			}
 			_initVel = 0.0;
 		}
 	}
