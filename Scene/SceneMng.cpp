@@ -66,6 +66,7 @@ bool SceneMng::SystemInit(void)
 	ImageMngIns.getImage("image/stage_chip.png", "s_cube", 32, 32, 8, 8);
 	ImageMngIns.getImage("image/cube.png", "cube", 32, 32, 3, 1);
 	ImageMngIns.getImage("image/char.png", "player", 64, 32, 2, 8);
+	ImageMngIns.getImage("image/clearFlame.png", "clearFlame");
 
 	// ゲームパッドの状態の初期化
 	_stick = { 0,0 };
