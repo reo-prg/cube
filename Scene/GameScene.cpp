@@ -16,6 +16,8 @@ GameScene::GameScene(int stage)
 	_result = &GameScene::moveResult;
 	_count	= 0;
 	_animCount = 0;
+	_theta = 0;
+	_keySpaceOld = 1;
 
 	// アニメーション
 	_LRAnim.emplace_back(std::make_pair(OBJ_STATS::LEFT, 10));
@@ -102,7 +104,6 @@ bool GameScene::moveUp(void)
 	{
 		_update = &GameScene::resultUpdate;
 		_count = 0;
-		return true;
 	}
 	return false;
 }
@@ -128,12 +129,22 @@ bool GameScene::moveLR(void)
 
 bool GameScene::moveResult(void)
 {
-	ImageMngIns.AddDraw({  })
+	_theta += 2;
+	if (_theta >= 90)
+	{
+		_result = &GameScene::resultScene;
+	}
 	return false;
 }
 
 bool GameScene::resultScene(void)
 {
+	if ((CheckHitKey(KEY_INPUT_SPACE) && (!_keySpaceOld)) || ((SceneMngIns.GetPad() & PAD_INPUT_5) != 0 && (SceneMngIns.GetPadOld() & PAD_INPUT_5) == 0))
+	{
+		return true;
+	}
+
+	_keySpaceOld = CheckHitKey(KEY_INPUT_SPACE);
 	return false;
 }
 
@@ -174,8 +185,11 @@ bool GameScene::animUpdate(void)
 
 bool GameScene::resultUpdate(void)
 {
-	
-	return false;
+	bool tmpBool = (this->*_result)();
+
+	Draw();
+	ImageMngIns.AddDraw({ ImageMngIns.getImage("clearFlame")[0], SceneMngIns.ScreenCenter.x, static_cast<int>(sin(RAD(_theta)) * RESULT_MOVE_OFFSET - 300), 0.0, LAYER::UI, 30000 });
+	return tmpBool;
 }
 
 void GameScene::Draw(void)

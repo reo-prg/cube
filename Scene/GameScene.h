@@ -12,6 +12,8 @@
 
 using namespace std::chrono;
 
+#define RESULT_MOVE_OFFSET	600
+
 // プレイヤーのアニメーションの種類
 enum class PL_ANIM
 {
@@ -49,8 +51,8 @@ private:
 
 	bool (GameScene::*_plMove)(void);	// 上3つのアニメーションの関数ポインタ
 
-	int _resultPos_Y;					// リザルト画面のY座標
 	int _keySpaceOld;					// 1フレ前のスペースキーの状態
+	int _theta;							// リザルト移動用
 
 	bool moveResult(void);				// リザルト画面の移動
 	bool resultScene(void);				// リザルト画面の処理
@@ -59,7 +61,7 @@ private:
 
 	bool objUpdate(void);				// プレイ中の処理	
 	bool animUpdate(void);				// アニメーション中の処理
-	bool resultUpdate(void);
+	bool resultUpdate(void);			// リザルトの処理
 	
 	bool (GameScene::*_update)(void);	// 上3つの関数ポインタ
 
