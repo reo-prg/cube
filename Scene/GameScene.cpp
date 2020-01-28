@@ -13,6 +13,7 @@ GameScene::GameScene(int stage)
 	StageMngIns.UpdateStagecount(stage);
 	_update = &GameScene::animUpdate;
 	_plMove = &GameScene::moveFall;
+	_result = &GameScene::moveResult;
 	_count	= 0;
 	_animCount = 0;
 
@@ -99,7 +100,8 @@ bool GameScene::moveUp(void)
 
 	if (_count >= 80)
 	{
-
+		_update = &GameScene::resultUpdate;
+		_count = 0;
 		return true;
 	}
 	return false;
@@ -121,6 +123,17 @@ bool GameScene::moveLR(void)
 		}
 	}
 
+	return false;
+}
+
+bool GameScene::moveResult(void)
+{
+	ImageMngIns.AddDraw({  })
+	return false;
+}
+
+bool GameScene::resultScene(void)
+{
 	return false;
 }
 
@@ -153,10 +166,16 @@ bool GameScene::objUpdate(void)
 
 bool GameScene::animUpdate(void)
 {
-	bool tmpBool = (this->*_plMove)();
+	(this->*_plMove)();
 	Draw();
 
-	return tmpBool;
+	return false;
+}
+
+bool GameScene::resultUpdate(void)
+{
+	
+	return false;
 }
 
 void GameScene::Draw(void)

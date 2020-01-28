@@ -37,21 +37,31 @@ private:
 
 	bool clearCheck(void);				// クリアしたのかをチェック
 
+	
+	int _count;											// アニメーション,リザルト用フレームカウンタ
+	std::vector<std::pair<OBJ_STATS, int>> _LRAnim;		// 回転アニメーション
+	int _animCount;										// 現在のアニメーション
+
 	// プレイヤーのアニメーション
 	bool moveFall(void);				// 落ちる
 	bool moveUp(void);					// 上がる
 	bool moveLR(void);					// 回転
-	
-	int _count;											// アニメーション用フレームカウンタ
-	std::vector<std::pair<OBJ_STATS, int>> _LRAnim;		// 回転アニメーション
-	int _animCount;										// 現在のアニメーション
 
-	bool (GameScene::*_plMove)(void);					// アニメーションの関数ポインタ
+	bool (GameScene::*_plMove)(void);	// 上3つのアニメーションの関数ポインタ
+
+	int _resultPos_Y;					// リザルト画面のY座標
+	int _keySpaceOld;					// 1フレ前のスペースキーの状態
+
+	bool moveResult(void);				// リザルト画面の移動
+	bool resultScene(void);				// リザルト画面の処理
+
+	bool(GameScene::*_result)(void);	// 上2つの関数ポインタ
 
 	bool objUpdate(void);				// プレイ中の処理	
 	bool animUpdate(void);				// アニメーション中の処理
+	bool resultUpdate(void);
 	
-	bool (GameScene::*_update)(void);	// 上2つの関数ポインタ
+	bool (GameScene::*_update)(void);	// 上3つの関数ポインタ
 
 	void Draw(void);
 
