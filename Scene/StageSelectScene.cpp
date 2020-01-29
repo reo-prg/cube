@@ -123,7 +123,7 @@ Base_unq StageSelectScene::stageSelect(Base_unq scene)
 	ImageMngIns.AddDraw({ ImageMngIns.getImage("guide")[3], SELECT_POS_X, GUIDE_POS_Y, 0.0, LAYER::UI, 1000 });
 
 	// ƒ‰ƒ“ƒLƒ“ƒO‚Ì•`‰æ
-	ImageMngIns.AddDraw({ ImageMngIns.getImage("rank")[0], SceneMngIns.ScreenCenter.x / 2 + STAGE_SIZE_X + 10, 250, 0.0, LAYER::UI, 0 });
+	ImageMngIns.AddDraw({ ImageMngIns.getImage("rank")[0], SceneMngIns.ScreenCenter.x / 2 + STAGE_SIZE_X * 2, 250, 0.0, LAYER::UI, 0 });
 
 	return std::move(scene);
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include <DxLib.h>
 #include <_debug/_DebugConOut.h>
+#include <common/Vector2.h>
 
 #define RankMngIns RankMng::getInstance()
 
@@ -31,10 +32,15 @@ public:
 
 	void RankInit(void);	// ランキングの読み取り
 
+	int getClearTime(int stage, int rank);	// クリアタイムの取得
+	int checkRank(int stage, int clearTime);			// クリアタイムがランキングに入っているのかをチェック
+
 private:
 	static RankMng* sInstance;
 
 	int _clearTimeRank[STAGE_COUNT][RANK_COUNT];	// クリアタイムの格納
+
+	void saveClearTime(void);
 
 	RankMng();
 	~RankMng();
