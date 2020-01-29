@@ -4,6 +4,7 @@
 
 StageSelectScene::StageSelectScene()
 {
+	RankMngIns.RankInit();
 	_stagePos_x = -720;
 	_cursor = 0;
 	_sceneMoveFlag = false;
@@ -63,13 +64,13 @@ Base_unq StageSelectScene::stageSelect(Base_unq scene)
 		_cursor--;
 		if (_cursor < 0)
 		{
-			_cursor = 7;
+			_cursor = STAGE_COUNT - 1;
 		}
 	}
 	if ((keyUpdate(KEY_INPUT_RIGHT) == 0 && CheckHitKey(KEY_INPUT_RIGHT) == 1) || (SceneMngIns.GetStick().x > STICK_INPUT && SceneMngIns.GetStickOld().x <= STICK_INPUT))
 	{
 		_cursor++;
-		if (_cursor > 7)
+		if (_cursor >= STAGE_COUNT)
 		{
 			_cursor = 0;
 		}
@@ -77,9 +78,9 @@ Base_unq StageSelectScene::stageSelect(Base_unq scene)
 	if ((keyUpdate(KEY_INPUT_UP) == 0 && CheckHitKey(KEY_INPUT_UP) == 1) || (SceneMngIns.GetStick().y < -STICK_INPUT && SceneMngIns.GetStickOld().y >= -STICK_INPUT))
 	{
 		_cursor += 4;
-		if (_cursor > 7)
+		if (_cursor >= STAGE_COUNT)
 		{
-			_cursor = _cursor - 8;
+			_cursor = _cursor - STAGE_COUNT;
 		}
 	}
 	if ((keyUpdate(KEY_INPUT_DOWN) == 0 && CheckHitKey(KEY_INPUT_DOWN) == 1) || (SceneMngIns.GetStick().y > STICK_INPUT && SceneMngIns.GetStickOld().y <= STICK_INPUT))
@@ -87,7 +88,7 @@ Base_unq StageSelectScene::stageSelect(Base_unq scene)
 		_cursor -= 4;
 		if (_cursor < 0)
 		{
-			_cursor = _cursor + 8;
+			_cursor = _cursor + STAGE_COUNT;
 		}
 	}
 
@@ -112,14 +113,17 @@ Base_unq StageSelectScene::stageSelect(Base_unq scene)
 	SetDrawScreen(_stageViewScreen);
 	ClsDrawScreen();
 	DrawRotaGraph(STAGE_SIZE_X, STAGE_SIZE_Y, 2.0, 0.0, ImageMngIns.getImage("stage")[_cursor], false);
-	ImageMngIns.AddDraw({ _stageViewScreen, SceneMngIns.ScreenCenter.x, 250, 0.0, LAYER::UI, 0 });
+	ImageMngIns.AddDraw({ _stageViewScreen, SceneMngIns.ScreenCenter.x / 2, 250, 0.0, LAYER::UI, 0 });
 
-	ImageMngIns.AddDraw({ ImageMngIns.getImage("flame")[0], SceneMngIns.ScreenCenter.x, 250, 0.0, LAYER::UI, 100 });
+	//ImageMngIns.AddDraw({ ImageMngIns.getImage("flame")[0], SceneMngIns.ScreenCenter.x, 250, 0.0, LAYER::UI, 100 });
 
 	// ガイドの描画
 	ImageMngIns.AddDraw({ ImageMngIns.getImage("guide")[0], BACK_POS_X, GUIDE_POS_Y, 0.0, LAYER::UI, 1000 });
 	ImageMngIns.AddDraw({ ImageMngIns.getImage("guide")[1], NEXT_POS_X, GUIDE_POS_Y, 0.0, LAYER::UI, 1000 });
 	ImageMngIns.AddDraw({ ImageMngIns.getImage("guide")[3], SELECT_POS_X, GUIDE_POS_Y, 0.0, LAYER::UI, 1000 });
+
+	// ランキングの描画
+	ImageMngIns.AddDraw({ ImageMngIns.getImage("rank")[0], SceneMngIns.ScreenCenter.x / 2 + STAGE_SIZE_X + 10, 250, 0.0, LAYER::UI, 0 });
 
 	return std::move(scene);
 }
@@ -142,7 +146,7 @@ void StageSelectScene::Draw()
 	ImageMngIns.AddDraw({ ImageMngIns.getImage("SelectMes")[1], _stagePos_x + SceneMngIns.ScreenCenter.x - STAGE_OFFSET, 52, 0.0, LAYER::BG, 0 });
 	ImageMngIns.AddDraw({ ImageMngIns.getImage("player")[StageMngIns.getPlayerColor() * 2], (_cursor % 4) * (STAGE_SIZE_X + STAGE_SPACE) + _stagePos_x - 85, 470 + (_cursor / 4) * (STAGE_SIZE_Y + STAGE_SPACE) + 32, 0.0, LAYER::UI, 200 });			// 座標はステージ一覧の右下
 
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < STAGE_COUNT; i++)
 	{
 		ImageMngIns.AddDraw({ ImageMngIns.getImage("stage")[i], (i % 4) * (STAGE_SIZE_X + STAGE_SPACE) + _stagePos_x, 470 + (i / 4) * (STAGE_SIZE_Y + STAGE_SPACE), 0.0, LAYER::CHAR, 0 });
 	}

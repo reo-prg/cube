@@ -2,10 +2,12 @@
 #include <map>
 #include <Scene/BaseScene.h>
 #include <Scene/SceneMng.h>
+#include <RankMng.h>
 
 #define STAGE_SPACE		60			// ステージ間の間隔
 #define STAGE_SIZE_X	128			// ステージのX方向の大きさ
 #define STAGE_SIZE_Y	96			// ステージのY方向の大きさ
+#define STAGE_COUNT		8			// ステージの数
 #define STAGE_OFFSET	(SceneMngIns.ScreenCenter.x - (STAGE_SIZE_X + STAGE_SPACE) * 3 / 2)		// 下のステージ達のオフセット
 
 
@@ -26,12 +28,12 @@ private:
 
 	std::map<int, int> _keyOld;			// 1フレ前のキー状態
 
-	Base_unq stageMove(Base_unq scene);		// ステージが動いている間の処理
+	Base_unq stageMove(Base_unq scene);			// ステージが動いている間の処理
 	Base_unq stageSelect(Base_unq scene);		// ステージを選ぶ時の処理
 
 	Base_unq (StageSelectScene::*_stageSel)(Base_unq);	// 上2つの関数ポインタ
 
-	int keyUpdate(int key);					// キー状態の管理
+	int keyUpdate(int key);				// キー状態の管理
 	void Draw();						// 描画
 };
 

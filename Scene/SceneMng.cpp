@@ -61,6 +61,7 @@ bool SceneMng::SystemInit(void)
 	ImageMngIns.getImage("image/cursor.png", "cursor");
 	ImageMngIns.getImage("image/stage.png", "stage", 128, 96, 4, 2);
 	ImageMngIns.getImage("image/stageflame.png", "s_flame");
+	ImageMngIns.getImage("image/rank.png", "rank");
 	ImageMngIns.getImage("image/flame.png", "flame");
 	ImageMngIns.getImage("image/back.png", "back");
 	ImageMngIns.getImage("image/stage_chip.png", "s_cube", 32, 32, 8, 8);
