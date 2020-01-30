@@ -18,6 +18,9 @@ GameScene::GameScene(int stage)
 	_animCount = 0;
 	_theta = 0;
 	_keySpaceOld = 1;
+	_stageCount = stage;
+
+	_resultScreen = MakeScreen(704, 544, false);
 
 	// アニメーション
 	_LRAnim.emplace_back(std::make_pair(OBJ_STATS::LEFT, 10));
@@ -52,11 +55,6 @@ Base_unq GameScene::Update(Base_unq scene)
 	}
 
 	return std::move(scene);
-}
-
-void GameScene::setStage(int count)
-{
-	_stageCount = count;
 }
 
 bool GameScene::clearCheck(void)
@@ -158,6 +156,7 @@ bool GameScene::objUpdate(void)
 	if (CheckHitKey(KEY_INPUT_R) && (!_keyOldR) || ((SceneMngIns.GetPad() & PAD_INPUT_10) != 0 && (SceneMngIns.GetPadOld() & PAD_INPUT_10) == 0))
 	{
 		StageMngIns.resetObj();
+		_startTime = steady_clock::now();
 	}
 	_keyOldR = CheckHitKey(KEY_INPUT_R);
 
@@ -166,8 +165,27 @@ bool GameScene::objUpdate(void)
 		_update = &GameScene::animUpdate;
 		_plMove = &GameScene::moveLR;
 		_count = 0;
+
 		_clearTime = steady_clock::now();
 		int time = static_cast<int>(duration_cast<milliseconds>(_clearTime - _startTime).count());
+
+		RankMngIns.checkRank(_stageCount, time);
+
+		int tmpScreen = RankMngIns.getRankScreen(_stageCount);
+		SetDrawScreen(_resultScreen);
+		ClsDrawScreen();
+		DrawGraph(0, 0, ImageMngIns.getImage("clearFlame")[0], false);
+		DrawGraph(165, 310, tmpScreen, true);
+
+		DrawGraph(CLEAR_TIME_OFFSET_X + NUM_SIZE_X * 0, CLEAR_TIME_OFFSET_Y, ImageMngIns.getImage("number")[time / (MIN * 10)], true);
+		DrawGraph(CLEAR_TIME_OFFSET_X + NUM_SIZE_X * 1, CLEAR_TIME_OFFSET_Y, ImageMngIns.getImage("number")[time / MIN % 10], true);
+		DrawGraph(CLEAR_TIME_OFFSET_X + NUM_SIZE_X * 2, CLEAR_TIME_OFFSET_Y, ImageMngIns.getImage("number")[10], true);
+		DrawGraph(CLEAR_TIME_OFFSET_X + NUM_SIZE_X * 3, CLEAR_TIME_OFFSET_Y, ImageMngIns.getImage("number")[time % MIN / (SEC * 10)], true);
+		DrawGraph(CLEAR_TIME_OFFSET_X + NUM_SIZE_X * 4, CLEAR_TIME_OFFSET_Y, ImageMngIns.getImage("number")[time % MIN / SEC % 10], true);
+		DrawGraph(CLEAR_TIME_OFFSET_X + NUM_SIZE_X * 5, CLEAR_TIME_OFFSET_Y, ImageMngIns.getImage("number")[10], true);
+		DrawGraph(CLEAR_TIME_OFFSET_X + NUM_SIZE_X * 6, CLEAR_TIME_OFFSET_Y, ImageMngIns.getImage("number")[time % SEC / 100], true);
+		DrawGraph(CLEAR_TIME_OFFSET_X + NUM_SIZE_X * 7, CLEAR_TIME_OFFSET_Y, ImageMngIns.getImage("number")[time % 100 / 10], true);
+		DrawGraph(CLEAR_TIME_OFFSET_X + NUM_SIZE_X * 8, CLEAR_TIME_OFFSET_Y, ImageMngIns.getImage("number")[time % 10], true);
 	}
 
 	Draw();
@@ -188,7 +206,7 @@ bool GameScene::resultUpdate(void)
 	bool tmpBool = (this->*_result)();
 
 	Draw();
-	ImageMngIns.AddDraw({ ImageMngIns.getImage("clearFlame")[0], SceneMngIns.ScreenCenter.x, static_cast<int>(sin(RAD(_theta)) * RESULT_MOVE_OFFSET - 300), 0.0, LAYER::UI, 30000 });
+	ImageMngIns.AddDraw({ _resultScreen, SceneMngIns.ScreenCenter.x, static_cast<int>(sin(RAD(_theta)) * RESULT_MOVE_OFFSET - 300), 0.0, LAYER::UI, 30000 });
 	return tmpBool;
 }
 

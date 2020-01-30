@@ -4,7 +4,6 @@
 
 StageSelectScene::StageSelectScene()
 {
-	RankMngIns.RankInit();
 	_stagePos_x = -720;
 	_cursor = 0;
 	_sceneMoveFlag = false;
@@ -19,6 +18,7 @@ StageSelectScene::StageSelectScene()
 	_keyOld.try_emplace(KEY_INPUT_SPACE, 1);
 
 	_stageViewScreen = MakeScreen(STAGE_SIZE_X * 2, STAGE_SIZE_Y * 2, false);
+	_drawRank = RankMngIns.getRankScreen(0);
 }
 
 
@@ -66,30 +66,38 @@ Base_unq StageSelectScene::stageSelect(Base_unq scene)
 		{
 			_cursor = STAGE_COUNT - 1;
 		}
+		_drawRank = RankMngIns.getRankScreen(_cursor);
 	}
-	if ((keyUpdate(KEY_INPUT_RIGHT) == 0 && CheckHitKey(KEY_INPUT_RIGHT) == 1) || (SceneMngIns.GetStick().x > STICK_INPUT && SceneMngIns.GetStickOld().x <= STICK_INPUT))
+	else if ((keyUpdate(KEY_INPUT_RIGHT) == 0 && CheckHitKey(KEY_INPUT_RIGHT) == 1) || (SceneMngIns.GetStick().x > STICK_INPUT && SceneMngIns.GetStickOld().x <= STICK_INPUT))
 	{
 		_cursor++;
 		if (_cursor >= STAGE_COUNT)
 		{
 			_cursor = 0;
 		}
+		_drawRank = RankMngIns.getRankScreen(_cursor);
 	}
-	if ((keyUpdate(KEY_INPUT_UP) == 0 && CheckHitKey(KEY_INPUT_UP) == 1) || (SceneMngIns.GetStick().y < -STICK_INPUT && SceneMngIns.GetStickOld().y >= -STICK_INPUT))
+	else if ((keyUpdate(KEY_INPUT_UP) == 0 && CheckHitKey(KEY_INPUT_UP) == 1) || (SceneMngIns.GetStick().y < -STICK_INPUT && SceneMngIns.GetStickOld().y >= -STICK_INPUT))
 	{
 		_cursor += 4;
 		if (_cursor >= STAGE_COUNT)
 		{
 			_cursor = _cursor - STAGE_COUNT;
 		}
+		_drawRank = RankMngIns.getRankScreen(_cursor);
 	}
-	if ((keyUpdate(KEY_INPUT_DOWN) == 0 && CheckHitKey(KEY_INPUT_DOWN) == 1) || (SceneMngIns.GetStick().y > STICK_INPUT && SceneMngIns.GetStickOld().y <= STICK_INPUT))
+	else if ((keyUpdate(KEY_INPUT_DOWN) == 0 && CheckHitKey(KEY_INPUT_DOWN) == 1) || (SceneMngIns.GetStick().y > STICK_INPUT && SceneMngIns.GetStickOld().y <= STICK_INPUT))
 	{
 		_cursor -= 4;
 		if (_cursor < 0)
 		{
 			_cursor = _cursor + STAGE_COUNT;
 		}
+		_drawRank = RankMngIns.getRankScreen(_cursor);
+	}
+	else
+	{
+		// ‚È‚É‚à‚µ‚È‚¢
 	}
 
 	// Œˆ’èA‚à‚Ç‚é
@@ -124,6 +132,7 @@ Base_unq StageSelectScene::stageSelect(Base_unq scene)
 
 	// ƒ‰ƒ“ƒLƒ“ƒO‚Ì•`‰æ
 	ImageMngIns.AddDraw({ ImageMngIns.getImage("rank")[0], SceneMngIns.ScreenCenter.x / 2 + STAGE_SIZE_X * 2, 250, 0.0, LAYER::UI, 0 });
+	ImageMngIns.AddDraw({ _drawRank, SceneMngIns.ScreenCenter.x / 2 + STAGE_SIZE_X * 2 + RANK_SIZE_X / 2 + 144, 250, 0.0, LAYER::UI, 0 });
 
 	return std::move(scene);
 }

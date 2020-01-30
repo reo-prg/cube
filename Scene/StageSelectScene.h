@@ -10,6 +10,8 @@
 #define STAGE_COUNT		8			// ステージの数
 #define STAGE_OFFSET	(SceneMngIns.ScreenCenter.x - (STAGE_SIZE_X + STAGE_SPACE) * 3 / 2)		// 下のステージ達のオフセット
 
+#define RANK_SIZE_X		125			// ランクのサイズ
+
 
 class StageSelectScene :
 	public BaseScene
@@ -25,6 +27,7 @@ private:
 	bool _sceneMoveFlag;				// 場面を変えるかどうか
 	Base_unq _tmpScene;					// 一時的に次のシーンを保持
 	int _stageViewScreen;				// ステージを拡大したものを描画するスクリーン
+	int _drawRank;						// 描画するランキング保存用
 
 	std::map<int, int> _keyOld;			// 1フレ前のキー状態
 

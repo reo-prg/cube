@@ -14,6 +14,9 @@ using namespace std::chrono;
 
 #define RESULT_MOVE_OFFSET	600
 
+#define CLEAR_TIME_OFFSET_X 370
+#define CLEAR_TIME_OFFSET_Y 80
+
 // プレイヤーのアニメーションの種類
 enum class PL_ANIM
 {
@@ -31,7 +34,6 @@ public:
 	~GameScene();
 
 	Base_unq Update(Base_unq scene);
-	void setStage(int count);			// ステージの設定
 private:
 	friend class StageMng;
 	friend struct CanGripCube;
@@ -53,6 +55,7 @@ private:
 
 	int _keySpaceOld;					// 1フレ前のスペースキーの状態
 	int _theta;							// リザルト移動用
+	int _resultScreen;					// リザルト画面
 
 	bool moveResult(void);				// リザルト画面の移動
 	bool resultScene(void);				// リザルト画面の処理
