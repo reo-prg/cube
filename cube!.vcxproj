@@ -136,6 +136,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Scene\NameSelectScene.cpp" />
     <ClCompile Include="Objects\LiftCube.cpp" />
     <ClCompile Include="Objects\CHECK_DIR.cpp" />
     <ClCompile Include="func\CheckHitObj.cpp" />
@@ -158,6 +159,7 @@
     <ClCompile Include="_debug\_DebugConOut.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Scene\NameSelectScene.h" />
     <ClInclude Include="Objects\LiftCube.h" />
     <ClInclude Include="Objects\CHECK_DIR.h" />
     <ClInclude Include="func\CheckHitObj.h" />

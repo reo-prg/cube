@@ -79,19 +79,19 @@ Base_unq StageSelectScene::stageSelect(Base_unq scene)
 	}
 	else if ((keyUpdate(KEY_INPUT_UP) == 0 && CheckHitKey(KEY_INPUT_UP) == 1) || (SceneMngIns.GetStick().y < -STICK_INPUT && SceneMngIns.GetStickOld().y >= -STICK_INPUT))
 	{
-		_cursor += 4;
-		if (_cursor >= STAGE_COUNT)
+		_cursor -= 4;
+		if (_cursor < 0)
 		{
-			_cursor = _cursor - STAGE_COUNT;
+			_cursor = _cursor + STAGE_COUNT;
 		}
 		_drawRank = RankMngIns.getRankScreen(_cursor);
 	}
 	else if ((keyUpdate(KEY_INPUT_DOWN) == 0 && CheckHitKey(KEY_INPUT_DOWN) == 1) || (SceneMngIns.GetStick().y > STICK_INPUT && SceneMngIns.GetStickOld().y <= STICK_INPUT))
 	{
-		_cursor -= 4;
-		if (_cursor < 0)
+		_cursor += 4;
+		if (_cursor >= STAGE_COUNT)
 		{
-			_cursor = _cursor + STAGE_COUNT;
+			_cursor = _cursor - STAGE_COUNT;
 		}
 		_drawRank = RankMngIns.getRankScreen(_cursor);
 	}

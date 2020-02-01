@@ -1,14 +1,2 @@
-﻿  FallCube.cpp
-  LiftCube.cpp
-  player.cpp
-  CharSelectScene.cpp
-  GameScene.cpp
-  SceneMng.cpp
-  StageSelectScene.cpp
-  TitleScene.cpp
-  StageMng.cpp
-  CanGripCube.cpp
-  CheckHitObj.cpp
-  main.cpp
-  コードを生成中...
+﻿  NameSelectScene.cpp
   cube!.vcxproj -> C:\Users\ewan1\OneDrive\Desktop\cube-\x64\Debug\cube!.exe

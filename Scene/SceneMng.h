@@ -8,6 +8,7 @@
 #include <Scene/TitleScene.h>
 #include <Scene/CharSelectScene.h>
 #include <Scene/GameScene.h>
+#include <Scene/NameSelectScene.h>
 
 #define SceneMngIns SceneMng::getInstance()
 
