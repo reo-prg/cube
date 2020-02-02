@@ -59,6 +59,7 @@ bool SceneMng::SystemInit(void)
 	ImageMngIns.getImage("image/SelectMes.png", "SelectMes", 700, 64, 1, 3);
 	ImageMngIns.getImage("image/guide.png", "guide", 256, 64, 1, 4);
 	ImageMngIns.getImage("image/cursor.png", "cursor");
+	ImageMngIns.getImage("image/char_flame.png", "c_flame");
 	ImageMngIns.getImage("image/name_char.png", "char", 32, 32, 10, 10);
 	ImageMngIns.getImage("image/stage.png", "stage", 128, 96, 4, 2);
 	ImageMngIns.getImage("image/stageflame.png", "s_flame");
@@ -78,7 +79,7 @@ bool SceneMng::SystemInit(void)
 	_padInputOld = INT_MAX;
 
 	// Å‰‚ÌƒV[ƒ“‚Ì‚ğİ’è
-	_runScene = std::make_unique<NameSelectScene>();
+	_runScene = std::make_unique<TitleScene>();
 
 	return true;
 }

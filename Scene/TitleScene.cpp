@@ -61,7 +61,7 @@ Base_unq TitleScene::mesMove(Base_unq scene)
 	{
 		if (_mesPos_x >= SceneMngIns.ScreenSize.x + MES_SIZE_X / 2)
 		{
-			return std::make_unique<CharSelectScene>();
+			return std::make_unique<NameSelectScene>();
 		}
 	}
 

@@ -5,6 +5,7 @@
 NameSelectScene::NameSelectScene()
 {
 	_cursor = { 0,0 };
+	_charCount = 0;
 	_update = &NameSelectScene::NameSceneMove;
 	_sceneMoveFlag = false;
 	_scenePos_x = -500;
@@ -60,6 +61,7 @@ bool NameSelectScene::NameSceneMove(void)
 		if (_scenePos_x >= SceneMngIns.ScreenCenter.x)
 		{
 			_scenePos_x = SceneMngIns.ScreenCenter.x;
+			_update = &NameSelectScene::NameSceneUpdate;
 		}
 	}
 	else
@@ -117,20 +119,32 @@ bool NameSelectScene::NameSceneUpdate(void)
 	{
 		if (_cursor.x == 9 && _cursor.y == 9)
 		{
-			_sceneMoveFlag = true;
-			return true;
+			if (_charCount > 0)
+			{
+				_sceneMoveFlag = true;
+				_update = &NameSelectScene::NameSceneMove;
+				RankMngIns.setName(_name);
+			}
 		}
 		else if (_cursor.x == 8 && _cursor.y == 9)
 		{
-
+			if (_charCount > 0)
+			{
+				_name.pop_back();
+				_charCount--;
+			}
 		}
 		else if ((_cursor.x == 1 && (_cursor.y == 7 || _cursor.y == 9)) || (_cursor.x == 3 && (_cursor.y == 7 || _cursor.y == 9)))
 		{
-
+			// ‚È‚É‚à‚µ‚È‚¢
 		}
 		else
 		{
-
+			if (_charCount < NAME_COUNT_MAX)
+			{
+				_name.emplace_back(_cursor.y * CHAR_COUNT_X + _cursor.x);
+				_charCount++;
+			}
 		}
 	}
 	return false;
@@ -152,4 +166,10 @@ void NameSelectScene::Draw(void)
 {
 	ImageMngIns.AddDraw({ ImageMngIns.getImage("back")[0], SceneMngIns.ScreenCenter.x, SceneMngIns.ScreenCenter.y, 0.0, LAYER::BG, -10 });
 	ImageMngIns.AddDraw({ _nameScreen, _scenePos_x, SceneMngIns.ScreenCenter.y, 0.0, LAYER::BG, 0 });
+	ImageMngIns.AddDraw({ ImageMngIns.getImage("c_flame")[0], static_cast<int>(CHAR_OFFSET_X + CHAR_SIZE / 2) + (CHAR_SIZE + CHAR_DUR_X) * _cursor.x + _scenePos_x - SceneMngIns.ScreenCenter.x,
+								CHAR_OFFSET_Y + static_cast<int>(CHAR_SIZE / 2) + (CHAR_SIZE + CHAR_DUR_Y) * _cursor.y, 0.0, LAYER::UI, 0 });
+	for (int i = 0; i < _charCount; i++)
+	{
+		ImageMngIns.AddDraw({ ImageMngIns.getImage("char")[_name[i]], NAME_OFFSET_X + CHAR_SIZE / 2 + CHAR_SIZE * i + _scenePos_x - SceneMngIns.ScreenCenter.x, NAME_OFFSET_Y + CHAR_SIZE / 2, 0.0, LAYER::CHAR, 0 });
+	}
 }

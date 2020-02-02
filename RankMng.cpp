@@ -17,11 +17,17 @@ void RankMng::RankInit(void)
 		{
 			for (int j = 0; j < RANK_COUNT; j++)
 			{
-   				fscanf_s(fp, "%d,", &_clearTimeRank[i][j]);
-				if (_clearTimeRank[i][j] == -1)
+				for (int data = 0; data < NAME_COUNT; data++)
 				{
-					_clearTimeRank[i][j] = TIME_MAX;
+					int tmpVal;
+					fscanf_s(fp, "%d,", &tmpVal);
+					if (tmpVal == -1)
+					{
+						break;
+					}
+					_rankName[i][j].emplace_back(tmpVal);
 				}
+   				fscanf_s(fp, "%d\n", &_clearTimeRank[i][j]);
 			}
 		}
 	}
@@ -56,16 +62,23 @@ int RankMng::getRankScreen(int stage)
 	for (int i = 0; i < RANK_COUNT; i++)
 	{
 		int tmpTime = _clearTimeRank[stage][i];
+		int count = 0;
 
-		DrawGraph(NUM_SIZE_X * 0, RANK_OFFSET + RANK_DUR * i, ImageMngIns.getImage("number")[tmpTime / (MIN * 10)], true);
-		DrawGraph(NUM_SIZE_X * 1, RANK_OFFSET + RANK_DUR * i, ImageMngIns.getImage("number")[tmpTime / MIN % 10], true);
-		DrawGraph(NUM_SIZE_X * 2, RANK_OFFSET + RANK_DUR * i, ImageMngIns.getImage("number")[10], true);
-		DrawGraph(NUM_SIZE_X * 3, RANK_OFFSET + RANK_DUR * i, ImageMngIns.getImage("number")[tmpTime % MIN / (SEC * 10)], true);
-		DrawGraph(NUM_SIZE_X * 4, RANK_OFFSET + RANK_DUR * i, ImageMngIns.getImage("number")[tmpTime % MIN / SEC % 10], true);
-		DrawGraph(NUM_SIZE_X * 5, RANK_OFFSET + RANK_DUR * i, ImageMngIns.getImage("number")[10], true);
-		DrawGraph(NUM_SIZE_X * 6, RANK_OFFSET + RANK_DUR * i, ImageMngIns.getImage("number")[tmpTime % SEC / 100 ], true);
-		DrawGraph(NUM_SIZE_X * 7, RANK_OFFSET + RANK_DUR * i, ImageMngIns.getImage("number")[tmpTime % 100 / 10], true);
-		DrawGraph(NUM_SIZE_X * 8, RANK_OFFSET + RANK_DUR * i, ImageMngIns.getImage("number")[tmpTime % 10], true);
+		for (auto data : _rankName[stage][i])
+		{
+			DrawGraph(NUM_SIZE_X * count, RANK_OFFSET_Y + 8 + RANK_DUR * i, ImageMngIns.getImage("char")[data], true);
+			count++;
+		}
+		
+		DrawGraph(RANK_OFFSET_X + NUM_SIZE_X * 0, RANK_OFFSET_Y + RANK_DUR * i, ImageMngIns.getImage("number")[tmpTime / (MIN * 10)], true);
+		DrawGraph(RANK_OFFSET_X + NUM_SIZE_X * 1, RANK_OFFSET_Y + RANK_DUR * i, ImageMngIns.getImage("number")[tmpTime / MIN % 10], true);
+		DrawGraph(RANK_OFFSET_X + NUM_SIZE_X * 2, RANK_OFFSET_Y + RANK_DUR * i, ImageMngIns.getImage("number")[10], true);
+		DrawGraph(RANK_OFFSET_X + NUM_SIZE_X * 3, RANK_OFFSET_Y + RANK_DUR * i, ImageMngIns.getImage("number")[tmpTime % MIN / (SEC * 10)], true);
+		DrawGraph(RANK_OFFSET_X + NUM_SIZE_X * 4, RANK_OFFSET_Y + RANK_DUR * i, ImageMngIns.getImage("number")[tmpTime % MIN / SEC % 10], true);
+		DrawGraph(RANK_OFFSET_X + NUM_SIZE_X * 5, RANK_OFFSET_Y + RANK_DUR * i, ImageMngIns.getImage("number")[10], true);
+		DrawGraph(RANK_OFFSET_X + NUM_SIZE_X * 6, RANK_OFFSET_Y + RANK_DUR * i, ImageMngIns.getImage("number")[tmpTime % SEC / 100 ], true);
+		DrawGraph(RANK_OFFSET_X + NUM_SIZE_X * 7, RANK_OFFSET_Y + RANK_DUR * i, ImageMngIns.getImage("number")[tmpTime % 100 / 10], true);
+		DrawGraph(RANK_OFFSET_X + NUM_SIZE_X * 8, RANK_OFFSET_Y + RANK_DUR * i, ImageMngIns.getImage("number")[tmpTime % 10], true);
 	}
 	return _rankScreen;
 }
@@ -84,15 +97,22 @@ int RankMng::checkRank(int stage, int clearTime)
 	for (int i = RANK_COUNT - 1; i > tmpRank; i--)
 	{
 		_clearTimeRank[stage][i] = _clearTimeRank[stage][i - 1];
+		_rankName[stage][i] = _rankName[stage][i - 1];
 	}
 	if (tmpRank != RANK_COUNT)
 	{
 		_clearTimeRank[stage][tmpRank] = clearTime;
+		_rankName[stage][tmpRank] = _name;
 	}
 
 	saveClearTime();
 
 	return tmpRank;
+}
+
+void RankMng::setName(std::vector<int> val)
+{
+	_name = val;
 }
 
 void RankMng::saveClearTime(void)
@@ -102,7 +122,20 @@ void RankMng::saveClearTime(void)
 	
 	for (int i = 0; i < STAGE_COUNT; i++)
 	{
-		fprintf_s(fp, "%d,%d,%d\n", _clearTimeRank[i][0], _clearTimeRank[i][1], _clearTimeRank[i][2]);
+		for (int j = 0; j < RANK_COUNT; j++)
+		{
+			int tmpCount = 0;
+			for (auto data : _rankName[i][j])
+			{
+				fprintf_s(fp, "%d.", data);
+				tmpCount++;
+			}
+			if (tmpCount < NAME_COUNT)
+			{
+				fprintf_s(fp, "-1,");
+			}
+			fprintf_s(fp, "%d\n", _clearTimeRank[i][j]);
+		}
 	}
 
 	fclose(fp);
@@ -111,7 +144,7 @@ void RankMng::saveClearTime(void)
 RankMng::RankMng()
 {
 	RankInit();
-	_rankScreen = MakeScreen(288, 195, false);
+	_rankScreen = MakeScreen(480, 195, false);
 }
 
 
