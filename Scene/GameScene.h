@@ -14,8 +14,8 @@ using namespace std::chrono;
 
 #define RESULT_MOVE_OFFSET	600
 
-#define CLEAR_TIME_OFFSET_X 370
-#define CLEAR_TIME_OFFSET_Y 80
+#define CLEAR_TIME_OFFSET_X 382
+#define CLEAR_TIME_OFFSET_Y 104
 
 // プレイヤーのアニメーションの種類
 enum class PL_ANIM

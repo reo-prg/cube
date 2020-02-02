@@ -177,15 +177,26 @@ bool GameScene::objUpdate(void)
 		DrawGraph(0, 0, ImageMngIns.getImage("clearFlame")[0], false);
 		DrawGraph(165, 310, tmpScreen, true);
 
-		DrawGraph(CLEAR_TIME_OFFSET_X + NUM_SIZE_X * 0, CLEAR_TIME_OFFSET_Y, ImageMngIns.getImage("number")[time / (MIN * 10)], true);
-		DrawGraph(CLEAR_TIME_OFFSET_X + NUM_SIZE_X * 1, CLEAR_TIME_OFFSET_Y, ImageMngIns.getImage("number")[time / MIN % 10], true);
-		DrawGraph(CLEAR_TIME_OFFSET_X + NUM_SIZE_X * 2, CLEAR_TIME_OFFSET_Y, ImageMngIns.getImage("number")[10], true);
-		DrawGraph(CLEAR_TIME_OFFSET_X + NUM_SIZE_X * 3, CLEAR_TIME_OFFSET_Y, ImageMngIns.getImage("number")[time % MIN / (SEC * 10)], true);
-		DrawGraph(CLEAR_TIME_OFFSET_X + NUM_SIZE_X * 4, CLEAR_TIME_OFFSET_Y, ImageMngIns.getImage("number")[time % MIN / SEC % 10], true);
-		DrawGraph(CLEAR_TIME_OFFSET_X + NUM_SIZE_X * 5, CLEAR_TIME_OFFSET_Y, ImageMngIns.getImage("number")[10], true);
-		DrawGraph(CLEAR_TIME_OFFSET_X + NUM_SIZE_X * 6, CLEAR_TIME_OFFSET_Y, ImageMngIns.getImage("number")[time % SEC / 100], true);
-		DrawGraph(CLEAR_TIME_OFFSET_X + NUM_SIZE_X * 7, CLEAR_TIME_OFFSET_Y, ImageMngIns.getImage("number")[time % 100 / 10], true);
-		DrawGraph(CLEAR_TIME_OFFSET_X + NUM_SIZE_X * 8, CLEAR_TIME_OFFSET_Y, ImageMngIns.getImage("number")[time % 10], true);
+		DrawRotaGraph(CLEAR_TIME_OFFSET_X + (NUM_SIZE_X + 8) * 0, CLEAR_TIME_OFFSET_Y, 2.0, 0.0, ImageMngIns.getImage("number")[time / (MIN * 10)], true);
+		DrawRotaGraph(CLEAR_TIME_OFFSET_X + (NUM_SIZE_X + 8) * 1, CLEAR_TIME_OFFSET_Y, 2.0, 0.0, ImageMngIns.getImage("number")[time / MIN % 10], true);
+		DrawRotaGraph(CLEAR_TIME_OFFSET_X + (NUM_SIZE_X + 8) * 2, CLEAR_TIME_OFFSET_Y, 2.0, 0.0, ImageMngIns.getImage("number")[10], true);
+		DrawRotaGraph(CLEAR_TIME_OFFSET_X + (NUM_SIZE_X + 8) * 3, CLEAR_TIME_OFFSET_Y, 2.0, 0.0, ImageMngIns.getImage("number")[time % MIN / (SEC * 10)], true);
+		DrawRotaGraph(CLEAR_TIME_OFFSET_X + (NUM_SIZE_X + 8) * 4, CLEAR_TIME_OFFSET_Y, 2.0, 0.0, ImageMngIns.getImage("number")[time % MIN / SEC % 10], true);
+		DrawRotaGraph(CLEAR_TIME_OFFSET_X + (NUM_SIZE_X + 8) * 5, CLEAR_TIME_OFFSET_Y, 2.0, 0.0, ImageMngIns.getImage("number")[10], true);
+		DrawRotaGraph(CLEAR_TIME_OFFSET_X + (NUM_SIZE_X + 8) * 6, CLEAR_TIME_OFFSET_Y, 2.0, 0.0, ImageMngIns.getImage("number")[time % SEC / 100], true);
+		DrawRotaGraph(CLEAR_TIME_OFFSET_X + (NUM_SIZE_X + 8) * 7, CLEAR_TIME_OFFSET_Y, 2.0, 0.0, ImageMngIns.getImage("number")[time % 100 / 10], true);
+		DrawRotaGraph(CLEAR_TIME_OFFSET_X + (NUM_SIZE_X + 8) * 8, CLEAR_TIME_OFFSET_Y, 2.0, 0.0, ImageMngIns.getImage("number")[time % 10], true);
+
+
+		//DrawGraph(CLEAR_TIME_OFFSET_X + NUM_SIZE_X * 0, CLEAR_TIME_OFFSET_Y, ImageMngIns.getImage("number")[time / (MIN * 10)], true);
+		//DrawGraph(CLEAR_TIME_OFFSET_X + NUM_SIZE_X * 1, CLEAR_TIME_OFFSET_Y, ImageMngIns.getImage("number")[time / MIN % 10], true);
+		//DrawGraph(CLEAR_TIME_OFFSET_X + NUM_SIZE_X * 2, CLEAR_TIME_OFFSET_Y, ImageMngIns.getImage("number")[10], true);
+		//DrawGraph(CLEAR_TIME_OFFSET_X + NUM_SIZE_X * 3, CLEAR_TIME_OFFSET_Y, ImageMngIns.getImage("number")[time % MIN / (SEC * 10)], true);
+		//DrawGraph(CLEAR_TIME_OFFSET_X + NUM_SIZE_X * 4, CLEAR_TIME_OFFSET_Y, ImageMngIns.getImage("number")[time % MIN / SEC % 10], true);
+		//DrawGraph(CLEAR_TIME_OFFSET_X + NUM_SIZE_X * 5, CLEAR_TIME_OFFSET_Y, ImageMngIns.getImage("number")[10], true);
+		//DrawGraph(CLEAR_TIME_OFFSET_X + NUM_SIZE_X * 6, CLEAR_TIME_OFFSET_Y, ImageMngIns.getImage("number")[time % SEC / 100], true);
+		//DrawGraph(CLEAR_TIME_OFFSET_X + NUM_SIZE_X * 7, CLEAR_TIME_OFFSET_Y, ImageMngIns.getImage("number")[time % 100 / 10], true);
+		//DrawGraph(CLEAR_TIME_OFFSET_X + NUM_SIZE_X * 8, CLEAR_TIME_OFFSET_Y, ImageMngIns.getImage("number")[time % 10], true);
 	}
 
 	Draw();

@@ -14,10 +14,11 @@
 #define MIN			60000	// ミリ秒から分への変換用
 #define SEC			1000	// ミリ秒から秒への変換用
 
-#define NUM_SIZE_X		32		// 番号画像のXの大きさ
-#define RANK_OFFSET_X	193		// ランク画像のXオフセット
-#define RANK_OFFSET_Y	20		// ランク画像のYオフセット
-#define RANK_DUR		64		// ランク間の間隔
+#define NUM_SIZE_X		24		// 番号画像のXの大きさ
+#define CHAR_SIZE		32		// 文字の大きさ
+#define RANK_OFFSET_X	252		// ランク画像のXオフセット
+#define RANK_OFFSET_Y	25		// ランク画像のYオフセット
+#define RANK_DUR		69		// ランク間の間隔
 #define TIME_MAX		5999999	// 時間の最大値
 
 class RankMng
@@ -53,7 +54,8 @@ private:
 	static RankMng* sInstance;
 
 	int _clearTimeRank[STAGE_COUNT][RANK_COUNT];			// クリアタイムの格納
-	std::vector<int> _rankName[STAGE_COUNT][RANK_COUNT];
+	std::vector<int> _rankName[STAGE_COUNT][RANK_COUNT];	// ランキングの名前格納
+	int _rankColor[STAGE_COUNT][RANK_COUNT];				// ランキングのプレイヤーの色
 	int _rankScreen;										// ランクが描画されているスクリーン
 	std::vector<int> _name;
 

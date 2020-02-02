@@ -17,6 +17,8 @@ void RankMng::RankInit(void)
 		{
 			for (int j = 0; j < RANK_COUNT; j++)
 			{
+				fscanf_s(fp, "%d,", &_rankColor[i][j]);
+
 				for (int data = 0; data < NAME_COUNT; data++)
 				{
 					int tmpVal;
@@ -27,7 +29,7 @@ void RankMng::RankInit(void)
 					}
 					_rankName[i][j].emplace_back(tmpVal);
 				}
-   				fscanf_s(fp, "%d\n", &_clearTimeRank[i][j]);
+   				fscanf_s(fp, "%d", &_clearTimeRank[i][j]);
 			}
 		}
 	}
@@ -64,9 +66,13 @@ int RankMng::getRankScreen(int stage)
 		int tmpTime = _clearTimeRank[stage][i];
 		int count = 0;
 
+		if (_rankColor[stage][i] >= 0 && _rankColor[stage][i] < 8)
+		{
+			DrawGraph(0, RANK_OFFSET_Y + RANK_DUR * i, ImageMngIns.getImage("player")[_rankColor[stage][i] * 2], true);
+		}
 		for (auto data : _rankName[stage][i])
 		{
-			DrawGraph(NUM_SIZE_X * count, RANK_OFFSET_Y + 8 + RANK_DUR * i, ImageMngIns.getImage("char")[data], true);
+			DrawGraph(CHAR_SIZE * count + 60, RANK_OFFSET_Y + RANK_DUR * i, ImageMngIns.getImage("char")[data], true);
 			count++;
 		}
 		
@@ -98,11 +104,13 @@ int RankMng::checkRank(int stage, int clearTime)
 	{
 		_clearTimeRank[stage][i] = _clearTimeRank[stage][i - 1];
 		_rankName[stage][i] = _rankName[stage][i - 1];
+		_rankColor[stage][i] = _rankColor[stage][i - 1];
 	}
 	if (tmpRank != RANK_COUNT)
 	{
 		_clearTimeRank[stage][tmpRank] = clearTime;
 		_rankName[stage][tmpRank] = _name;
+		_rankColor[stage][tmpRank] = StageMngIns.getPlayerColor();
 	}
 
 	saveClearTime();
@@ -127,7 +135,7 @@ void RankMng::saveClearTime(void)
 			int tmpCount = 0;
 			for (auto data : _rankName[i][j])
 			{
-				fprintf_s(fp, "%d.", data);
+				fprintf_s(fp, "%d,", data);
 				tmpCount++;
 			}
 			if (tmpCount < NAME_COUNT)

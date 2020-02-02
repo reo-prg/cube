@@ -132,7 +132,7 @@ Base_unq StageSelectScene::stageSelect(Base_unq scene)
 
 	// ƒ‰ƒ“ƒLƒ“ƒO‚Ì•`‰æ
 	ImageMngIns.AddDraw({ ImageMngIns.getImage("rank")[0], SceneMngIns.ScreenCenter.x / 2 + STAGE_SIZE_X * 2 - 60, 250, 0.0, LAYER::UI, 0 });
-	ImageMngIns.AddDraw({ _drawRank, SceneMngIns.ScreenCenter.x / 2 + STAGE_SIZE_X * 2 + RANK_SIZE_X / 2 + 160, 245, 0.0, LAYER::UI, 0 });
+	ImageMngIns.AddDraw({ _drawRank, SceneMngIns.ScreenCenter.x / 2 + STAGE_SIZE_X * 2 + RANK_SIZE_X / 2 + 180, 245, 0.0, LAYER::UI, 0 });
 
 	return std::move(scene);
 }
