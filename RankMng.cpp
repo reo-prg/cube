@@ -132,6 +132,7 @@ void RankMng::saveClearTime(void)
 	{
 		for (int j = 0; j < RANK_COUNT; j++)
 		{
+			fprintf_s(fp, "%d,", _rankColor[i][j]);
 			int tmpCount = 0;
 			for (auto data : _rankName[i][j])
 			{

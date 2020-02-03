@@ -72,12 +72,7 @@ Base_unq CharSelectScene::charSelect(Base_unq scene)
 			_cursor = 0;
 		}
 	}
-	if ((keyUpdate(KEY_INPUT_LSHIFT) == 0 && CheckHitKey(KEY_INPUT_LSHIFT) == 1) || (keyUpdate(KEY_INPUT_RSHIFT) == 0 && CheckHitKey(KEY_INPUT_RSHIFT) == 1) || ((SceneMngIns.GetPad() & PAD_INPUT_3) != 0 && (SceneMngIns.GetPadOld() & PAD_INPUT_3) == 0))
-	{
-		_sceneMoveFlag = true;
-		_charSel = &CharSelectScene::charMove;
-		_tmpScene = std::make_unique<TitleScene>();
-	}
+
 	if (keyUpdate(KEY_INPUT_SPACE) == 0 && CheckHitKey(KEY_INPUT_SPACE) == 1 || ((SceneMngIns.GetPad() & PAD_INPUT_2) != 0 && (SceneMngIns.GetPadOld() & PAD_INPUT_2) == 0))
 	{
 		_sceneMoveFlag = true;
@@ -92,7 +87,6 @@ Base_unq CharSelectScene::charSelect(Base_unq scene)
 	// ÉJÅ[É\ÉãÇÃï`âÊ
 	ImageMngIns.AddDraw({ ImageMngIns.getImage("cursor")[0], PL_SPACE * _cursor + _charSelPos_x, 400 + CubeSize + static_cast<int>(std::sin(RAD(_theta)) * 30), 0.0, LAYER::UI, 0 });
 	// ÉKÉCÉhÇÃï`âÊ
-	ImageMngIns.AddDraw({ ImageMngIns.getImage("guide")[0], BACK_POS_X, GUIDE_POS_Y, 0.0, LAYER::UI, 1000 });
 	ImageMngIns.AddDraw({ ImageMngIns.getImage("guide")[1], NEXT_POS_X, GUIDE_POS_Y, 0.0, LAYER::UI, 1000 });
 	ImageMngIns.AddDraw({ ImageMngIns.getImage("guide")[2], SELECT_POS_X, GUIDE_POS_Y, 0.0, LAYER::UI, 1000 });
 

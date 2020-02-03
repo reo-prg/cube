@@ -66,8 +66,8 @@ bool GameScene::clearCheck(void)
 		return false;
 	}
 
-	if (StageMngIns.getStageData({ static_cast<int>((*pl_data)->getPos().x + (*pl_data)->getSize().x / 2), static_cast<int>((*pl_data)->getPos().y + (*pl_data)->getSize().y / 2) }) >= 0 &&
-		StageMngIns.getStageData({ static_cast<int>((*pl_data)->getPos().x + (*pl_data)->getSize().x / 2), static_cast<int>((*pl_data)->getPos().y + (*pl_data)->getSize().y / 2) }) <= 3)
+	if (StageMngIns.getStageData({ static_cast<int>((*pl_data)->getPos().x + (*pl_data)->getSize().x / 2), static_cast<int>((*pl_data)->getPos().y + (*pl_data)->getSize().y / 2) }) == 1 ||
+		StageMngIns.getStageData({ static_cast<int>((*pl_data)->getPos().x + (*pl_data)->getSize().x / 2), static_cast<int>((*pl_data)->getPos().y + (*pl_data)->getSize().y / 2) }) == 3)
 	{
 		return true;
 	}
@@ -137,7 +137,7 @@ bool GameScene::moveResult(void)
 
 bool GameScene::resultScene(void)
 {
-	if ((CheckHitKey(KEY_INPUT_SPACE) && (!_keySpaceOld)) || ((SceneMngIns.GetPad() & PAD_INPUT_5) != 0 && (SceneMngIns.GetPadOld() & PAD_INPUT_5) == 0))
+	if ((CheckHitKey(KEY_INPUT_SPACE) && (!_keySpaceOld)) || ((SceneMngIns.GetPad() & PAD_INPUT_2) != 0 && (SceneMngIns.GetPadOld() & PAD_INPUT_2) == 0))
 	{
 		return true;
 	}
@@ -200,6 +200,12 @@ bool GameScene::objUpdate(void)
 	}
 
 	Draw();
+
+	if ((SceneMngIns.GetPad() & PAD_INPUT_10) != 0 && (SceneMngIns.GetPad() & PAD_INPUT_5) != 0 && (SceneMngIns.GetPad() & PAD_INPUT_6) != 0)
+	{
+		_objList.clear();
+		return true;
+	}
 
 	return false;
 }

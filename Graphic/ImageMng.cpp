@@ -115,9 +115,9 @@ void ImageMng::ImageMngInit(void)
 {
 	getImage("image/effect.png", "gripEffect", 64, 64, 3, 1);
 
-	_effectMap[EFFECT::GRIP].emplace_back(std::make_pair(getImage("gripEffect")[0], 5));
-	_effectMap[EFFECT::GRIP].emplace_back(std::make_pair(getImage("gripEffect")[1], 10));
-	_effectMap[EFFECT::GRIP].emplace_back(std::make_pair(getImage("gripEffect")[2], 15));
+	_effectMap[EFFECT::GRIP].emplace_back(std::make_pair(getImage("gripEffect")[0], 3));
+	_effectMap[EFFECT::GRIP].emplace_back(std::make_pair(getImage("gripEffect")[1], 6));
+	_effectMap[EFFECT::GRIP].emplace_back(std::make_pair(getImage("gripEffect")[2], 9));
 	_effectMap[EFFECT::GRIP].emplace_back(std::make_pair(getImage("gripEffect")[2], -1));
 
 	getImage("image/smoke.png", "smokeEffect", 64, 64, 6, 1);

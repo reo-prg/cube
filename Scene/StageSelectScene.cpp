@@ -105,7 +105,7 @@ Base_unq StageSelectScene::stageSelect(Base_unq scene)
 	{
 		_sceneMoveFlag = true;
 		_stageSel = &StageSelectScene::stageMove;
-		_tmpScene = std::make_unique<CharSelectScene>();
+		_tmpScene = std::make_unique<TitleScene>();
 	}
 	if ((keyUpdate(KEY_INPUT_SPACE) == 0 && CheckHitKey(KEY_INPUT_SPACE) == 1) || ((SceneMngIns.GetPad() & PAD_INPUT_2) != 0 && (SceneMngIns.GetPadOld() & PAD_INPUT_2) == 0))
 	{
