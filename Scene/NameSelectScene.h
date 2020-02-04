@@ -30,7 +30,7 @@ private:
 	int _nameScreen;
 	Vector2Template<int> _cursor;
 	int _charCount;
-	std::vector<int> _name;					// 名前の格納
+	static std::vector<int> _name;					// 名前の格納
 
 	bool _sceneMoveFlag;					// 次のシーンに移行するか
 	int _scenePos_x;						// このシーンの座標

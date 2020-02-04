@@ -1,6 +1,6 @@
 #include <Scene/NameSelectScene.h>
 
-
+std::vector<int> NameSelectScene::_name;
 
 NameSelectScene::NameSelectScene()
 {

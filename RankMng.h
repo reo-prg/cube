@@ -46,7 +46,7 @@ public:
 	void RankInit(void);	// ランキングの読み取り
 
 	int getClearTime(int stage, int rank);				// クリアタイムの取得
-	int getRankScreen(int stage);						// ランキングのスクリーンを取得
+	int getRankScreen(int stage, int rank);				// ランキングのスクリーンを取得
 	int checkRank(int stage, int clearTime);			// クリアタイムがランキングに入っているのかをチェック
 	void setName(std::vector<int> val);
 

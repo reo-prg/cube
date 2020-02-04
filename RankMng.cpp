@@ -51,7 +51,7 @@ int RankMng::getClearTime(int stage, int rank)
 	return _clearTimeRank[stage][rank];
 }
 
-int RankMng::getRankScreen(int stage)
+int RankMng::getRankScreen(int stage, int rank)
 {
 	if (stage < 0 || stage >= STAGE_COUNT)
 	{
@@ -61,6 +61,10 @@ int RankMng::getRankScreen(int stage)
 	SetDrawScreen(_rankScreen);
 	ClsDrawScreen();
 	DrawGraph(0, 0, ImageMngIns.getImage("back")[0], false);
+	if (rank != RANK_COUNT)
+	{
+		DrawGraph(0, RANK_OFFSET_Y + RANK_DUR * rank, ImageMngIns.getImage("rankin")[0], true);
+	}
 	for (int i = 0; i < RANK_COUNT; i++)
 	{
 		int tmpTime = _clearTimeRank[stage][i];

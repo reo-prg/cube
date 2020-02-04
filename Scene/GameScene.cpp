@@ -169,9 +169,9 @@ bool GameScene::objUpdate(void)
 		_clearTime = steady_clock::now();
 		int time = static_cast<int>(duration_cast<milliseconds>(_clearTime - _startTime).count());
 
-		RankMngIns.checkRank(_stageCount, time);
+		int tmpRank = RankMngIns.checkRank(_stageCount, time);
 
-		int tmpScreen = RankMngIns.getRankScreen(_stageCount);
+		int tmpScreen = RankMngIns.getRankScreen(_stageCount, tmpRank);
 		SetDrawScreen(_resultScreen);
 		ClsDrawScreen();
 		DrawGraph(0, 0, ImageMngIns.getImage("clearFlame")[0], false);

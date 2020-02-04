@@ -71,6 +71,7 @@ bool SceneMng::SystemInit(void)
 	ImageMngIns.getImage("image/char.png", "player", 64, 32, 2, 8);
 	ImageMngIns.getImage("image/clearFlame.png", "clearFlame");
 	ImageMngIns.getImage("image/number.png", "number", 24, 32, 11, 1);
+	ImageMngIns.getImage("image/rank_in.png", "rankin");
 
 	// ゲームパッドの状態の初期化
 	_stick = { 0,0 };
