@@ -1,29 +1,60 @@
 #include <StageMng.h>
 
 StageMng* StageMng::sInstance = nullptr;
-std::vector<int> StageMng::_stageData;
-int StageMng::_stageScreen;
-
 
 void StageMng::Update(void)
 {
-	ImageMngIns.AddDraw({ _stageScreen,SceneMngIns.ScreenCenter.x,SceneMngIns.ScreenCenter.y,0.0,LAYER::CHAR,0 });
+	// スクリーンの描画
+	ImageMngIns.AddDraw({ _stageScreen,SceneMngIns.ScreenCenter.x,SceneMngIns.ScreenCenter.y,0.0,LAYER::BG,0 });
 }
 
 void StageMng::UpdateStagecount(int count)
 {
-	FILE *fp;
-	fopen_s(&fp, "data/stage_data.dat", "rb");
-	if (fp != nullptr)
-	{
-		fread(&_stageData[0], sizeof(_stageData[0]), _stageData.size(), fp);
-	}
-	else
+	_objInitPos.clear();
+
+	// データの読み込みとオブジェクトの配置
+	FILE  *fp;
+	fopen_s(&fp, fileName[count].c_str(), "r");
+
+	if (fp == nullptr)
 	{
 		AST();
 	}
-	fclose(fp);
+	else
+	{
+		int objCount;				// オブジェクトの数
+		Vector2Template<int> pos;	// オブジェクトの座標
+		int type;	// オブジェクトの種類
 
+		for (int i = 0; i < StageHeight; i++)
+		{
+			for (int j = 0; j < StageWidth; j++)
+			{
+				fscanf_s(fp, "%d,", &_stageData[i][j]);
+			}
+		}
+
+		fscanf_s(fp, "%d,", &objCount);
+		for (int i = 0; i < objCount; i++)
+		{
+			fscanf_s(fp, "%d,%d,%d,", &pos.x, &pos.y, &type);
+			switch (type)
+			{
+			case 0:
+				GameScene::_objList.emplace_back(new FallCube(pos, { 32,32 }));
+				break;
+			case 1:
+				GameScene::_objList.emplace_back(new LockCube(pos, { 32,32 }));
+				break;
+			case 10:
+				GameScene::_objList.emplace_back(new player({ static_cast<double>(pos.x), static_cast<double>(pos.y) + PLAYER_OFFSET }, 0.0, { 32,32 }, _playerColor));
+			}
+			_objInitPos.emplace_back(std::make_pair(Vector2Template<int>{ pos.x,pos.y },type));
+		}
+		fclose(fp);
+	}
+	
+	// ステージを別のスクリーンにあらかじめ描画
 	SetDrawScreen(_stageScreen);
 	ClsDrawScreen();
 	DrawGraph(0, 0, ImageMngIns.getImage("back")[0], true);
@@ -31,32 +62,68 @@ void StageMng::UpdateStagecount(int count)
 	{
 		for (int x = 0; x < StageWidth; x++)
 		{
-			if (_stageData[y * StageWidth + x] == 1)
+			if (_stageData[y][x] != -1)
 			{
-				DrawGraph(x * 32, y * 32, ImageMngIns.getImage("s_block")[0], true);
+				DrawGraph(x * 32, y * 32, ImageMngIns.getImage("s_cube")[_stageData[y][x]], true);
 			}
 
 		}
 	}
 }
 
-int StageMng::getStageData(int val)
+int StageMng::getStageData(Vector2Template<int> val)
 {
-	if (val >= 0 && val < StageHeight * StageWidth)
+	if (val.x >= 0 && val.x < StageWidth * CubeSize && val.y >= 0 && val.y < StageHeight * CubeSize)
 	{
-		return _stageData[val];
+		return _stageData[val.y / CubeSize][val.x / CubeSize];
 	}
 	else
 	{
-		return 1;
+		return 100;
+	}
+}
+
+int StageMng::getPlayerColor(void)
+{
+	return _playerColor;
+}
+
+void StageMng::setPlayerColor(int color)
+{
+	if (color >= 0 && color < 8)
+	{
+		_playerColor = color;
+	}
+	else
+	{
+		_playerColor = 0;
+	}
+}
+
+void StageMng::resetObj(void)
+{
+	GameScene::_objList.clear();
+	for (auto data : _objInitPos)
+	{
+		switch (data.second)
+		{
+		case 0:
+			GameScene::_objList.emplace_back(new FallCube(data.first, { 32,32 }));
+			break;
+		case 1:
+			GameScene::_objList.emplace_back(new LockCube(data.first, { 32,32 }));
+			break;
+		case 10:
+			GameScene::_objList.emplace_back(new player({ static_cast<double>(data.first.x), static_cast<double>(data.first.y) }, 0.0, { 32,32 }, _playerColor));
+		}
 	}
 }
 
 StageMng::StageMng()
 {
+	// 初期化
+	// スクリーンの作成
 	_stageScreen = MakeScreen(SceneMngIns.ScreenSize.x, SceneMngIns.ScreenSize.y, false);
-	_stageData.resize(StageHeight * StageWidth);
-	UpdateStagecount(0);
 }
 
 
